@@ -1,0 +1,79 @@
+name: HARDYS V11.2 independent comprehensive review
+
+on:
+  push:
+    branches:
+      - audit/v11.2-20261123-comprehensive
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  focused-windows-review:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONIOENCODING: utf-8
+    steps:
+      - name: Read audit branch sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Prepare Node for actual JavaScript functions
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Download and verify the already-published distribution
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $auditRoot = Join-Path $env:GITHUB_WORKSPACE 'reaudit_v11_2_20261123'
+          $downloadRoot = Join-Path $env:RUNNER_TEMP 'hardys-v11.2-published'
+          New-Item -ItemType Directory -Force -Path $downloadRoot | Out-Null
+          gh release download v11.2 --repo wodnd323-oss/PRINT-SIMULATOR --pattern 'HARDYS_PrintSimulator_v11_2_Full_Install.zip' --dir $downloadRoot
+          if ($LASTEXITCODE -ne 0) { throw 'Published release download failed.' }
+          $archive = Join-Path $downloadRoot 'HARDYS_PrintSimulator_v11_2_Full_Install.zip'
+          $actual = (Get-FileHash -Algorithm SHA256 -LiteralPath $archive).Hash.ToLowerInvariant()
+          $expected = 'b0f3fecb39a029c7b3da129a2f3bdec4b9b0cf26a2d98a3556b0e15a802b307b'
+          if ($actual -ne $expected) { throw "Release hash mismatch: $actual" }
+          $expanded = Join-Path $downloadRoot 'expanded'
+          Expand-Archive -LiteralPath $archive -DestinationPath $expanded
+          $app = Join-Path $expanded 'HARDYS_PrintSimulator_v11_2'
+          if (-not (Test-Path (Join-Path $app 'runtime/python/python.exe'))) { throw 'Bundled Python was not found in the expected release root.' }
+          $target = Join-Path $auditRoot 'released_app'
+          if (Test-Path $target) { throw 'Refusing to overwrite an existing released_app directory.' }
+          Move-Item -LiteralPath $app -Destination $target
+          $receipt = @{ sha256 = $actual; release = 'v11.2'; downloaded_asset = (Split-Path $archive -Leaf); source_unchanged = $true }
+          $resultRoot = Join-Path $auditRoot 'windows_checks/results'
+          New-Item -ItemType Directory -Force -Path $resultRoot | Out-Null
+          $receipt | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $resultRoot 'download_receipt.json') -Encoding utf8
+
+      - name: Run only the new focused review cases
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $auditRoot = Join-Path $env:GITHUB_WORKSPACE 'reaudit_v11_2_20261123'
+          $python = Join-Path $auditRoot 'released_app/runtime/python/python.exe'
+          & $python (Join-Path $auditRoot 'windows_checks/run_focused_audit.py')
+          if ($LASTEXITCODE -ne 0) { throw 'Some review cases could not finish or product files changed; inspect the evidence artifact.' }
+
+      - name: Collect review findings and execution evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hardys-v11.2-comprehensive-${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 90
+          path: |
+            reaudit_v11_2_20261123/windows_checks/results/
+            reaudit_v11_2_20261123/ui_contracts/ui_state_results.json
+            reaudit_v11_2_20261123/inverse_geometry/*.json
+            reaudit_v11_2_20261123/inverse_geometry/*.png
+
