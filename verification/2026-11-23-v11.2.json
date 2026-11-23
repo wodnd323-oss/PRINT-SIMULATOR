@@ -50,7 +50,14 @@
       "all_pass=true",
       "release_gate_eligible=true"
     ],
-    "authoritative_result": "GitHub v11.2 release asset WINDOWS_VERIFICATION.json"
+    "authoritative_result": "GitHub v11.2 release asset WINDOWS_VERIFICATION.json",
+    "final_status": "passed",
+    "all_pass": true,
+    "release_gate_eligible": true,
+    "executed_groups": 8,
+    "bundled_ghostscript_version": "9.50",
+    "checker_exit_code": 0,
+    "receipt": "verification/v11_2/WINDOWS_VERIFICATION.json"
   },
   "limits": [
     "User PC installation and display were not operated.",
@@ -97,5 +104,34 @@
     "initial_release_published": false,
     "reason": "The --version diagnostic printed 9.50 but the existing DLL bridge returned nonzero; the initial gate stopped before PDF tests.",
     "fix": "Require a successful normal PostScript revision probe, exact Windows revision 950 and original DLL identity; no product bridge or color model changes."
+  },
+  "publication": {
+    "status": "published_and_redownload_verified",
+    "release_url": "https://github.com/wodnd323-oss/PRINT-SIMULATOR/releases/tag/v11.2",
+    "published_at_utc": "2026-11-23T03:24:53Z",
+    "code_commit": "c256beaa56af5be4eec3ad5da2d6549cd1add8dd",
+    "run_id": 45105699744,
+    "run_url": "https://github.com/wodnd323-oss/PRINT-SIMULATOR/actions/runs/45105699744",
+    "draft": false,
+    "prerelease": false,
+    "download_verified_utc": "2026-11-23T03:24:57.630374+00:00",
+    "download_receipt": "verification/v11_2/PUBLIC_DOWNLOAD_VERIFICATION.json",
+    "artifacts": [
+      {
+        "name": "HARDYS_PrintSimulator_v11_2_Full_Install.zip",
+        "bytes": 164200077,
+        "sha256": "b0f3fecb39a029c7b3da129a2f3bdec4b9b0cf26a2d98a3556b0e15a802b307b",
+        "matches_verified_build": true,
+        "public_download_url": "https://github.com/wodnd323-oss/PRINT-SIMULATOR/releases/download/v11.2/HARDYS_PrintSimulator_v11_2_Full_Install.zip"
+      },
+      {
+        "name": "HARDYS_PrintSimulator_v11_2_Update.zip",
+        "bytes": 3002153,
+        "sha256": "b878f129058792d7d095f4442c20e18aca6e59ebe5d5a35d57dcd629664d1eff",
+        "matches_verified_build": true,
+        "public_download_url": "https://github.com/wodnd323-oss/PRINT-SIMULATOR/releases/download/v11.2/HARDYS_PrintSimulator_v11_2_Update.zip"
+      }
+    ],
+    "user_pc_updated": false
   }
 }
