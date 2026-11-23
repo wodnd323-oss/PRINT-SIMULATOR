@@ -1,0 +1,31 @@
+{
+  "revision": "11.1",
+  "tested": "2026-11-23",
+  "full_manifest_files": 1346,
+  "v11_plus_update_equals_full": true,
+  "training": {
+    "n": 13,
+    "unique_input_rgb": 10,
+    "mean_before": 16.16425752305465,
+    "mean_after": 1.5808566543957088,
+    "max_after": 3.528143158376876
+  },
+  "group_holdout": {
+    "mean_across_13_patches": 5.807965030158369,
+    "mean_across_10_group_means": 5.014837434105198,
+    "max": 19.906350955915716
+  },
+  "http": "PASS",
+  "rgb_cases": 10000,
+  "cmyk_cases": 2048,
+  "icc_rgb_matches": true,
+  "icc_cmyk_matches": true,
+  "symmetric_gradient": {
+    "axis_cosine": 0.9999997445604873,
+    "residual_delta_e76": 0.47,
+    "feasible_seed_objective": 1.3460601375609693,
+    "returned_objective": 1.1553366418329385,
+    "three_stop_mean_delta_e76": 0.79
+  },
+  "actual_new_print_test": false
+}

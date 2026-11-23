@@ -1,0 +1,24 @@
+name: Publish verified simulator archives
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["distribution/VERSION", ".github/workflows/release.yml"]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify and publish V11.1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          cd distribution
+          cat parts/installer.* > HARDYS_PrintSimulator_v11_1_Full_Install.zip
+          sha256sum -c SHA256SUMS
+          gh release create v11.1 HARDYS_PrintSimulator_v11_1_Full_Install.zip HARDYS_PrintSimulator_v11_1_Update.zip SHA256SUMS --target "$GITHUB_SHA" --title "HARDYS 인쇄색 시뮬레이터 V11.1" --notes "Windows 신규 설치: Full_Install.zip을 전부 풀고 START.cmd 실행. 기존 V11 설치본은 Update.zip 사용."
