@@ -82,14 +82,20 @@
     "artifacts": [
       {
         "name": "HARDYS_PrintSimulator_v11_2_Full_Install.zip",
-        "bytes": 164198234,
-        "sha256": "57a55b107604c04c73e40b5f4015a6bb3da66305f24855abbf0cb8baa6e0c654"
+        "bytes": 164200077,
+        "sha256": "b0f3fecb39a029c7b3da129a2f3bdec4b9b0cf26a2d98a3556b0e15a802b307b"
       },
       {
         "name": "HARDYS_PrintSimulator_v11_2_Update.zip",
-        "bytes": 3000310,
-        "sha256": "e411bf61d18725d4bec0a6a0bc296cb314925cba1ff90be2d98c0d4c3272da4d"
+        "bytes": 3002153,
+        "sha256": "b878f129058792d7d095f4442c20e18aca6e59ebe5d5a35d57dcd629664d1eff"
       }
     ]
+  },
+  "windows_probe_fix": {
+    "initial_run": 45105176550,
+    "initial_release_published": false,
+    "reason": "The --version diagnostic printed 9.50 but the existing DLL bridge returned nonzero; the initial gate stopped before PDF tests.",
+    "fix": "Require a successful normal PostScript revision probe, exact Windows revision 950 and original DLL identity; no product bridge or color model changes."
   }
 }

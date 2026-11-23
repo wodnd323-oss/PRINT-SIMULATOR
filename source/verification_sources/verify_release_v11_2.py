@@ -145,13 +145,27 @@ def main():
             if not args.native_gs:
                 need(len(command) == 2 and Path(command[0]).resolve() == Path(sys.executable).resolve()
                      and Path(command[1]).resolve() == (APP / 'gs_bridge.py').resolve(), 'PDF renderer is not using the actual bundled DLL bridge.')
-            completed = subprocess.run([*command, '--version'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            # --version is an informational API exit, not an interpreter run;
+            # the unchanged product bridge accepts only normal
+            # completion/quit. Also PostScript `version` may be a compatibility
+            # string such as 3010. `revision` identifies the actual GS product.
+            probe_args = ['-q', '-dNODISPLAY', '-dBATCH', '-c', 'revision == quit']
+            completed = subprocess.run([*command, *probe_args], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                        timeout=60, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
-            version = completed.stdout.decode('utf8', errors='replace').strip()
-            need(completed.returncode == 0, 'Ghostscript version command failed: ' + version)
+            probe_output = completed.stdout.decode('utf8', errors='replace').strip()
+            result['engine_probe'] = {'command': command, 'probe_args': probe_args,
+                                      'exit_code': completed.returncode, 'stdout': probe_output}
+            need(completed.returncode == 0, 'Ghostscript revision execution failed: ' + probe_output)
+            need(bool(re.fullmatch(r'\d+', probe_output)), 'Ghostscript revision output is not one integer: ' + probe_output)
+            revision = int(probe_output)
+            version = (f'{revision // 100}.{revision % 100:02d}' if revision < 1000
+                       else f'{revision // 1000}.{(revision // 10) % 100:02d}.{revision % 10}')
             if not args.native_gs:
+                need(revision == 950, 'Expected bundled Ghostscript revision 950, got ' + probe_output)
                 need(bool(re.search(r'(?<!\d)9\.50(?!\d)', version)), 'Expected bundled Ghostscript 9.50, got ' + version)
-            result['engine'] = {'command': command, 'version_output': version,
+            result['engine'] = {'command': command, 'version_output': version, 'revision': revision,
+                                'probe_args': probe_args, 'probe_exit_code': completed.returncode,
+                                'probe_stdout': probe_output,
                                 'actual_bundled_gs950_dll': not args.native_gs,
                                 'user_pc_executed': False}
             return result['engine']

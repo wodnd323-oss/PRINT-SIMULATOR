@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "revision": "11.2",
-  "started_utc": "2026-11-23T03:08:25.483599+00:00",
+  "started_utc": "2026-11-23T03:21:55.322273+00:00",
   "baseline_zip_sha256": "139032097707e870ea1e0f961cf7a72853dde8617086979a298f039e742b2d1f",
   "mode": "native_development_comparison",
   "scope": "Remote/independent execution; does not verify the user PC, monitor settings, printer RIP or measured print color.",
@@ -26,7 +26,7 @@
       "pass": true,
       "files_checked": 11,
       "anchors": 13,
-      "seconds": 0.026
+      "seconds": 0.043
     },
     "ghostscript_execution": {
       "pass": true,
@@ -34,9 +34,19 @@
         "/usr/bin/gs"
       ],
       "version_output": "10.05.1",
+      "revision": 10051,
+      "probe_args": [
+        "-q",
+        "-dNODISPLAY",
+        "-dBATCH",
+        "-c",
+        "revision == quit"
+      ],
+      "probe_exit_code": 0,
+      "probe_stdout": "10051",
       "actual_bundled_gs950_dll": false,
       "user_pc_executed": false,
-      "seconds": 0.013
+      "seconds": 0.048
     },
     "delivered_pdf_source_13_anchors": {
       "pass": true,
@@ -45,7 +55,7 @@
       "allowed_channel_difference": 1,
       "source_icc_sha256": "4ebbfad6bc9cfc033fdafdd8ac5df8159208932cb16d9a6596d349ae7ab50443",
       "source_pdf_sha256": "e8cf05c8b3241d037ea40214213a95551a3ad24e49e001894b30c65b6bdcb23a",
-      "seconds": 4.835
+      "seconds": 4.943
     },
     "equivalent_fogra_device_cmyk_6_colors": {
       "pass": true,
@@ -159,7 +169,7 @@
         "pdf_rewritten": false,
         "object_profiles_rewritten": false
       },
-      "seconds": 0.43
+      "seconds": 0.397
     },
     "explicit_and_mixed_icc_preserved": {
       "pass": true,
@@ -173,7 +183,7 @@
         "선택한 프루프와 색 특성이 같은 객체별 CMYK ICC의 파일 표현이 다릅니다. 객체 ICC는 그대로 해석하므로 표준 PDF 프루프가 동일 CMYK 래스터의 채널 보존 결과와 다를 수 있습니다. 인쇄소 RIP에서 확인하세요."
       ],
       "explicit_equivalent_remaining_raster_difference": 23,
-      "seconds": 1.966
+      "seconds": 1.846
     },
     "recommended_cmyk_same_mode_strength": {
       "pass": true,
@@ -266,13 +276,13 @@
           "quantized_tac_percent": 167.45098039215685
         }
       ],
-      "seconds": 2.521
+      "seconds": 2.477
     },
     "original_inputs_unchanged_after_tests": {
       "pass": true,
       "files_checked": 11,
       "anchors": 13,
-      "seconds": 0.013
+      "seconds": 0.012
     }
   },
   "all_pass": true,
@@ -334,11 +344,35 @@
       "allowed_change": "One render_revision value 11.1->11.2 and line endings only."
     }
   },
+  "engine_probe": {
+    "command": [
+      "/usr/bin/gs"
+    ],
+    "probe_args": [
+      "-q",
+      "-dNODISPLAY",
+      "-dBATCH",
+      "-c",
+      "revision == quit"
+    ],
+    "exit_code": 0,
+    "stdout": "10051"
+  },
   "engine": {
     "command": [
       "/usr/bin/gs"
     ],
     "version_output": "10.05.1",
+    "revision": 10051,
+    "probe_args": [
+      "-q",
+      "-dNODISPLAY",
+      "-dBATCH",
+      "-c",
+      "revision == quit"
+    ],
+    "probe_exit_code": 0,
+    "probe_stdout": "10051",
     "actual_bundled_gs950_dll": false,
     "user_pc_executed": false
   },
@@ -526,6 +560,6 @@
       "max_channel_difference": 0
     }
   ],
-  "elapsed_seconds": 10.069,
-  "finished_utc": "2026-11-23T03:08:35.552259+00:00"
+  "elapsed_seconds": 10.024,
+  "finished_utc": "2026-11-23T03:22:05.345794+00:00"
 }
