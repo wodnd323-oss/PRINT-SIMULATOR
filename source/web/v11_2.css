@@ -1,0 +1,14 @@
+/* V11.2: one selected gradient result drives every output surface. */
+.gradient-selection-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px;padding:12px;background:#f4f7fa;border:1px solid #dfe5eb;border-radius:7px}
+.gradient-selection-row label,.gradient-compare-toolbar label{font-size:12px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.gradient-selection-row select,.gradient-compare-toolbar select{max-width:100%;padding:8px;border:1px solid #cbd4dd;border-radius:5px;background:#fff;color:#202124}
+.gradient-selection-row select:disabled,.gradient-compare-toolbar select:disabled{cursor:default}
+.gradient-geometry{white-space:pre-line;background:#f7f8fa;padding:12px;border-radius:6px;overflow-wrap:anywhere}
+.gradient-stops[data-stop-count="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+.gradient-stop>div{min-width:0;flex:1}
+.gradient-support{white-space:pre-line;border-left:3px solid #4b6e8a;background:#f3f7fa;padding:10px 12px;overflow-wrap:anywhere}
+#gradientCompareInfo{white-space:pre-line;flex-shrink:0;max-height:22vh;overflow:auto}
+#gradientCompareDialog .gradient-compare-toolbar{flex-shrink:0}
+.color-mode-field{max-width:520px}
+.inverse-recheck{margin-top:-8px}
+@media(max-width:640px){.gradient-stops[data-stop-count="3"]{grid-template-columns:1fr}.gradient-compare-toolbar label{width:100%}#gradientCompareDialog .gradient-compare-toolbar{gap:6px;margin:8px 0}#gradientCompareDialog .gradient-compare-toolbar select{font-size:11px}.gradient-compare-heading h2{font-size:17px}.gradient-selection-row label{width:100%}.gradient-selection-row select{flex:1;min-width:0}}

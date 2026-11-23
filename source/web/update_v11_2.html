@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HARDYS V11.2 변경 내용과 검증</title>
+<style>body{margin:0;background:#edf2f5;color:#20333d;font:16px/1.8 system-ui,"Malgun Gothic",sans-serif}main{max-width:950px;margin:28px auto;padding:34px 40px;background:white;border-top:6px solid #215d74}h1{font-size:29px;line-height:1.4}h2{font-size:21px;margin-top:34px}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:12px;border:1px solid #d8e1e6;text-align:left;vertical-align:top}th{background:#eaf2f5}a{color:#126b95}code{overflow-wrap:anywhere}li{margin:9px 0}.note{background:#f0f6f8;padding:16px;border-radius:8px}@media(max-width:700px){main{margin:0;padding:22px 18px}h1{font-size:24px}th,td{padding:8px}}</style></head>
+<body><main><p>HARDYS · 2026년 11월 23일</p><h1>V11.2 변경 내용과 검증</h1>
+<p class="note">기존 사진 모델과 기준색은 유지하면서, 계산한 결과를 확인하고 디자인에 옮기는 기능을 보완했습니다. 새 색 계열은 계속 사진 경향으로 추정하며, 실제 새 인쇄물의 정확도를 확정하는 도구는 아닙니다.</p>
+<h2>바뀐 사용 방법</h2><table><thead><tr><th>기능</th><th>V11.2</th></tr></thead><tbody>
+<tr><td>직접 색상 비교</td><td>사진 모델과 FOGRA39 표준 프루프를 선택합니다. 늦게 도착한 이전 조회는 현재 입력의 결과를 덮어쓰지 않습니다.</td></tr>
+<tr><td>역산값 재확인</td><td>추천 아래의 같은 조건으로 RGB 또는 CMYK 확인 버튼을 사용합니다. 모드·프로파일·사진 강도·보정 기준을 유지해 다시 계산합니다.</td></tr>
+<tr><td>그라데이션 방향</td><td>정확한 CSS 각도와 기준, 선택한 두 점의 원본 좌표를 함께 제공합니다. CSS는 0° 위, 90° 오른쪽, 시계방향입니다.</td></tr>
+<tr><td>2색과 3색</td><td>대안을 선택하면 색상표·통계·미리보기·PNG 저장·큰 비교창에 같은 결과가 적용됩니다. TXT는 현재 선택을 표시하고 두 대안을 보존합니다.</td></tr>
+<tr><td>추천의 근거 범위</td><td>기준색 근처·전환·외삽을 결과별로 표시합니다. 비율은 유채색 표본 기준이고 중성·저채도는 별도입니다. 정확도나 성공확률이 아닙니다.</td></tr>
+</tbody></table>
+<h2>계산과 입력 처리</h2><ul>
+<li>강한 잉크량 제한에서도 유효화한 여러 시작점을 탐색합니다. 기존 후보를 보존하고 전체 양자화 경로의 TAC를 검사한 뒤 같은 목적함수로 비교합니다.</li>
+<li>헤더만 다른 동등 FOGRA OutputIntent의 DeviceCMYK 표준 경로를 보완했습니다. 사진 해석과 서로 다른 명시적 ICC 객체를 유지합니다. 명시적 ICCBased 객체의 동등 프로파일은 강제 치환하지 않고 경계를 경고합니다.</li>
+<li>사진 모델 수식·기본13영역·고유 입력10색·인쇄 프로파일은 그대로입니다. 표준 프루프에 사진 모델을 중복 적용하지 않습니다.</li>
+</ul>
+<h2>확인한 범위</h2><p>실제 색상 조회 함수의 응답 순서 역전, 동일 조건 재입력, HTTP 요청, 그라데이션 선택·저장 함수, 전체 구간 잉크량, PDF ICC 회귀를 검증했습니다. 세부 결과는 설치 폴더의 <code>verification_results/update_v11_2</code>에 있습니다.</p>
+<p>별도 Windows 릴리스 검증은 번들 Python과 Ghostscript9.50을 실제로 실행하도록 구성했습니다. 통과 기록은 GitHub 릴리스의 Windows 검증 JSON으로 확인합니다. 사용자 PC 설치 상태·실제 화면·실물 인쇄 결과는 이 검사와 별개입니다. 이번 실행 환경에서는 브라우저가 시작 전에 차단되어 화면의 시각 검사는 완료하지 못했습니다.</p>
+<h2>색 결과를 해석할 때</h2><p>학습에 쓴 사진의 평균 ΔE76은1.58이지만, 같은 입력색을 통째로 제외하면 평균5.81·최대19.91입니다. 새 계열의 추정값을 실제 인쇄 정답으로 해석하지 마세요. 그라데이션 HEX는 sRGB 수치의 선형 혼합 기준이며 디자인 도구의 혼합 방식이 다를 수 있으므로, 최종 내보낸 PDF를 같은 모드로 다시 확인합니다.</p>
+<p><a href="/web/calculation_review.html">기존 V11.1 계산 흐름과 근거</a> · <a href="/">시뮬레이터로 돌아가기</a></p></main></body></html>

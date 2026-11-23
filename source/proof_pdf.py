@@ -29,7 +29,18 @@ def gs_command():
  dll=BASE/'runtime/ghostscript/bin/gsdll64.dll'
  return [sys.executable,str(BASE/'gs_bridge.py')] if dll.exists() else [find_gs()]
 
-def object_icc_profiles(reader):
+def same_cmyk_input_characterization(source,target):
+ """Conservatively identify equivalent CMYK inputs for ink preservation.
+
+ Ignore descriptive ICC headers and inverse separation tables, as the raster
+ path does. Version, class, flags, media attributes, default intent and PCS
+ illuminant must still match; forward color tables must match byte for byte.
+ """
+ from proof_rgb_image import same_cmyk_characterization
+ a=source.tobytes();b=target.tobytes()
+ return a[16:20]==b'CMYK' and all(a[x:y]==b[x:y] for x,y in ((8,24),(36,40),(44,48),(56,80))) and same_cmyk_characterization(source,target)
+
+def object_icc_profiles(reader,proof_profile=None):
  """Describe embedded object profiles without changing rendering or defaults."""
  found={};seen=set();warnings=[]
  def visit(value):
@@ -44,6 +55,8 @@ def object_icc_profiles(reader):
      data=obj[1].get_object().get_data();sha=hashlib.sha256(data).hexdigest()
      profile=ImageCms.ImageCmsProfile(io.BytesIO(data))
      found[sha]={'description':ImageCms.getProfileDescription(profile).strip(),'color_space':data[16:20].decode('ascii',errors='replace').strip(),'sha256':sha}
+     if proof_profile is not None:
+      found[sha]['same_proof_cmyk_characterization']=same_cmyk_input_characterization(profile,proof_profile)
     except Exception:
      warnings.append('객체 ICC 프로파일 설명을 읽지 못했습니다. 변환 로그를 확인하세요.')
     return
@@ -75,7 +88,7 @@ def render(pdf,out=None,profile=None,dpi=120):
  absolute=ImageCms.buildTransformFromOpenProfiles(p,srgb,'CMYK','RGB',renderingIntent=3)
  srgb_path=out/'sRGB.icc';srgb_path.write_bytes(srgb.tobytes())
  defaults={'CMYK':profile,'RGB':srgb_path,'Gray':BASE/'runtime/ghostscript/iccprofiles/default_gray.icc'}
- embedded=None;embedded_description=None;object_profiles,warnings=object_icc_profiles(reader)
+ embedded=None;embedded_description=None;object_profiles,warnings=object_icc_profiles(reader,p)
  for ref in reader.trailer['/Root'].get('/OutputIntents',[]):
   oi=ref.get_object();stream=oi.get('/DestOutputProfile')
   if stream:
@@ -86,13 +99,26 @@ def render(pdf,out=None,profile=None,dpi=120):
    embedded_description=ImageCms.getProfileDescription(ImageCms.getOpenProfile(str(embedded))).strip()
    defaults['Gray' if space=='GRAY' else space]=embedded
    break
+ # Only the standard DeviceCMYK default may be canonicalized. Keep the direct
+ # source/photo rendering and every explicit object ICC untouched. Rewriting
+ # an entire OutputIntent or forcing OverrideICC would corrupt mixed-profile
+ # documents. Equal forward characterization means the same inks already
+ # belong to the proof device, even if descriptive ICC headers differ.
+ proof_defaults=dict(defaults);cmyk_default_normalized=False
+ if embedded is not None and defaults['CMYK']==embedded:
+  source_profile=ImageCms.getOpenProfile(str(embedded))
+  if digest(embedded)!=digest(profile) and same_cmyk_input_characterization(source_profile,p):
+   proof_defaults['CMYK']=profile;cmyk_default_normalized=True
+ for item in object_profiles:
+  if item.get('same_proof_cmyk_characterization') and item['sha256']!=digest(profile):
+   warnings.append('선택한 프루프와 색 특성이 같은 객체별 CMYK ICC의 파일 표현이 다릅니다. 객체 ICC는 그대로 해석하므로 표준 PDF 프루프가 동일 CMYK 래스터의 채널 보존 결과와 다를 수 있습니다. 인쇄소 RIP에서 확인하세요.')
  command=gs_command();records=[]
  common=['-dSAFER','-dBATCH','-dNOPAUSE',f'-r{dpi}','-dTextAlphaBits=4','-dGraphicsAlphaBits=4','-dOverrideICC=false','-dRenderIntent=1','-dBlackPtComp=1']
- common += [f'-sDefault{kind}Profile={path.resolve()}' for kind,path in defaults.items()]
  for n in range(1,pages+1):
   page_args=[f'-dFirstPage={n}',f'-dLastPage={n}']
-  def run(device,destination,output_profile,extra=()):
-   args=[*command,*common,*page_args,f'-sDEVICE={device}',*extra,f'-sOutputICCProfile={output_profile.resolve()}',f'-sOutputFile={destination.resolve()}',str(pdf)]
+  def run(device,destination,output_profile,extra=(),input_defaults=None):
+   default_args=[f'-sDefault{kind}Profile={path.resolve()}' for kind,path in (input_defaults or defaults).items()]
+   args=[*command,*common,*default_args,*page_args,f'-sDEVICE={device}',*extra,f'-sOutputICCProfile={output_profile.resolve()}',f'-sOutputFile={destination.resolve()}',str(pdf)]
    result=subprocess.run(args,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=180,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
    (out/(destination.stem+'_render.log')).write_bytes(result.stdout)
    if result.returncode or not destination.exists():raise RuntimeError(result.stdout.decode('utf8',errors='replace'))
@@ -102,7 +128,7 @@ def render(pdf,out=None,profile=None,dpi=120):
   with Image.open(source) as im:im.save(source,icc_profile=srgb.tobytes())
   records.append(source.name)
   target=out/f'page_{n:02d}_CMYK.tif'
-  run('tiff32nc',target,profile,['-sCompression=lzw','-dSimulateOverprint=true'])
+  run('tiff32nc',target,profile,['-sCompression=lzw','-dSimulateOverprint=true'],proof_defaults)
   with Image.open(target) as im:
    im.load()
    if im.mode!='CMYK':raise ValueError(f'Expected CMYK, got {im.mode}')
@@ -122,8 +148,10 @@ def render(pdf,out=None,profile=None,dpi=120):
  description=('객체 ICC: '+object_names+' · ' if object_names else '')+'기본값: RGB '+rgb_label+' · CMYK '+default_names['CMYK']+' · Gray '+gray_label
  note=('객체 내장 ICC를 우선 해석. ' if object_names else '')+('내장 Output Intent 적용. ' if embedded else 'Output Intent 없음. ')
  note+='태그 없는 DeviceCMYK / DeviceRGB / DeviceGray 기본값: '+default_names['CMYK']+' / '+default_names['RGB']+' / '+default_names['Gray']+'. sRGB 직접 변환.'
+ if cmyk_default_normalized:note+=' 표준 프루프에서는 색 특성이 같은 DeviceCMYK 기본 ICC를 선택한 프루프 ICC로 통일하여 CMYK 채널을 보존합니다. 사진 경로와 객체별 ICC는 변경하지 않았습니다.'
  info={'source':pdf.name,'source_sha256':before,'profile':profile.name,'profile_description':ImageCms.getProfileDescription(p).strip(),'profile_sha256':digest(profile),'source_profile_note':note,'source_profile_description':description,'source_profile_assumed':embedded is None and not object_profiles,'source_object_icc_profiles':object_profiles,'source_default_profiles':default_names,'source_icc_sha256':digest(embedded) if embedded else None,'dpi':dpi,'pages':pages,'engine':'Ghostscript 9.50 bundled DLL in isolated process' if len(command)>1 else command[0],'relative':'source -> FOGRA relative colorimetric + BPC; FOGRA -> sRGB relative colorimetric, BPC off to retain simulated ink black','paper':'source -> FOGRA relative + BPC; FOGRA -> sRGB absolute colorimetric, BPC off','source_rendering':'direct source -> sRGB, relative colorimetric + BPC','overprint':'Standard CMYK proof simulates overprint. Direct RGB source does not reproduce physical overprint; inspect complex spots/transparency in printer RIP.','files':records,'input_unchanged':True,'pipeline':'source_srgb_photo_v11','warnings':warnings}
- info['render_revision']='11.1'
+ info['cmyk_preservation']={'device_cmyk_default_normalized':cmyk_default_normalized,'scope':'standard proof DeviceCMYK default only; source/photo rendering and explicit object ICC unchanged','standard_default_cmyk_sha256':digest(proof_defaults['CMYK']),'pdf_rewritten':False,'object_profiles_rewritten':False}
+ info['render_revision']='11.2'
  (out/'preview_info.json').write_text(json.dumps(info,ensure_ascii=False,indent=2),encoding='utf8');build_result_view(out,info)
  return out
 if __name__=='__main__':

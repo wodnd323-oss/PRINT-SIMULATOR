@@ -139,23 +139,31 @@ def preview(payload):
     matched=out/'matched.png';overlay=out/'reference_range.png'
     if not matched.exists():save_srgb(model.apply(im,strength),matched)
     if not overlay.exists():save_srgb(model.support_overlay(im),overlay)
-    report=model.support(im);report.update({'model_name':doc.get('name'),'strength':strength,'input_asset':asset,'anchors':len(model.anchors),'photo_match_only':True,'global_extrapolation':True,'fit':model.fit_information()})
+    from reference_support import reference_support
+    support_image=im.copy();support_image.thumbnail((650,650));support=reference_support(model,support_image)
+    report={'near_reference_percent':support['near_percent'],'transition_percent':support['transition_percent'],'unsupported_percent':support['extrapolated_percent'],'reference_support':support,'meaning':support['meaning']}
+    report.update({'model_name':doc.get('name'),'strength':strength,'input_asset':asset,'anchors':len(model.anchors),'photo_match_only':True,'global_extrapolation':True,'fit':model.fit_information()})
     write_json(out/'comparison_info.json',report)
     return {'matched':matched.relative_to(BASE).as_posix(),'range':overlay.relative_to(BASE).as_posix(),'statistics':report,'export_name':f'HARDYS_global_estimate_{round(strength*100)}.png'}
 
 def color_sample(payload):
     import math,numpy as np
     from prediction import Predictor,gamut_flags
+    from reference_support import reference_support
     mode=payload.get('model_mode','photo');strength=float(payload.get('strength',1))
     if not math.isfinite(strength) or not 0<=strength<=1:raise ValueError('Invalid strength')
+    if mode=='icc':strength=0.
     kind='cmyk' if 'cmyk' in payload else 'rgb';point=payload[kind];cap=100 if kind=='cmyk' else 255
-    if len(point)!=(4 if kind=='cmyk' else 3) or any(not isinstance(v,(int,float)) or not math.isfinite(v) or not 0<=v<=cap for v in point):raise ValueError('색상 값 범위를 확인해 주세요.')
-    predictor=Predictor(model_doc(),strength,mode)
+    if not isinstance(point,list) or len(point)!=(4 if kind=='cmyk' else 3) or any(type(v) not in (int,float) or not math.isfinite(v) or not 0<=v<=cap for v in point):raise ValueError('색상 값 범위를 확인해 주세요.')
+    document=model_doc();calibration_sha256=hashlib.sha256(json.dumps(document,sort_keys=True).encode()).hexdigest()
+    expected=payload.get('calibration_sha256')
+    if expected is not None and expected!=calibration_sha256:raise ValueError('보정 기준이 변경됐습니다. 목표색을 다시 역산한 뒤 확인해 주세요.')
+    predictor=Predictor(document,strength,mode)
     points=np.rint(np.array([point])*255/100) if kind=='cmyk' else np.rint([point])
     matched,basic,ink=predictor.forward(points,kind.upper())
     rgb=basic[0].tolist() if kind=='cmyk' else points[0].astype(int).tolist()
     near=float(predictor.model.nearest(basic)[0])
-    return {'input_rgb':rgb,'baseline_rgb':basic[0].tolist(),'matched_rgb':matched[0].tolist(),'cmyk':np.round(ink[0]*100/255,2).tolist(),'near_reference':near<=12,'distance_from_reference':round(near,2),'outside_cmyk_gamut':bool(gamut_flags([rgb])[0]) if kind=='rgb' else None,'strength':strength,'model_mode':mode,'input_cmyk_profile':predictor.input_profile,'global_extrapolation':True}
+    return {'input_rgb':rgb,'baseline_rgb':basic[0].tolist(),'matched_rgb':matched[0].tolist(),'cmyk':np.round(ink[0]*100/255,2).tolist(),'near_reference':near<=12,'distance_from_reference':round(near,2),'outside_cmyk_gamut':bool(gamut_flags([rgb])[0]) if kind=='rgb' else None,'strength':strength,'model_mode':mode,'input_cmyk_profile':predictor.input_profile,'global_extrapolation':mode=='photo','reference_support':reference_support(predictor.model,basic) if mode=='photo' else None,'calibration_sha256':calibration_sha256}
 
 class Handler(http.server.BaseHTTPRequestHandler):
     server_version='HARDYSLocal/2.0'

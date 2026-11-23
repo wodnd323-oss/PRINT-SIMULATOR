@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "revision": "11.2",
+  "started_utc": "2026-11-23T03:09:09.836825+00:00",
+  "baseline_zip_sha256": "139032097707e870ea1e0f961cf7a72853dde8617086979a298f039e742b2d1f",
+  "mode": "bundled_windows_release_gate",
+  "scope": "Remote/independent execution; does not verify the user PC, monitor settings, printer RIP or measured print color.",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "pillow": "13.0.0",
+    "lcms": "2.19",
+    "numpy": "2.3.5",
+    "pypdf": "6.21.4"
+  },
+  "tests": {
+    "revision": {
+      "pass": true,
+      "startup_revision": "11.2",
+      "build": 11,
+      "rgb_revision": "11.2",
+      "seconds": 0.001
+    },
+    "original_core_calibration_profiles": {
+      "pass": false,
+      "error": "[Errno 2] No such file or directory: '/workspace/scratch/f98f756e67c8/update_v11_2/app/runtime/ghostscript/bin/gsdll64.dll'",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/f98f756e67c8/update_v11_2/app/verification_sources/verify_release_v11_2.py\", line 80, in check\n    data = function() or {}\n           ^^^^^^^^^^\n  File \"/workspace/scratch/f98f756e67c8/update_v11_2/app/verification_sources/verify_release_v11_2.py\", line 120, in preservation_check\n    actual = sha(path)\n             ^^^^^^^^^\n  File \"/workspace/scratch/f98f756e67c8/update_v11_2/app/verification_sources/verify_release_v11_2.py\", line 54, in sha\n    return hashlib.sha256(Path(path).read_bytes()).hexdigest()\n                          ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1019, in read_bytes\n    with self.open(mode='rb') as f:\n         ^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/f98f756e67c8/update_v11_2/app/runtime/ghostscript/bin/gsdll64.dll'\n",
+      "seconds": 0.029
+    },
+    "ghostscript_execution": {
+      "pass": false,
+      "error": "Default release gate requires Windows. Use --native-gs only for development.",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/f98f756e67c8/update_v11_2/app/verification_sources/verify_release_v11_2.py\", line 80, in check\n    data = function() or {}\n           ^^^^^^^^^^\n  File \"/workspace/scratch/f98f756e67c8/update_v11_2/app/verification_sources/verify_release_v11_2.py\", line 141, in engine_check\n    need(os.name == 'nt', 'Default release gate requires Windows. Use --native-gs only for development.')\n  File \"/workspace/scratch/f98f756e67c8/update_v11_2/app/verification_sources/verify_release_v11_2.py\", line 59, in need\n    raise AssertionError(message)\nAssertionError: Default release gate requires Windows. Use --native-gs only for development.\n",
+      "seconds": 0.0
+    }
+  },
+  "all_pass": false,
+  "release_gate_eligible": false,
+  "fatal_error": "Stop rendering because the baseline or required engine check failed.",
+  "fatal_traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/f98f756e67c8/update_v11_2/app/verification_sources/verify_release_v11_2.py\", line 162, in main\n    need(preserved and engine_ok, 'Stop rendering because the baseline or required engine check failed.')\n  File \"/workspace/scratch/f98f756e67c8/update_v11_2/app/verification_sources/verify_release_v11_2.py\", line 59, in need\n    raise AssertionError(message)\nAssertionError: Stop rendering because the baseline or required engine check failed.\n",
+  "elapsed_seconds": 0.259,
+  "finished_utc": "2026-11-23T03:09:10.096147+00:00"
+}

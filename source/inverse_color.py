@@ -3,6 +3,7 @@ import hashlib,itertools,json,math,pathlib
 import numpy as np
 from PIL import Image,ImageCms
 from color_model import PhotoModel,SRGB,rgb_to_lab
+from reference_support import reference_support
 BASE=pathlib.Path(__file__).resolve().parent
 
 def _image(points,mode):
@@ -71,7 +72,8 @@ def inverse_color(payload,document):
                 'cmyk':percentages,'predicted_rgb':predicted[0].tolist(),
                 'baseline_rgb':baseline[0].tolist(),'delta_e76':round(delta,2),
                 'total_ink_percent':round(sum(percentages),2),
-                'near_reference':distance<=12,'distance_from_reference':round(distance,2)}
+                'near_reference':distance<=12,'distance_from_reference':round(distance,2),
+                'reference_support':reference_support(model,baseline) if mode=='photo' else None}
     cresult=record(cpoint,cp,base,cink,cdelta,'cmyk')
     rresult=record(rpoint,rp,rbase,rink,rdelta,'rgb')
     gamut_warning=bool(gamut_flags([rgb])[0])

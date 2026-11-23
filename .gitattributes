@@ -1,0 +1,6 @@
+source/** -text
+distribution/parts/** -text
+distribution/*.zip -text
+packaging/*.py text eol=lf
+packaging/*.json text eol=lf
+.github/workflows/*.yml text eol=lf

@@ -5,6 +5,7 @@ from PIL import Image,ImageCms
 from color_model import PhotoModel,SRGB,rgb_to_lab,save_srgb
 from inverse_color import inverse_color,_image
 from proof_rgb_image import read_image_srgb
+from reference_support import reference_support
 BASE=pathlib.Path(__file__).resolve().parent
 
 def _curve(stops,positions):
@@ -32,6 +33,7 @@ def _quantized_ramp(stops):
 def _analyze(filename,payload):
     im,_=read_image_srgb(filename)
     w,h=im.size;line=payload.get('line');rect=payload.get('rect')
+    geometry={'source_image_size':[w,h],'source_coordinate_system':'pixel centers; origin top-left; x right; y down','css_angle_convention':'0 degrees up; 90 degrees right; clockwise'}
     if line is not None:
         p=np.asarray(line,dtype=float)
         if p.shape!=(2,2) or not np.isfinite(p).all() or np.linalg.norm(p[1]-p[0])<4:raise ValueError('그라데이션의 서로 떨어진 두 위치를 선택해 주세요.')
@@ -43,6 +45,9 @@ def _analyze(filename,payload):
             colors.append(np.median(patch,axis=0))
         target=np.rint(colors).astype(int);axis=np.array([1.,0.]);preview=Image.fromarray(np.tile(_curve(target,np.linspace(0,1,700)).astype(np.uint8)[None,:,:],(180,1,1)))
         info={'selection':'line','start_label':'선택한 1번 위치','end_label':'선택한 2번 위치','direction':'선택한 1번 → 2번 위치','style':'선택한 두 위치의 방향','css_angle':None,'source_points':p.tolist(),'spatial_residual_delta_e76':0}
+        dx,dy=p[1]-p[0]
+        info.update(geometry)
+        info.update({'source_points_normalized':(p/np.array([max(w-1,1),max(h-1,1)])).tolist(),'source_points_normalization':'x/(width-1), y/(height-1); a singleton axis uses denominator 1','source_line_css_angle':round(math.degrees(math.atan2(dx,-dy))%360,4),'source_line_angle_scope':'Direction of selected source points only; not an inferred whole-area gradient angle','preview_css_angle':90.0,'line_sample_count':33,'line_sampling':'rounded pixel center; median of clipped 5x5 neighborhood'})
         return target,axis,preview,info
     bounds=[0,0,w,h]
     if rect is not None:
@@ -114,6 +119,8 @@ def _analyze(filename,payload):
         end=('오른쪽' if dx>=0 else '왼쪽')+(' 아래' if dy>=0 else ' 위');style='대각선 그라데이션'
     angle=math.degrees(math.atan2(nx,-ny))%360
     info={'selection':'rect' if rect is not None else 'auto','rect':bounds,'start_label':start,'end_label':end,'direction':start+' → '+end,'style':style,'css_angle':round(angle,1),'orientation_method':orientation_method,'spatial_residual_delta_e76':round(residual,2),'flat_image':bool(np.max(np.std(pixels,axis=0))<=1)}
+    info.update(geometry)
+    info['rect_coordinate_convention']='left, top inclusive; right, bottom exclusive'
     preview=crop.copy();preview.thumbnail((700,300))
     return target,axis,preview,info
 
@@ -159,21 +166,41 @@ def inverse_gradient(filename,payload,document):
                 if float(scores[index])>=best-1e-9:break
                 current=candidates[index];best=float(scores[index])
         return current.reshape(count,3)
-    def result(stops):
+    def repair(stops):
+        stops=np.clip(np.rint(stops),0,255).astype(int).reshape(-1,3)
         # Verify every quantized RGB state, rather than only 513 sample points.
         for _ in range(256):
             _,fine_ink=forward(_quantized_ramp(stops))
             if int(fine_ink.sum(axis=1).max())<=limit:break
             stops=np.minimum(stops+1,255)
         else:raise ValueError('그라데이션 전체 구간에서 잉크량 제한을 만족하는 후보를 찾지 못했습니다.')
+        return stops,fine_ink
+    def result(stops):
+        stops,fine_ink=repair(stops)
         inputs=np.rint(_curve(stops,sample_t)).astype(int);predicted,ink=forward(inputs)
         delta=np.linalg.norm(rgb_to_lab(predicted)-target_lab,axis=1)
         stop_t=np.linspace(0,1,len(stops));stop_targets=np.rint(_curve(target,stop_t)).astype(int);stop_pred,stop_ink=forward(stops)
         rows=[]
         for n,(rgb,desired,printed,channels) in enumerate(zip(stops,stop_targets,stop_pred,stop_ink)):
             rows.append({'position_percent':round(stop_t[n]*100),'input_rgb':rgb.tolist(),'target_rgb':desired.tolist(),'predicted_rgb':printed.tolist(),'converted_cmyk':(np.floor(channels*10000/255)/100).tolist(),'delta_e76':round(float(np.linalg.norm(rgb_to_lab(printed)-rgb_to_lab(desired))),2)})
-        return {'stops':rows,'mean_delta_e76':round(float(delta.mean()),2),'max_delta_e76':round(float(delta.max()),2),'max_ink_percent':round(float(fine_ink.sum(axis=1).max()*100/255),2),'ink_validation':'all quantized RGB states on encoded-sRGB linear segments','predicted_samples':predicted.tolist(),'input_samples':inputs.tolist()}
-    two=result(fit(seeds,2));three=None
+        return {'stops':rows,'mean_delta_e76':round(float(delta.mean()),2),'max_delta_e76':round(float(delta.max()),2),'max_ink_percent':round(float(fine_ink.sum(axis=1).max()*100/255),2),'ink_validation':'all quantized RGB states on encoded-sRGB linear segments','predicted_samples':predicted.tolist(),'input_samples':inputs.tolist(),'reference_support':reference_support(model,inputs) if mode=='photo' else None}
+    def final_cost(record):
+        delta=np.linalg.norm(rgb_to_lab(record['predicted_samples'])-target_lab,axis=1)
+        return float(np.average(delta**2,weights=weights)+.2*np.max(delta**2))
+    # Keep the V11.1 result as a baseline. An otherwise useful endpoint seed
+    # can exceed TAC by only one or two codes and be rejected by score(); a
+    # separate feasible start avoids falling back to a poor white-only basin.
+    # Retain both the feasible seed and its refinement, then compare AFTER
+    # complete-ramp repair so extra starts cannot worsen the old objective.
+    baseline_two=result(fit(seeds,2))
+    alternatives=[baseline_two];seen=set()
+    for seed in seeds:
+        feasible,_=repair(np.asarray(seed).reshape(2,3))
+        signature=tuple(feasible.reshape(-1))
+        if signature in seen:continue
+        seen.add(signature)
+        alternatives.extend([result(feasible),result(fit([feasible],2))])
+    two=min(alternatives,key=final_cost);three=None
     if (two['mean_delta_e76']>3 or two['max_delta_e76']>6) and analysis['spatial_residual_delta_e76']<=5:
         middle=inverse_color({'rgb':target[16].tolist(),'strength':strength,'tac':tac,'model_mode':mode},document)['rgb_result']['input_rgb']
         seed3=[two['stops'][0]['input_rgb'],middle,two['stops'][1]['input_rgb']]
@@ -183,11 +210,12 @@ def inverse_gradient(filename,payload,document):
         # Compare the actual objective AFTER complete-ramp TAC repair, so these
         # additional starts cannot worsen the former seed's final objective.
         independent=[endpoints[0]['rgb_result']['input_rgb'],middle,endpoints[1]['rgb_result']['input_rgb']]
-        starts=[seed3,independent,target[[0,16,32]],np.full((3,3),255)]
+        # Preserve the former two-stop-derived three-stop start as well as
+        # the improved two-stop start; all prior independent starts remain.
+        former_seed3=[baseline_two['stops'][0]['input_rgb'],middle,baseline_two['stops'][1]['input_rgb']]
+        starts=[seed3,former_seed3,independent,target[[0,16,32]],np.full((3,3),255)]
+        starts=list({tuple(np.asarray(start,dtype=int).reshape(-1)):start for start in starts}.values())
         alternatives=[result(fit([start],3)) for start in starts]
-        def final_cost(record):
-            delta=np.linalg.norm(rgb_to_lab(record['predicted_samples'])-target_lab,axis=1)
-            return float(np.average(delta**2,weights=weights)+.2*np.max(delta**2))
         constant=min(alternatives,key=final_cost)
         if constant['mean_delta_e76']<two['mean_delta_e76']-.35:three=constant
     key=hashlib.sha256((json.dumps(payload,sort_keys=True)+json.dumps(document,sort_keys=True)+str(pathlib.Path(filename).stat().st_mtime_ns)).encode()).hexdigest()[:20]

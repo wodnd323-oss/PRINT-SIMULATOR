@@ -19,13 +19,21 @@ function zoomGradientCompare(value){
   gradientCompare.zoom=Math.max(1,Math.min(8,value));fitGradientCompare();
   stages.forEach((s,i)=>{s.scrollLeft=centers[i][0]*s.scrollWidth-s.clientWidth/2;s.scrollTop=centers[i][1]*s.scrollHeight-s.clientHeight/2;});
 }
-function openGradientCompare(){
-  const r=gradientState.result;if(!r)return;
-  gradientCompare.zoom=1;
+function refreshGradientCompare(){
+  const r=gradientState.result,record=gradientSelectedRecord(r);if(!r||!record||!$('gradientCompareDialog').open)return;
+  gradientSetSelector('gradientCompareVariant',r);
   $('gradientCompareTarget').src=assetURL(r.target_preview);
-  $('gradientCompareOutput').src=assetURL(r.two_stop.predicted_preview);
-  $('gradientCompareInfo').textContent='두 색 추천 조합 · '+predictionModeLabel(r)+' · '+correctionLabel(r)+' · 33개 표본 평균 ΔE76 '+r.two_stop.mean_delta_e76+' / 표본 최대 '+r.two_stop.max_delta_e76;
-  $('gradientCompareDialog').showModal();fitGradientCompare();
+  $('gradientCompareOutput').src=assetURL(record.predicted_preview);
+  const label=gradientVariantLabel(gradientSelectedVariant(r));
+  $('gradientCompareOutput').alt=label+' 추천의 인쇄 예상 이미지';
+  $('gradientCompareTitle').textContent='목표 이미지 · '+label+' 인쇄 예상';
+  $('gradientCompareInfo').textContent='선택: '+label+' · '+predictionModeLabel(r)+' · '+correctionLabel(r)+' · 33개 표본 평균 ΔE76 '+record.mean_delta_e76+' / 표본 최대 '+record.max_delta_e76+'\n'+gradientSupportLines(record,r).join(' ');
+  fitGradientCompare();
+}
+function openGradientCompare(){
+  if(!gradientState.result)return;
+  gradientCompare.zoom=1;
+  if(!$('gradientCompareDialog').open)$('gradientCompareDialog').showModal();refreshGradientCompare();
   ['gradientCompareBeforeStage','gradientCompareAfterStage'].forEach(id=>{$(id).scrollLeft=0;$(id).scrollTop=0;});
 }
 function bindGradientCompare(){

@@ -1,0 +1,107 @@
+HARDYS V11.2 · PDF ICC 경계 보완 및 회귀 결과
+작성일: 2026-11-23
+
+1. 변경 범위
+
+애플리케이션 변경 파일은 app/proof_pdf.py 한 개입니다. 원래 V11.1 감사본,
+실제 전달 PDF, FOGRA39·GRACoL 프로파일, 사진 모델·보정점은 변경하지 않았습니다.
+
+V11.1에서는 같은 FOGRA 색표를 가진 ICC라도 제조사 헤더 등의 파일 표현이
+달라지면 Ghostscript가 CMYK→CMYK 재분판을 수행했습니다. 래스터 경로는
+같은 색표의 입력을 채널 보존하므로 PDF와 래스터의 표준 프루프가 달라졌습니다.
+
+V11.2에서는 아래 조건을 모두 만족하는 PDF OutputIntent에 한하여 표준
+프루프 호출의 -sDefaultCMYKProfile을 선택한 프루프 ICC 경로로 통일합니다.
+
+  • 입력은 CMYK이며 프로파일 버전·클래스·색공간·PCS가 동일함.
+  • ICC 시그니처, 플래그, 미디어 속성, 기본 렌더링 의도, PCS 백색점이 동일함.
+  • 기존 래스터 경로와 같은 비교로 A2B/D2B 전방 색표 및 wtpt/bkpt/chad가 동일함.
+  • 내장 ICC 파일 자체는 선택한 프루프 ICC와 바이트가 다름.
+
+ICC의 설명용 헤더 및 역방향 분판표가 다른 경우도 전방 특성과 위 조건이
+동일하면 표준 출력의 DeviceCMYK 채널을 보존합니다. 숫자가 같은 CMYK를
+다른 프로파일로 강제 해석하는 일반 옵션은 추가하지 않았습니다.
+
+사진용 원본→sRGB 호출에는 원래 내장 ICC를 계속 사용합니다. 명시적인
+ICCBased 객체나 PDF 리소스의 DefaultCMYK를 덮어쓰지 않습니다.
+-dOverrideICC=false를 유지하며 원본 PDF도 처리용 PDF 사본도 재작성하지
+않습니다. 보완은 Ghostscript 호출의 기본 프로파일 선택에만 작용합니다.
+
+preview_info.json의 cmyk_preservation에는 실제 정규화 여부·선택한 표준
+CMYK 기본값의 SHA256·변경하지 않은 범위를 기록합니다. source_profile_note는
+정규화가 이루어진 경우에만 해당 처리 사실을 설명합니다.
+
+2. 새로운 회귀시험 결과: 7개 그룹 통과
+
+실행 파일: tests/icc/run_pdf_regression.py
+세부 결과: tests/icc/pdf_regression_results.json
+입력 PDF 및 실제 렌더 출력: tests/icc/outputs/
+비교용 V11.1 함수: tests/icc/fixtures/proof_pdf_v11_1.py
+
+  1) 제조사 헤더만 바꾼 FOGRA OutputIntent + DeviceCMYK 6색:
+     래스터의 채널 보존 결과 대비 최대 RGB 채널 차이 23 → 0.
+     예: CMYK8 [249,54,77,220]의 표준 RGB가 [26,49,55] → [3,48,56].
+     사진용 직접 sRGB 이미지의 모든 픽셀은 이전과 동일함.
+     추출된 원래 ICC의 SHA256 및 입력 PDF는 보존됨.
+
+  2) 원래 FOGRA OutputIntent:
+     정규화를 적용하지 않음. 표준/사진 이미지 변화 0.
+
+  3) 다른 색 특성의 GRACoL2013 OutputIntent:
+     정규화를 적용하지 않음. 표준/사진 이미지 변화 0.
+
+  4) 수정 헤더 FOGRA DeviceCMYK + GRACoL CMYK 객체 + Adobe RGB 객체:
+     기본 DeviceCMYK만 채널 보존 결과와 일치함.
+     명시적 객체의 표준 결과 및 사진 이미지 변화 0.
+     객체 ICC SHA256은 각각 원래 프로파일과 동일함.
+
+  5) PDF 리소스의 DefaultCMYK가 GRACoL인 경우:
+     해당 PDF 리소스가 계속 우선됨. 표준/사진 이미지 변화 0.
+
+  6) 수정 헤더 FOGRA가 명시적 ICCBased 객체에 들어간 경우:
+     객체 프로파일을 재작성하지 않음. 표준 결과는 V11.1과 같음.
+     잔여 PDF↔채널 보존 래스터 차이 최대 23이 있음을 경고로 표시함.
+
+  7) 실제 delivered_case7.pdf:
+     원본 SHA256 e8cf05c8b3241d037ea40214213a95551a3ad24e49e001894b30c65b6bdcb23a 유지.
+     원래 GRACoL2013 ICC SHA256
+     4ebbfad6bc9cfc033fdafdd8ac5df8159208932cb16d9a6596d349ae7ab50443 유지.
+     180 DPI의 원본 sRGB 및 표준 프루프 전체 이미지가 같은 native 엔진으로
+     실행한 V11.1 코드와 픽셀별로 동일함. 13개 기준점도 모두 변화 0.
+     기존 설치본 GS9.50 저장 이미지와의 기준점 차이는 11점에서 0,
+     v11_04·v11_13에서 최대 1채널 단계로, 이전 감사 때 확인한 엔진 차이임.
+
+3. 안전하게 남긴 범위
+
+명시적 ICCBased 객체가 같은 색 특성의 다른 ICC 파일을 참조하는 경우는
+강제 치환하지 않습니다. 객체별 프로파일을 무시하는 전역 OverrideICC는
+혼합 GRACoL/Adobe RGB 문서를 손상시킬 수 있습니다. PDF 리소스·폼·투명도
+그룹 등에서 프로파일의 적용 관계를 완전하게 보존하는 재작성은 이번
+작은 보완 범위를 넘어가므로 이 경우에는 결과의 경고를 남깁니다.
+
+따라서 이 변경을 "모든 PDF의 ICC 표현 차이 해결"로 설명하면 안 됩니다.
+해결 범위는 동일 특성 OutputIntent로 해석되는 표준 DeviceCMYK 기본값이고,
+잔여 범위는 같은 특성의 다른 표현을 가진 명시적 객체 ICC입니다.
+실제 기준 전달본은 원래 GRACoL이며 이번 보완이 색 결과를 바꾸지 않습니다.
+
+4. 환경 및 근거
+
+이번 실행은 Linux, Python 3.12.14, Pillow 13.0.0, LittleCMS 2.19,
+Ghostscript 10.05.1입니다. 정확한 Python/OS 버전은 JSON에 기록했습니다.
+Windows 번들 Ghostscript 9.50 DLL은 이 환경에서 실행하지 못했습니다.
+
+보완의 판단은 Python에서 ICC 헤더·색표를 비교하여 프로파일 경로를 선택하는
+코드이므로 엔진 전용 패치나 운영체제 설정에 의존하지 않습니다. Ghostscript에
+전달하는 기본값·출력 프로파일의 파일 경로가 같아지는 기존의 동일 프로파일
+조건을 사용합니다. 그러나 Windows9.50에서의 실동작까지 이번 Linux 시험이
+입증하는 것은 아닙니다. 설치 PC 재실행은 별도 확인 범위입니다.
+
+Ghostscript 공식 설명은 DefaultCMYKProfile을 DeviceCMYK 기본 입력 해석에
+쓰고, OverrideICC=true는 문서의 객체 ICC까지 덮어쓴다고 설명합니다.
+V11.2는 false를 유지하며 PDF의 명시적 자원이 보존됨을 혼합 문서로 시험했습니다.
+참고: https://ghostscript.readthedocs.io/en/latest/GhostscriptColorManagement.html
+해당 웹 문서는 Ghostscript 9.54 이상 구조를 설명하는 최신 문서이므로,
+그 자체를 Windows9.50 실행 증거로 사용하지 않습니다.
+
+모니터·Windows 색 설정, 사용자의 설치 PC, 프린터 RIP, 실물 측색은 건드리지
+않았으며 실행/검증했다고 주장하지 않습니다.

@@ -1,0 +1,55 @@
+HARDYS V11.2 — 그라데이션 UI 수정·검증
+2026-11-23
+
+수정 파일
+- app/web/gradient.js
+- app/web/gradient_compare.js
+- app/web/index.html
+- app/web/v11_2.css (새 파일)
+
+구현
+1. 자동/영역 분석의 실제 css_angle을 숫자와 CSS 각도 기준(0° 위,
+   90° 오른쪽, 시계방향)으로 표시하고 TXT에도 보존한다.
+   원본 이미지 크기, 분석 영역의 좌표 및 끝 좌표 제외 규약도 전달한다.
+   두 점 선택은 source_points, 정규화 좌표, 선택선 방향을 따로 표시한다.
+   선을 가로로 펼친90° 미리보기와 전체 그라데이션 각도 미추정을 구분한다.
+2. 2색/3색 선택이 하나의 selectedVariant를 사용한다. 표, 입력/예상PNG,
+   오차/잉크량, 지원범위, PNG저장, TXT, 큰비교가 모두 같은 선택을 따른다.
+   처음에는 더 나은3색이 있으면3색을 선택한다. 사용자가 고른2/3색 선호는
+   현재 앱 세션의 다음 계산에도 유지한다. 선호 대안이 없으면2색으로 표시하고,
+   나중에 그 대안이 다시 생기면 선호를 복원한다.
+3. 큰비교에서도2/3색을 바꿀 수 있으며 원래 결과의 선택과 함께 바뀐다.
+4. TXT는 현재 선택을 먼저 표시하고 다른 대안의 HEX/통계도 함께 보존한다.
+   PNG파일명은2색/3색을 구분한다.
+5. 각 추천 record.reference_support를 사용한다. 이전 top-level
+   extrapolated_sample_percent는 쓰지 않는다. 유채색0개일 때0%로
+   표시하지 않고 비율을 계산하지 않는다고 설명한다. 중성·저채도는
+   분모에서 제외하며 active model radius를 반영한 경계값을 표시한다.
+   ICC모드의null은 사진 지원범위가 적용되지 않는다고 설명한다.
+6. 직접 색상비교의colorMode(photo/icc), colorModeDescription,
+   basicColorLabel/globalColorLabel, 추천RGB/CMYK 같은 조건 확인 버튼을
+   HTML에 추가했다. 동작 연결은root담당app.js에서 수행한다.
+7. title/header를V11.2로 바꾸고 사용방법에V11.2변경내용·검증 링크를 추가했다.
+
+검증
+- tests/gradient_ui_regression_v11_2.cjs: 실제 배포JS를 엄격한HTML ID의
+   DOM모형에서 실행하는20검사 통과.
+- 각도/TXT,2·3색선택 및 PNG저장,큰비교 동기화,사용자선호 보존,
+   대안 없음 fallback,두점좌표,중성만 존재,ICC모드,radius<12를 확인했다.
+- 새Python백엔드회귀 결과도 직접 읽어검사했다. 실제대칭그라데이션의
+   2색은중성33개·유채색0개,3색은근처15/전환14/외삽4개의서로다른
+   범위가선택에따라바뀌는것을확인했다.
+- gradient_ui_results_v11_2.json에결과와사용한코드/백엔드결과해시가있다.
+- JavaScript문법검사는node --check로통과했다.
+
+시각 검증 제한
+tests/gradient_browser_v11_2.cjs로실제Chromium DOM검증을준비했으나,
+브라우저가페이지를열기전에process_singleton socket()에서
+Operation not permitted로종료했다. 실행환경의허용범위문제이며
+앱UI실패로판정하지않는다. 재시도나우회를하지않았다.
+gradient_browser_results_v11_2.json은status=blocked_environment,
+all_passed=null,page_checks_executed=0이다. 실제화면스크린샷은없다.
+
+코드색모델·원본PDF·사진·사용자보정값은이작업에서변경하지않았다.
+검사는클라우드Node및격리된회귀자료기준이며실제Windows브라우저의
+시각확인이나새실물인쇄검증을대신하지않는다.

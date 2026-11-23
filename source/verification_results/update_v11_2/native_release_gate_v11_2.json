@@ -1,0 +1,531 @@
+{
+  "schema_version": 1,
+  "revision": "11.2",
+  "started_utc": "2026-11-23T03:08:25.483599+00:00",
+  "baseline_zip_sha256": "139032097707e870ea1e0f961cf7a72853dde8617086979a298f039e742b2d1f",
+  "mode": "native_development_comparison",
+  "scope": "Remote/independent execution; does not verify the user PC, monitor settings, printer RIP or measured print color.",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "pillow": "13.0.0",
+    "lcms": "2.19",
+    "numpy": "2.3.5",
+    "pypdf": "6.21.4"
+  },
+  "tests": {
+    "revision": {
+      "pass": true,
+      "startup_revision": "11.2",
+      "build": 11,
+      "rgb_revision": "11.2",
+      "seconds": 0.001
+    },
+    "original_core_calibration_profiles": {
+      "pass": true,
+      "files_checked": 11,
+      "anchors": 13,
+      "seconds": 0.026
+    },
+    "ghostscript_execution": {
+      "pass": true,
+      "command": [
+        "/usr/bin/gs"
+      ],
+      "version_output": "10.05.1",
+      "actual_bundled_gs950_dll": false,
+      "user_pc_executed": false,
+      "seconds": 0.013
+    },
+    "delivered_pdf_source_13_anchors": {
+      "pass": true,
+      "anchors": 13,
+      "maximum_channel_difference": 1,
+      "allowed_channel_difference": 1,
+      "source_icc_sha256": "4ebbfad6bc9cfc033fdafdd8ac5df8159208932cb16d9a6596d349ae7ab50443",
+      "source_pdf_sha256": "e8cf05c8b3241d037ea40214213a95551a3ad24e49e001894b30c65b6bdcb23a",
+      "seconds": 4.835
+    },
+    "equivalent_fogra_device_cmyk_6_colors": {
+      "pass": true,
+      "input_cmyk_8bit": [
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          249,
+          54,
+          77,
+          220
+        ],
+        [
+          255,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          255,
+          255,
+          0
+        ],
+        [
+          10,
+          20,
+          30,
+          40
+        ],
+        [
+          200,
+          100,
+          50,
+          100
+        ]
+      ],
+      "expected_rgb": [
+        [
+          43,
+          43,
+          42
+        ],
+        [
+          3,
+          48,
+          56
+        ],
+        [
+          0,
+          160,
+          228
+        ],
+        [
+          228,
+          31,
+          37
+        ],
+        [
+          218,
+          211,
+          203
+        ],
+        [
+          50,
+          97,
+          125
+        ]
+      ],
+      "actual_rgb": [
+        [
+          43,
+          43,
+          42
+        ],
+        [
+          3,
+          48,
+          56
+        ],
+        [
+          0,
+          160,
+          228
+        ],
+        [
+          228,
+          31,
+          37
+        ],
+        [
+          218,
+          211,
+          203
+        ],
+        [
+          50,
+          97,
+          125
+        ]
+      ],
+      "max_channel_difference": 0,
+      "normalization": {
+        "device_cmyk_default_normalized": true,
+        "scope": "standard proof DeviceCMYK default only; source/photo rendering and explicit object ICC unchanged",
+        "standard_default_cmyk_sha256": "da2b9b593e27cba2563cbc8596071c5c8f2395d3dbb4434538bac2bc9d58ce77",
+        "pdf_rewritten": false,
+        "object_profiles_rewritten": false
+      },
+      "seconds": 0.43
+    },
+    "explicit_and_mixed_icc_preserved": {
+      "pass": true,
+      "explicit_gracol_a98_max_change": 0,
+      "photo_source_max_change": 0,
+      "object_icc_sha256": [
+        "4ebbfad6bc9cfc033fdafdd8ac5df8159208932cb16d9a6596d349ae7ab50443",
+        "c0995b8b196223f1c029c013b04d0ee11bce3d3dd8a23f814cac73e50ac0719a"
+      ],
+      "explicit_equivalent_warnings": [
+        "선택한 프루프와 색 특성이 같은 객체별 CMYK ICC의 파일 표현이 다릅니다. 객체 ICC는 그대로 해석하므로 표준 PDF 프루프가 동일 CMYK 래스터의 채널 보존 결과와 다를 수 있습니다. 인쇄소 RIP에서 확인하세요."
+      ],
+      "explicit_equivalent_remaining_raster_difference": 23,
+      "seconds": 1.966
+    },
+    "recommended_cmyk_same_mode_strength": {
+      "pass": true,
+      "cases": [
+        {
+          "mode": "photo",
+          "strength": 1.0,
+          "target_rgb": [
+            50,
+            86,
+            120
+          ],
+          "input_profile": "GRACoL2013_CRPC6.icc",
+          "cmyk_percent": [
+            75.29,
+            16.47,
+            3.52,
+            53.33
+          ],
+          "reentered_cmyk_8bit": [
+            192,
+            42,
+            9,
+            136
+          ],
+          "predicted_rgb": [
+            50,
+            86,
+            120
+          ],
+          "delta_e76": 0.0,
+          "quantized_tac_percent": 148.62745098039215
+        },
+        {
+          "mode": "photo",
+          "strength": 0.4,
+          "target_rgb": [
+            40,
+            150,
+            70
+          ],
+          "input_profile": "GRACoL2013_CRPC6.icc",
+          "cmyk_percent": [
+            72.54,
+            1.56,
+            92.54,
+            10.58
+          ],
+          "reentered_cmyk_8bit": [
+            185,
+            4,
+            236,
+            27
+          ],
+          "predicted_rgb": [
+            40,
+            150,
+            70
+          ],
+          "delta_e76": 0.0,
+          "quantized_tac_percent": 177.2549019607843
+        },
+        {
+          "mode": "icc",
+          "strength": 0.0,
+          "target_rgb": [
+            50,
+            86,
+            120
+          ],
+          "input_profile": "CoatedFOGRA39.icc",
+          "cmyk_percent": [
+            74.11,
+            37.64,
+            1.96,
+            53.72
+          ],
+          "reentered_cmyk_8bit": [
+            189,
+            96,
+            5,
+            137
+          ],
+          "predicted_rgb": [
+            50,
+            86,
+            120
+          ],
+          "delta_e76": 0.0,
+          "quantized_tac_percent": 167.45098039215685
+        }
+      ],
+      "seconds": 2.521
+    },
+    "original_inputs_unchanged_after_tests": {
+      "pass": true,
+      "files_checked": 11,
+      "anchors": 13,
+      "seconds": 0.013
+    }
+  },
+  "all_pass": true,
+  "release_gate_eligible": false,
+  "preserved_files": {
+    "color_model.py": {
+      "actual_sha256": "6714996845ed58c7615c57084b7daa9b4d9c375495202440ddfd744b238fbffe",
+      "expected_sha256": "6714996845ed58c7615c57084b7daa9b4d9c375495202440ddfd744b238fbffe",
+      "equal": true
+    },
+    "prediction.py": {
+      "actual_sha256": "04c7d4509696dc9302183d78e177aed2ef3098f8a40a17e5963660c51d851c01",
+      "expected_sha256": "04c7d4509696dc9302183d78e177aed2ef3098f8a40a17e5963660c51d851c01",
+      "equal": true
+    },
+    "default_calibration.json": {
+      "actual_sha256": "5653523ea74fb72bdfc4c60d31bca8c0e6f4b7b2ae03bbd6e576fbbd8aa75236",
+      "expected_sha256": "5653523ea74fb72bdfc4c60d31bca8c0e6f4b7b2ae03bbd6e576fbbd8aa75236",
+      "equal": true
+    },
+    "icc/CoatedFOGRA39.icc": {
+      "actual_sha256": "da2b9b593e27cba2563cbc8596071c5c8f2395d3dbb4434538bac2bc9d58ce77",
+      "expected_sha256": "da2b9b593e27cba2563cbc8596071c5c8f2395d3dbb4434538bac2bc9d58ce77",
+      "equal": true
+    },
+    "icc/GRACoL2013_CRPC6.icc": {
+      "actual_sha256": "4ebbfad6bc9cfc033fdafdd8ac5df8159208932cb16d9a6596d349ae7ab50443",
+      "expected_sha256": "4ebbfad6bc9cfc033fdafdd8ac5df8159208932cb16d9a6596d349ae7ab50443",
+      "equal": true
+    },
+    "reference_archive/delivered_case7.pdf": {
+      "actual_sha256": "e8cf05c8b3241d037ea40214213a95551a3ad24e49e001894b30c65b6bdcb23a",
+      "expected_sha256": "e8cf05c8b3241d037ea40214213a95551a3ad24e49e001894b30c65b6bdcb23a",
+      "equal": true
+    },
+    "assets/reference_v11/page_01_source.png": {
+      "actual_sha256": "c48696c95adb4211371a06128306f01202808ff7d08cd22b9308c8c053c3b41d",
+      "expected_sha256": "c48696c95adb4211371a06128306f01202808ff7d08cd22b9308c8c053c3b41d",
+      "equal": true
+    },
+    "assets/printed_case_reference.png": {
+      "actual_sha256": "0704f99348a971c07f7fef83505bb89ed30996ac7350d6602a159f18f9061749",
+      "expected_sha256": "0704f99348a971c07f7fef83505bb89ed30996ac7350d6602a159f18f9061749",
+      "equal": true
+    },
+    "gs_bridge.py": {
+      "actual_sha256": "e1afe2793d7f5b64778d70c6d15079cd4c25616298d4c33f356951158f1ef7bf",
+      "expected_sha256": "e1afe2793d7f5b64778d70c6d15079cd4c25616298d4c33f356951158f1ef7bf",
+      "equal": true
+    },
+    "runtime/ghostscript/bin/gsdll64.dll": {
+      "skipped": "Windows DLL absent in native development copy",
+      "expected_sha256": "85cb1e23c4a6db2c3f1122b7daf97fa0c502953ad400eb027ea3e4c34e8fcb15"
+    },
+    "proof_rgb_image.py_normalized": {
+      "actual_sha256": "8f6ac385b8c76347a02bab43add1d8cbd5d4c2abe6fe1348abbc48eed8da1f0b",
+      "expected_sha256": "8f6ac385b8c76347a02bab43add1d8cbd5d4c2abe6fe1348abbc48eed8da1f0b",
+      "equal": true,
+      "allowed_change": "One render_revision value 11.1->11.2 and line endings only."
+    }
+  },
+  "engine": {
+    "command": [
+      "/usr/bin/gs"
+    ],
+    "version_output": "10.05.1",
+    "actual_bundled_gs950_dll": false,
+    "user_pc_executed": false
+  },
+  "delivered_anchor_results": [
+    {
+      "anchor": "v11_01",
+      "source_median": [
+        5.0,
+        92.0,
+        124.0
+      ],
+      "reference_median": [
+        5.0,
+        92.0,
+        124.0
+      ],
+      "max_channel_difference": 0
+    },
+    {
+      "anchor": "v11_02",
+      "source_median": [
+        11.0,
+        99.0,
+        127.0
+      ],
+      "reference_median": [
+        11.0,
+        99.0,
+        127.0
+      ],
+      "max_channel_difference": 0
+    },
+    {
+      "anchor": "v11_04",
+      "source_median": [
+        16.0,
+        107.0,
+        132.0
+      ],
+      "reference_median": [
+        15.0,
+        107.0,
+        131.0
+      ],
+      "max_channel_difference": 1
+    },
+    {
+      "anchor": "v11_05",
+      "source_median": [
+        15.0,
+        106.0,
+        132.0
+      ],
+      "reference_median": [
+        15.0,
+        106.0,
+        132.0
+      ],
+      "max_channel_difference": 0
+    },
+    {
+      "anchor": "v11_07",
+      "source_median": [
+        18.0,
+        121.0,
+        141.0
+      ],
+      "reference_median": [
+        18.0,
+        121.0,
+        141.0
+      ],
+      "max_channel_difference": 0
+    },
+    {
+      "anchor": "v11_08",
+      "source_median": [
+        18.0,
+        121.0,
+        141.0
+      ],
+      "reference_median": [
+        18.0,
+        121.0,
+        141.0
+      ],
+      "max_channel_difference": 0
+    },
+    {
+      "anchor": "v11_09",
+      "source_median": [
+        18.0,
+        121.0,
+        141.0
+      ],
+      "reference_median": [
+        18.0,
+        121.0,
+        141.0
+      ],
+      "max_channel_difference": 0
+    },
+    {
+      "anchor": "v11_10",
+      "source_median": [
+        26.0,
+        138.0,
+        151.0
+      ],
+      "reference_median": [
+        26.0,
+        138.0,
+        151.0
+      ],
+      "max_channel_difference": 0
+    },
+    {
+      "anchor": "v11_11",
+      "source_median": [
+        24.0,
+        131.0,
+        147.0
+      ],
+      "reference_median": [
+        24.0,
+        131.0,
+        147.0
+      ],
+      "max_channel_difference": 0
+    },
+    {
+      "anchor": "v11_12",
+      "source_median": [
+        29.0,
+        152.0,
+        158.0
+      ],
+      "reference_median": [
+        29.0,
+        152.0,
+        158.0
+      ],
+      "max_channel_difference": 0
+    },
+    {
+      "anchor": "v11_13",
+      "source_median": [
+        28.0,
+        142.0,
+        153.0
+      ],
+      "reference_median": [
+        28.0,
+        141.0,
+        153.0
+      ],
+      "max_channel_difference": 1
+    },
+    {
+      "anchor": "v11_14",
+      "source_median": [
+        224.0,
+        186.0,
+        124.0
+      ],
+      "reference_median": [
+        224.0,
+        186.0,
+        124.0
+      ],
+      "max_channel_difference": 0
+    },
+    {
+      "anchor": "v11_15",
+      "source_median": [
+        224.0,
+        186.0,
+        124.0
+      ],
+      "reference_median": [
+        224.0,
+        186.0,
+        124.0
+      ],
+      "max_channel_difference": 0
+    }
+  ],
+  "elapsed_seconds": 10.069,
+  "finished_utc": "2026-11-23T03:08:35.552259+00:00"
+}

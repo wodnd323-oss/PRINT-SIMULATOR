@@ -231,7 +231,7 @@ def proof_image(filename,out=None):
     normal.save(d/'RGB_softproof.png',icc_profile=srgb.tobytes())
     Image.fromarray(marked).save(d/'RGB_gamut_warning.png',icc_profile=srgb.tobytes())
     ref.save(d/'RGB_reference.png',icc_profile=srgb.tobytes())
-    report.update({'source':f.name,'render_revision':'11.1','proof_profile':'Coated FOGRA39 (ISO 12647-2:2004)',
+    report.update({'source':f.name,'render_revision':'11.2','proof_profile':'Coated FOGRA39 (ISO 12647-2:2004)',
                    'proof_rendering':'source -> FOGRA relative + BPC; FOGRA -> sRGB relative, BPC off to retain simulated ink black',
                    'gamut_check_applicable':gamut_applicable,
                    'gamut_alarm_percent':round(float(mask.mean()*100),3) if gamut_applicable else None,

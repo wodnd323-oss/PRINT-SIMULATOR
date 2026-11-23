@@ -1,0 +1,111 @@
+{
+  "scope": "Actual gradient.js and gradient_compare.js with strict HTML IDs and controlled DOM/request stubs; no physical print or Windows UI test.",
+  "fixture_scope": "Representative deliberate edge records plus the newly executed V11.2 Python backend result/geometry JSON; math is tested separately.",
+  "backend_result_sha256": "30cd9ff6fcb1743b0ee19c9b3cb4d9877601a6ef76439ed6bc44ff8216dc311d",
+  "node": "v24.22.3",
+  "checks": [
+    {
+      "name": "better_three_stop_is_initial_choice",
+      "passed": true
+    },
+    {
+      "name": "three_stop_rows_previews_statistics_support",
+      "passed": true
+    },
+    {
+      "name": "angle_and_convention_displayed",
+      "passed": true
+    },
+    {
+      "name": "selected_three_stop_png_download",
+      "passed": true
+    },
+    {
+      "name": "txt_selected_three_first_both_alternatives_and_angle",
+      "passed": true
+    },
+    {
+      "name": "large_compare_opens_selected_three",
+      "passed": true
+    },
+    {
+      "name": "large_compare_selection_updates_all_surfaces",
+      "passed": true
+    },
+    {
+      "name": "selected_two_stop_png_and_txt",
+      "passed": true
+    },
+    {
+      "name": "explicit_two_choice_survives_recalculation",
+      "passed": true
+    },
+    {
+      "name": "unavailable_three_falls_back_to_two",
+      "passed": true
+    },
+    {
+      "name": "preferred_three_restored_when_available",
+      "passed": true
+    },
+    {
+      "name": "line_coordinates_and_distinct_preview_angle",
+      "passed": true
+    },
+    {
+      "name": "neutral_only_support_has_no_false_percentages",
+      "passed": true
+    },
+    {
+      "name": "custom_short_radius_ranges_do_not_overlap",
+      "passed": true
+    },
+    {
+      "name": "icc_does_not_show_photo_support_as_accuracy",
+      "passed": true
+    },
+    {
+      "name": "fresh_backend_three_stop_support_contract",
+      "passed": true
+    },
+    {
+      "name": "fresh_backend_neutral_two_stop_does_not_use_legacy_extrapolation",
+      "passed": true
+    },
+    {
+      "name": "fresh_backend_line_geometry_contract",
+      "passed": true
+    },
+    {
+      "name": "reset_hides_and_closes_stale_gradient_outputs",
+      "passed": true
+    },
+    {
+      "name": "direct_mode_and_same_condition_controls_present",
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "three_stop_txt": "HARDYS 목표 그라데이션 역산 · V11.2\n현재 선택: 3색 · 미리보기와 PNG 저장에 적용\n방향: 왼쪽 아래 → 오른쪽 위\n스타일: 대각선 그라데이션\n각도: 35.6° · CSS 기준 0°는 위, 90°는 오른쪽, 시계방향\n분석 영역 [왼쪽, 위, 오른쪽, 아래]: [0, 0, 200, 80] px · 오른쪽·아래 끝 좌표 제외\n목표 원본 이미지: 200 × 80 px\n기준: 전달본 기준 사진 모델 / CMYK 프로파일 GRACoL2013_CRPC6.icc / 사진 보정 100% / 잉크량 상한 300%\n\n[현재 선택] 3색 입력값\n색상 1 (0%): #177B8D / 목표 #177B8D / 예상 #177B8D\n색상 2 (50%): #DDB97C / 목표 #DDB97C / 예상 #DDB97C\n색상 3 (100%): #177B8D / 목표 #177B8D / 예상 #177B8D\n33개 표본 평균 ΔE76 0.48 / 표본 최대 0.88 / 전체 구간 최대 잉크량 151.76%\n사진 기준색과의 거리 · 유채색 33개 기준: 가까움 66.7% (22개) / 전환 21.2% (7개) / 외삽 12.1% (4개)\n전체 33개 중 중성·저채도(C*≤16) 0개는 비율의 분모에서 제외합니다. 거리 분류: 가까움 ≤12, 전환 12 초과·26 미만, 외삽 ≥26.\n이 비율은 사진 기준색과의 거리이며 정확도·신뢰확률이 아닙니다. 낮은 ΔE76도 실제 인쇄 일치를 보장하지 않습니다.\n\n[다른 후보] 2색 입력값\n색상 1 (0%): #788384 / 목표 #788384 / 예상 #788384\n색상 2 (100%): #6F9589 / 목표 #6F9589 / 예상 #6F9589\n33개 표본 평균 ΔE76 15.4 / 표본 최대 25.4 / 전체 구간 최대 잉크량 140%\n사진 기준색과의 거리 · 유채색 33개 기준: 가까움 0% (0개) / 전환 0% (0개) / 외삽 100% (33개)\n전체 33개 중 중성·저채도(C*≤16) 0개는 비율의 분모에서 제외합니다. 거리 분류: 가까움 ≤12, 전환 12 초과·26 미만, 외삽 ≥26.\n이 비율은 사진 기준색과의 거리이며 정확도·신뢰확률이 아닙니다. 낮은 ΔE76도 실제 인쇄 일치를 보장하지 않습니다.\n\n사진 모델의 후보이며 최종 PDF로 확인하세요.\nHEX는 sRGB 원본에서 수치가 선형으로 혼합되는 그라데이션을 기준으로 합니다. 끝색만 CMYK로 바꿔 CMYK에서 혼합하면 중간색이 달라집니다.\n각도는 CSS 기준입니다. 디자인 도구의 각도 기준·선택 영역·중간색 혼합 방식이 다르면 그대로 재현되지 않을 수 있으므로 최종 PDF를 다시 확인하세요.",
+  "png_fetches": [
+    "asset:three_input.png",
+    "asset:two_input.png"
+  ],
+  "png_saves": [
+    {
+      "name": "HARDYS_gradient_3_color_input.png",
+      "mime": "image/png",
+      "text": "asset:three_input.png"
+    },
+    {
+      "name": "HARDYS_gradient_2_color_input.png",
+      "mime": "image/png",
+      "text": "asset:two_input.png"
+    }
+  ],
+  "sources": {
+    "web/gradient.js": "2fe03674beeeadeb582f1c9b5fe2d2e320e72d9e9b1d21196518cbfb116723b2",
+    "web/gradient_compare.js": "3d1fd07cc30b607239a36dc5754631bad1c4aa0c9cfbecac8eed73f188a387c2",
+    "web/index.html": "5f7f3c850a2d65b1380695a472899ebd43aea4ea292cebe191eb51ff8eefc8df"
+  }
+}

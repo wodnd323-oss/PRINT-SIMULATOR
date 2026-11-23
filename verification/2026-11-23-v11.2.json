@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "revision": "11.2",
+  "date": "2026-11-23",
+  "source_base_commit": "10f94cc2cef45d3cc93a2c6c9e0f019542d26f38",
+  "original_full_sha256": "139032097707e870ea1e0f961cf7a72853dde8617086979a298f039e742b2d1f",
+  "original_patch_sha256": "249695144325f5ad7a7b0cdf01723d9fb25b17dfced28930dc8a08d28ae521db",
+  "core_files_unchanged": {
+    "color_model.py": "6714996845ed58c7615c57084b7daa9b4d9c375495202440ddfd744b238fbffe",
+    "prediction.py": "04c7d4509696dc9302183d78e177aed2ef3098f8a40a17e5963660c51d851c01",
+    "default_calibration.json": "5653523ea74fb72bdfc4c60d31bca8c0e6f4b7b2ae03bbd6e576fbbd8aa75236"
+  },
+  "executed_checks": {
+    "http_contract": {
+      "count": 69,
+      "all_passed": true
+    },
+    "color_ui_actual_functions": {
+      "count": 9,
+      "all_passed": true
+    },
+    "gradient_ui_actual_functions": {
+      "count": 20,
+      "all_passed": true
+    },
+    "inverse_gradient_and_reference_support": {
+      "count": 88,
+      "all_passed": true
+    },
+    "pdf_icc_regression": {
+      "groups": 7,
+      "all_passed": true
+    },
+    "native_linux_release_checker": {
+      "groups": 8,
+      "all_passed": true,
+      "release_gate_eligible": false
+    }
+  },
+  "browser_visual_check": {
+    "status": "blocked_before_browser_start",
+    "page_checks_executed": 0
+  },
+  "windows_release_gate": {
+    "required": true,
+    "status_at_package_build": "pending_external_ci",
+    "script": "verification_sources/verify_release_v11_2.py",
+    "success_requires": [
+      "exit_code_0",
+      "all_pass=true",
+      "release_gate_eligible=true"
+    ],
+    "authoritative_result": "GitHub v11.2 release asset WINDOWS_VERIFICATION.json"
+  },
+  "limits": [
+    "User PC installation and display were not operated.",
+    "Remote runtime verification does not validate monitor settings, printer RIP or physical print accuracy.",
+    "Explicit ICCBased equivalent-profile objects are preserved with a warning, not rewritten.",
+    "New color families remain extrapolation from the existing photo calibration."
+  ],
+  "reported_training_delta_e76": {
+    "training_mean": 1.58,
+    "leave_identical_input_group_out_mean": 5.81,
+    "leave_identical_input_group_out_max": 19.91
+  },
+  "regression_example": {
+    "scenario": "ICC 100 percent TAC two-stop gradient; API edge case, UI minimum is 240 percent",
+    "v11_1_mean_delta_e76": 33.715186,
+    "v11_2_mean_delta_e76": 15.639247,
+    "v11_2_quantized_max_tac_percent": 99.607843
+  },
+  "build": {
+    "revision": "11.2",
+    "original_full_sha256": "139032097707e870ea1e0f961cf7a72853dde8617086979a298f039e742b2d1f",
+    "original_patch_sha256": "249695144325f5ad7a7b0cdf01723d9fb25b17dfced28930dc8a08d28ae521db",
+    "full_manifest_files": 1364,
+    "full_zip_files": 1365,
+    "patch_content_files": 61,
+    "overlay_files": 28,
+    "verified_all_full_files": true,
+    "verified_patch_matches_full": true,
+    "artifacts": [
+      {
+        "name": "HARDYS_PrintSimulator_v11_2_Full_Install.zip",
+        "bytes": 164198234,
+        "sha256": "57a55b107604c04c73e40b5f4015a6bb3da66305f24855abbf0cb8baa6e0c654"
+      },
+      {
+        "name": "HARDYS_PrintSimulator_v11_2_Update.zip",
+        "bytes": 3000310,
+        "sha256": "e411bf61d18725d4bec0a6a0bc296cb314925cba1ff90be2d98c0d4c3272da4d"
+      }
+    ]
+  }
+}

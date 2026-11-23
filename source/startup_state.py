@@ -3,7 +3,7 @@ import hashlib,json,os,pathlib,re,tempfile,time
 APP=pathlib.Path(__file__).resolve().parent
 STATE=APP/'state'
 BUILD=11
-REVISION="11.1"
+REVISION="11.2"
 ROOT_ID=hashlib.sha256(str(APP).casefold().encode()).hexdigest()[:20]
 
 def atomic_json(path,value):

@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-23",
+  "revision": "11.2",
+  "scope": "Actual production JS functions executed with controlled UI and deferred request stubs; no user PC access",
+  "checks": [
+    {
+      "name": "Late success cannot overwrite the latest input",
+      "pass": true
+    },
+    {
+      "name": "Late failure cannot replace the latest result",
+      "pass": true
+    },
+    {
+      "name": "Input snapshot rejects an edited value before its next lookup",
+      "pass": true
+    },
+    {
+      "name": "Invalid input clears the old result without sending",
+      "pass": true
+    },
+    {
+      "name": "ICC selection sends ICC mode and disables photo strength",
+      "pass": true
+    },
+    {
+      "name": "Recommended CMYK preserves mode, profile, calibration and values",
+      "pass": true
+    },
+    {
+      "name": "Recommended RGB preserves photo strength",
+      "pass": true
+    },
+    {
+      "name": "Invalidation or closing prevents a pending result from reappearing",
+      "pass": true
+    },
+    {
+      "name": "Support labels distinguish near, transition, extrapolation and neutral",
+      "pass": true
+    }
+  ],
+  "all_passed": true
+}

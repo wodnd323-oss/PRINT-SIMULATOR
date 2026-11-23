@@ -1,6 +1,6 @@
 'use strict';
 const $=id=>document.getElementById(id);
-const state={catalog:null,calibration:null,current:null,page:0,preview:null,photo:null,photoName:'7번 파란 케이스',sourcePick:null,targetPick:null,busy:false,sequence:0,inverseSequence:0};
+const state={catalog:null,calibration:null,current:null,page:0,preview:null,photo:null,photoName:'7번 파란 케이스',sourcePick:null,targetPick:null,busy:false,sequence:0,inverseSequence:0,colorSequence:0,colorKind:'rgb'};
 const assetURL=p=>'/'+p.split('/').map(encodeURIComponent).join('/');
 const safeText=value=>String(value??'');
 function status(text,busy=false){$('status').textContent=text;$('status').classList.toggle('busy',busy);}
@@ -47,7 +47,9 @@ function paintView(){
   if(mode==='paper'){path=page.relative;title=state.current.kind==='rgb'?(cmykImage()?'CMYK 원본의 FOGRA39 예상색':'RGB 원본의 FOGRA39 예상색'):'FOGRA39 표준 소프트 프루핑';tag='사진 보정 미적용';}
   if(mode==='ink'){path=page.TAC300;title=state.current.kind==='rgb'?(cmykImage()?'CMYK 입력 · RGB 색역 검사 해당 없음':'CMYK 색역 초과 예상'):'총 잉크량 300% 초과';tag=cmykImage()?'CMYK에서 변환 전 RGB 색역은 판정할 수 없습니다':'자주색: 경고 표시';}
   $('afterTitle').textContent=title;$('afterTag').textContent=tag;$('afterImage').src=assetURL(path);
-  const stats=state.preview.statistics;$('nearStat').textContent=stats.near_reference_percent+'%';$('transitionStat').textContent=stats.transition_percent+'%';$('unknownStat').textContent=stats.unsupported_percent+'%';
+  const stats=state.preview.statistics;const percentage=value=>value==null?'—':value+'%';
+  $('nearStat').textContent=percentage(stats.near_reference_percent);$('transitionStat').textContent=percentage(stats.transition_percent);$('unknownStat').textContent=percentage(stats.unsupported_percent);
+  ['nearStat','transitionStat','unknownStat'].forEach(id=>$(id).title=stats.reference_support?.chromatic_samples?'유채색 표본 중 기준색과의 근접도입니다. 정확도나 신뢰확률이 아닙니다.':'유채색 표본이 없어 사진 기준색 지원 비율을 계산하지 않습니다.');
   state.displayOutput={path,name:mode==='matched'?state.preview.export_name:mode==='paper'?'HARDYS_FOGRA39_standard.png':mode==='range'?'HARDYS_reference_range.png':state.current.kind==='rgb'?'HARDYS_gamut_warning.png':'HARDYS_TAC300.png'};
   $('savePng').textContent=title+' PNG · 다른 이름으로 저장';
   $('openPng').textContent=title+' 열기 · 직접 저장';
@@ -109,22 +111,66 @@ async function saveBlob(blob,name,mime){
   const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),15000);status('브라우저 저장 창을 확인하세요');
 }
 function resetInverseResult(){state.inverseSequence++;state.inverse=null;$('inverseResult').hidden=true;$('inverseError').textContent='';}
-function invalidatePredictions(){resetInverseResult();gradientResetResult();}
+function invalidatePredictions(){resetInverseResult();gradientResetResult();resetColorResult();}
 function correctionLabel(r){return r.model_mode==='icc'?'사진 보정 미적용':'사진 보정 '+Math.round(r.strength*100)+'%';}
 function predictionModeLabel(r){return r.model_mode==='icc'?'FOGRA39 표준 프루프':'전달본 기준 사진 모델';}
 function hex(rgb){return '#'+rgb.map(v=>Math.round(v).toString(16).padStart(2,'0')).join('');}
-async function checkColor(kind='rgb'){
+function colorInputKey(kind){
+  return JSON.stringify({kind,mode:$('colorMode').value,strength:$('strength').value,values:kind==='cmyk'?['c','m','y','k'].map(k=>$(k+'Input').value):$('hexInput').value.trim().toUpperCase()});
+}
+function resetColorResult(message='입력값과 계산 기준을 확인한 뒤 색상을 조회하세요.'){
+  state.colorSequence++;
+  ['input','basic','global'].forEach(id=>{$(id+'Color').style.background='';$(id+'ColorValue').textContent='—';});
+  $('colorDetail').textContent='';$('colorScope').textContent=message;$('colorScope').className='small';
+}
+function updateColorModeDescription(){
+  const standard=$('colorMode').value==='icc';
+  $('colorModeDescription').textContent=standard?'FOGRA39 표준 프루프입니다. CMYK도 FOGRA39로 해석하며 사진 보정은 적용하지 않습니다.':'RGB는 sRGB 원본에 사진 모델을 한 번 적용합니다. CMYK는 GRACoL2013_CRPC6로 해석합니다. 새 색은 사진에서 배운 전체 경향의 외삽 추정입니다.';
+  $('basicColorLabel').textContent=standard?'FOGRA39 표준 프루프':'모델 입력 해석색';
+  $('globalColorLabel').textContent=standard?'표준 예상색 · 사진 보정 없음':'사진 경향 예상색';
+}
+function singleSupportText(s){
+  if(!s)return '기준색 지원 정보를 확인할 수 없습니다.';
+  if(!s.chromatic_samples)return '중성·저채도 구간으로 지원 비율에서 제외합니다. 회색·흰색의 사진 응답을 학습했다는 뜻은 아닙니다.';
+  if(s.near_samples)return '기존 사진 기준색 근처입니다. 실제 인쇄 정확도나 합격 여부를 뜻하지 않습니다.';
+  if(s.transition_samples)return '기준색과 외삽 사이의 전환 구간입니다. 전체 경향과 기준색 주변 보정이 함께 적용됩니다.';
+  return '기존 사진 기준색에서 먼 미검증 외삽입니다. 전체 채도·색조·밝기 경향으로 추정합니다.';
+}
+async function checkColor(kind='rgb',verification=null){
+  state.colorKind=kind;resetColorResult('현재 조건의 색상을 계산하고 있습니다…');updateColorModeDescription();
+  const sequence=state.colorSequence,key=colorInputKey(kind);
   try{
-    let payload={strength:Number($('strength').value)/100};
-    if(kind==='cmyk'){payload.cmyk=['c','m','y','k'].map(k=>Number($(k+'Input').value));}
+    const mode=$('colorMode').value;
+    const payload={model_mode:mode,strength:mode==='icc'?0:Number($('strength').value)/100};
+    if(kind==='cmyk')payload.cmyk=['c','m','y','k'].map(k=>Number($(k+'Input').value));
     else{const value=$('hexInput').value.trim();if(!/^#[0-9a-f]{6}$/i.test(value))throw Error('HEX를 #00b941 형식으로 입력해 주세요.');payload.rgb=[1,3,5].map(n=>parseInt(value.slice(n,n+2),16));$('colorPicker').value=value;}
+    if(verification)payload.calibration_sha256=verification.calibration_sha256;
     const result=await request('/api/color',{payload});
+    if(sequence!==state.colorSequence||key!==colorInputKey(kind))return null;
     [['input',result.input_rgb],['basic',result.baseline_rgb],['global',result.matched_rgb]].forEach(([id,rgb])=>{$(id+'Color').style.background=hex(rgb);$(id+'ColorValue').textContent=hex(rgb).toUpperCase()+' · '+rgb.join(', ');});
-    $('inputColorLabel').textContent=kind==='cmyk'?'입력 CMYK의 화면색':'원본 RGB';
-    $('colorDetail').textContent='CMYK 해석/분해 프로파일: '+result.input_cmyk_profile+' · 값: '+['C','M','Y','K'].map((n,i)=>n+' '+result.cmyk[i]+'%').join(' / ')+(result.outside_cmyk_gamut===true?' · RGB 원본은 FOGRA39 색역 밖으로 추정됩니다.':result.outside_cmyk_gamut===false?' · FOGRA39 ICC 색역 경고 없음. 실제 4도 인쇄 재현 보장은 아닙니다.':' · CMYK 직접 입력.');
-    $('colorScope').textContent=result.near_reference?'기존 인쇄 기준색에 가까운 색입니다. 사진에 맞춘 보정도 함께 적용됩니다.':'기존 인쇄 기준에 없는 색입니다. 전체 채도·색조·밝기 경향으로 계산한 외삽 추정입니다.';
-    $('colorScope').className=result.near_reference?'near-color':'extrapolated-color';
-  }catch(e){$('colorScope').textContent=e.message;$('colorScope').className='extrapolated-color';}
+    $('inputColorLabel').textContent=kind==='cmyk'?'입력 CMYK의 해석색':'원본 sRGB';
+    let detail=predictionModeLabel(result)+' · '+correctionLabel(result)+' · CMYK 프로파일: '+result.input_cmyk_profile+' · '+['C','M','Y','K'].map((n,i)=>n+' '+result.cmyk[i]+'%').join(' / ');
+    if(kind==='rgb')detail+=' · 이 CMYK는 참고 변환값입니다. CMYK로 다시 사용하면 예상색이 달라질 수 있습니다.';
+    detail+=result.outside_cmyk_gamut===true?' · FOGRA39 색역 경고 있음.':result.outside_cmyk_gamut===false?' · FOGRA39 색역 경고 없음. 실제 4도 재현 보장은 아닙니다.':'';
+    if(verification){
+      const same=result.model_mode===verification.model_mode&&result.input_cmyk_profile===verification.input_cmyk_profile&&result.strength===verification.strength&&result.calibration_sha256===verification.calibration_sha256&&JSON.stringify(result.matched_rgb)===JSON.stringify(verification.predicted_rgb);
+      detail+=same?' · 같은 조건 재확인: 추천의 예상색과 일치합니다.':' · 추천 결과와 다릅니다. 현재 보정 기준으로 다시 역산해 주세요.';
+    }
+    $('colorDetail').textContent=detail;
+    $('colorScope').textContent=mode==='icc'?'FOGRA39 표준 조건의 예상입니다. 사진 기반 지원 범위와 외삽 비율은 적용하지 않습니다.':singleSupportText(result.reference_support);
+    $('colorScope').className=mode==='icc'||result.reference_support?.near_samples?'near-color':'extrapolated-color';
+    return result;
+  }catch(e){if(sequence===state.colorSequence&&key===colorInputKey(kind)){$('colorScope').textContent=e.message;$('colorScope').className='extrapolated-color';}return null;}
+}
+async function verifyRecommendedColor(kind){
+  const r=state.inverse;if(!r)return;
+  const record=kind==='cmyk'?r.cmyk_result:r.rgb_result;
+  $('colorMode').value=r.model_mode;
+  if(r.model_mode==='photo'){$('strength').value=String(Math.round(r.strength*100));$('strengthValue').textContent=$('strength').value+'%';}
+  if(kind==='cmyk')['c','m','y','k'].forEach((name,i)=>$(name+'Input').value=String(record.cmyk[i]));
+  else{$('hexInput').value=hex(record.input_rgb).toUpperCase();$('colorPicker').value=hex(record.input_rgb);}
+  if(!$('colorDialog').open)$('colorDialog').showModal();
+  return checkColor(kind,{predicted_rgb:record.predicted_rgb,model_mode:r.model_mode,input_cmyk_profile:r.input_cmyk_profile,strength:r.strength,calibration_sha256:r.calibration_sha256});
 }
 function setupPresets(){
   const presets=[['하디스 빨강','#d80202'],['녹색','#00b941'],['청록','#009baa'],['파랑','#176bc1'],['보라','#8a43bf'],['주황','#ef7d21'],['금색','#e3c084'],['연두','#9bc830'],['분홍','#db76a5'],['남색','#243c78'],['갈색','#8b5941'],['회색','#808080']];
@@ -137,6 +183,7 @@ function inverseText(r){
     'CMYK 추천: '+['C','M','Y','K'].map((n,i)=>n+' '+c.cmyk[i]+'%').join(' / '),'CMYK 예상 결과: '+hex(c.predicted_rgb).toUpperCase()+' / 색차 ΔE76 '+c.delta_e76+' / 총 잉크량 '+c.total_ink_percent+'%',
     'RGB 디자인 입력용 HEX: '+hex(g.input_rgb).toUpperCase(),'RGB 경로 예상 결과: '+hex(g.predicted_rgb).toUpperCase()+' / 색차 ΔE76 '+g.delta_e76+' / 변환 후 총 잉크량 '+g.total_ink_percent+'%',
     '목표색 FOGRA39 색역 경고: '+(r.icc_gamut_warning?'있음':'없음'),'보정 기준 식별값: '+r.calibration_sha256,
+    r.model_mode==='photo'?'RGB 추천 근거: '+singleSupportText(g.reference_support)+' / CMYK 추천 근거: '+singleSupportText(c.reference_support):'FOGRA39 표준 모드: 사진 기준색 지원 범위는 적용하지 않습니다.',
     '사진 모드의 RGB 추천은 sRGB 원본 입력 기준입니다. CMYK 추천은 표시한 프로파일을 지정해야 합니다. 최종 PDF로 다시 확인하세요.',
     '수치 검색에서 찾은 가까운 후보이며, 실제 인쇄의 정확도나 전역 최적해를 보장하지 않습니다. 새 색의 사진 보정은 외삽 추정입니다. ΔE76의 2·5 구분은 프로그램 안내 기준입니다.'].join('\n');
 }
@@ -156,7 +203,7 @@ async function runInverse(){
     $('inverseCmykValue').textContent+=' · ΔE76 '+c.delta_e76;$('inverseRgbValue').textContent+=' · ΔE76 '+g.delta_e76+(g.delta_e76>5?' · 이 RGB 변환 경로에서는 차이가 큽니다':'');
     $('inverseCmykInput').value=['C','M','Y','K'].map((n,i)=>n+' '+c.cmyk[i]+'%').join(' / ');$('inverseRgbInput').value=hex(g.input_rgb).toUpperCase();
     $('inverseDetail').textContent='CMYK 입력 프로파일: '+r.input_cmyk_profile+' · 총 잉크량: CMYK 추천 '+c.total_ink_percent+'% / RGB 변환 후 '+g.total_ink_percent+'% · '+correctionLabel(r)+' · 목표색 FOGRA39 색역 경고 '+(r.icc_gamut_warning?'있음':'없음');
-    $('inverseScope').textContent=r.model_mode==='icc'?'별도 FOGRA39 ICC 표준 예상색을 기준으로 역산했습니다.':c.near_reference&&g.near_reference?'기존 기준색 근처의 사진 보정을 포함한 역산입니다.':'기존 기준에서 먼 새 색의 역산이 포함됩니다. 사진에서 추정한 전체 색상 경향을 확장한 결과입니다.';
+    $('inverseScope').textContent=r.model_mode==='icc'?'별도 FOGRA39 ICC 표준 예상색을 기준으로 역산했습니다.': 'RGB 추천: '+singleSupportText(g.reference_support)+' CMYK 추천: '+singleSupportText(c.reference_support);
     $('inverseError').textContent='';$('inverseResult').hidden=false;
   }catch(e){if(sequence===state.inverseSequence)$('inverseError').textContent=e.message;}
   finally{controls.forEach(id=>$(id).disabled=false);}
@@ -171,13 +218,14 @@ function bind(){
   $('inverseHex').oninput=resetInverseResult;$('inverseHex').onkeydown=e=>{if(e.key==='Enter')runInverse();};
   ['inverseMode','inverseTac'].forEach(id=>$(id).onchange=resetInverseResult);
   $('saveInverseTxt').onclick=async()=>{try{if(state.inverse)await saveBlob(new Blob([inverseText(state.inverse)],{type:'text/plain'}),'HARDYS_inverse_color.txt','text/plain');}catch(e){$('inverseError').textContent=e.message;}};
+  $('checkRecommendedRgb').onclick=()=>verifyRecommendedColor('rgb');$('checkRecommendedCmyk').onclick=()=>verifyRecommendedColor('cmyk');
 
   $('reconnectBtn').onclick=async()=>{try{await session();error('');if(!state.current){window.location.reload();return;}await refreshPreview();}catch(e){error(e.message);}};
   $('quitBtn').onclick=async()=>{try{await request('/api/shutdown',{payload:{}});status('프로그램 종료됨');error('프로그램을 종료했습니다. 다음에는 START.cmd를 실행해 주세요.');}catch(e){error(e.message);}};
   $('pdfInput').onchange=e=>{const file=e.target.files[0];e.target.value='';importFile(file);};$('rgbInput').onchange=e=>{const file=e.target.files[0];e.target.value='';importFile(file,'rgb');};
   $('caseSelect').onchange=e=>selectCase(e.target.value);$('pageSelect').onchange=async e=>{state.page=Number(e.target.value);$('beforeImage').src=assetURL(currentPage().source);clearPicks();await refreshPreview();};
   $('zoomSelect').onchange=fitImages;['beforeImage','afterImage'].forEach(id=>$(id).onload=fitImages);
-  $('strength').oninput=()=>{$('strengthValue').textContent=$('strength').value+'%';};$('strength').onchange=()=>{resetInverseResult();refreshPreview();};$('viewSelect').onchange=paintView;
+  $('strength').oninput=()=>{$('strengthValue').textContent=$('strength').value+'%';resetColorResult();};$('strength').onchange=()=>{resetInverseResult();refreshPreview();if($('colorDialog').open)checkColor(state.colorKind);};$('viewSelect').onchange=paintView;
   $('rangeBtn').onclick=()=>{$('viewSelect').value=$('viewSelect').value==='range'?'matched':'range';paintView();};
   $('pickMode').onchange=()=>{const value=$('pickMode').checked;['beforeImage','photoImage'].forEach(id=>$(id).classList.toggle('pick',value));};
   $('beforeImage').onclick=e=>pick(e,'source');$('photoImage').onclick=e=>pick(e,'target');
@@ -193,7 +241,14 @@ function bind(){
   $('saveModel').onclick=async()=>{try{await saveBlob(new Blob([JSON.stringify(state.calibration,null,2)],{type:'application/json'}),'HARDYS_photo_calibration.json','application/json');}catch(e){error(e.message);}};
   $('loadModel').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const doc=JSON.parse(await f.text());if(!Array.isArray(doc.anchors))throw Error('올바른 보정 기준 JSON이 아닙니다.');const result=await request('/api/calibration',{payload:doc});state.calibration=result.calibration;invalidatePredictions();paintAnchors();await refreshPreview();}catch(e){error(e.message);}};
   $('resetModel').onclick=async()=>{try{const result=await request('/api/reset',{payload:{}});state.calibration=result.calibration;invalidatePredictions();paintAnchors();await refreshPreview();}catch(e){error(e.message);}};
-  $('colorDialogBtn').onclick=()=>{$('colorDialog').showModal();checkColor();};$('closeColor').onclick=()=>$('colorDialog').close();$('checkHex').onclick=()=>checkColor();$('checkCmyk').onclick=()=>checkColor('cmyk');$('colorPicker').oninput=()=>{$('hexInput').value=$('colorPicker').value;};$('colorPicker').onchange=()=>checkColor();$('hexInput').onkeydown=e=>{if(e.key==='Enter')checkColor();};setupPresets();
+  $('colorDialogBtn').onclick=()=>{$('colorDialog').showModal();checkColor(state.colorKind);};$('closeColor').onclick=()=>$('colorDialog').close();
+  $('colorDialog').addEventListener('close',()=>resetColorResult());
+  $('colorMode').onchange=()=>{updateColorModeDescription();checkColor(state.colorKind);};
+  $('checkHex').onclick=()=>checkColor();$('checkCmyk').onclick=()=>checkColor('cmyk');
+  $('colorPicker').oninput=()=>{$('hexInput').value=$('colorPicker').value;state.colorKind='rgb';resetColorResult();};$('colorPicker').onchange=()=>checkColor();
+  $('hexInput').oninput=()=>{state.colorKind='rgb';resetColorResult();};$('hexInput').onkeydown=e=>{if(e.key==='Enter')checkColor();};
+  ['c','m','y','k'].forEach(name=>{$(name+'Input').oninput=()=>{state.colorKind='cmyk';resetColorResult();};$(name+'Input').onkeydown=e=>{if(e.key==='Enter')checkColor('cmyk');};});
+  setupPresets();updateColorModeDescription();
   $('helpBtn').onclick=()=>$('help').showModal();$('closeHelp').onclick=()=>$('help').close();
   const drop=$('drop');drop.ondragover=e=>{e.preventDefault();drop.classList.add('drag');};drop.ondragleave=()=>drop.classList.remove('drag');drop.ondrop=e=>{e.preventDefault();drop.classList.remove('drag');importFile(e.dataTransfer.files[0]);};
   let syncing=false;['beforeStage','afterStage'].forEach(id=>$(id).onscroll=()=>{if(syncing)return;const from=$(id),to=$(id==='beforeStage'?'afterStage':'beforeStage');syncing=true;to.scrollTop=from.scrollTop;to.scrollLeft=from.scrollLeft;requestAnimationFrame(()=>syncing=false);});

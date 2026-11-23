@@ -1,24 +1,298 @@
-name: Publish verified simulator archives
+# Install this draft as .github/workflows/release.yml in the release commit.
+name: Build, verify and release HARDYS V11.2
+
 on:
-  workflow_dispatch:
   push:
     branches: [main]
-    paths: ["distribution/VERSION", ".github/workflows/release.yml"]
+    paths:
+      - distribution/VERSION
+      - .github/workflows/release.yml
+      - packaging/**
+      - source/**
+  workflow_dispatch:
+
 permissions:
   contents: write
+
+concurrency:
+  group: hardys-release-v11-2
+  cancel-in-progress: false
+
+env:
+  RELEASE_VERSION: '11.2'
+  RELEASE_TAG: v11.2
+  FULL_ZIP: HARDYS_PrintSimulator_v11_2_Full_Install.zip
+  UPDATE_ZIP: HARDYS_PrintSimulator_v11_2_Update.zip
+
 jobs:
-  release:
+  build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    outputs:
+      artifact_name: hardys-v11.2-release-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out the exact release commit
+        uses: actions/checkout@v4
         with:
+          ref: ${{ github.sha }}
           persist-credentials: false
-      - name: Verify and publish V11.1
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Verify version and deterministically build both archives
+        shell: bash
         run: |
-          set -eu
-          cd distribution
-          cat parts/installer.* > HARDYS_PrintSimulator_v11_1_Full_Install.zip
-          sha256sum -c SHA256SUMS
-          gh release create v11.1 HARDYS_PrintSimulator_v11_1_Full_Install.zip HARDYS_PrintSimulator_v11_1_Update.zip SHA256SUMS --target "$GITHUB_SHA" --title "HARDYS 인쇄색 시뮬레이터 V11.1" --notes "Windows 신규 설치: Full_Install.zip을 전부 풀고 START.cmd 실행. 기존 V11 설치본은 Update.zip 사용."
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          if Path('distribution/VERSION').read_text(encoding='utf8').strip() != os.environ['RELEASE_VERSION']:
+              raise SystemExit('distribution/VERSION must be 11.2 for this workflow.')
+          config = json.loads(Path('packaging/release_v11_2.json').read_text(encoding='utf8'))
+          if config['full_filename'] != os.environ['FULL_ZIP'] or config['update_filename'] != os.environ['UPDATE_ZIP']:
+              raise SystemExit('Configured archive names do not match this release.')
+          PY
+          python3 packaging/build_release.py --config packaging/release_v11_2.json --source-root source --out release
+          cmp distribution/SHA256SUMS-v11.2 release/SHA256SUMS
+          cd release
+          sha256sum --check --strict SHA256SUMS
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          for name in (os.environ['FULL_ZIP'], os.environ['UPDATE_ZIP'], 'SHA256SUMS', 'BUILD_VERIFICATION.json'):
+              if not Path(name).is_file():
+                  raise SystemExit('Missing build artifact: ' + name)
+          receipt = json.loads(Path('BUILD_VERIFICATION.json').read_text(encoding='utf8'))
+          if receipt.get('revision') != '11.2' or receipt.get('verified_all_full_files') is not True or receipt.get('verified_patch_matches_full') is not True:
+              raise SystemExit('Build verification did not pass.')
+          PY
+      - name: Transfer the verified release archives
+        uses: actions/upload-artifact@v4
+        with:
+          name: hardys-v11.2-release-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            release/${{ env.FULL_ZIP }}
+            release/${{ env.UPDATE_ZIP }}
+            release/SHA256SUMS
+            release/BUILD_VERIFICATION.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+
+  windows_verify:
+    needs: build
+    runs-on: windows-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    outputs:
+      artifact_name: hardys-v11.2-windows-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Prepare a failure receipt before downloading or running anything
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $receipt = Join-Path $env:GITHUB_WORKSPACE 'WINDOWS_VERIFICATION.json'
+          [ordered]@{
+            schema_version = 1
+            revision = '11.2'
+            all_pass = $false
+            release_gate_eligible = $false
+            mode = 'bundled_windows_release_gate'
+            scope = 'GitHub-hosted Windows runner; the user PC is not accessed.'
+            error = 'The Windows gate has not completed. See this job log if this placeholder remains.'
+            ci = @{ commit_sha = $env:GITHUB_SHA; run_id = $env:GITHUB_RUN_ID; run_attempt = $env:GITHUB_RUN_ATTEMPT; user_pc_executed = $false }
+          } | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $receipt -Encoding utf8NoBOM
+      - name: Download the build from this workflow run
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+          path: release_artifacts
+      - name: Check archive bytes and run the bundled Python with the actual GS 9.50 DLL
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $false
+          $artifactDir = Join-Path $env:GITHUB_WORKSPACE 'release_artifacts'
+          $receipt = Join-Path $env:GITHUB_WORKSPACE 'WINDOWS_VERIFICATION.json'
+          $lines = @(Get-Content -LiteralPath (Join-Path $artifactDir 'SHA256SUMS') | Where-Object { $_.Trim() })
+          if ($lines.Count -ne 2) { throw 'Expected exactly two archive checksums.' }
+          $expectedNames = @($env:FULL_ZIP, $env:UPDATE_ZIP)
+          $verifiedHashes = @{}
+          foreach ($line in $lines) {
+            if ($line -notmatch '^(?<digest>[0-9a-f]{64})  (?<filename>[^/\\]+)$') { throw "Malformed checksum line: $line" }
+            $name = $Matches.filename
+            $expected = $Matches.digest
+            if (($expectedNames -notcontains $name) -or $verifiedHashes.ContainsKey($name)) { throw "Unexpected or repeated archive: $name" }
+            $actual = (Get-FileHash -LiteralPath (Join-Path $artifactDir $name) -Algorithm SHA256).Hash.ToLowerInvariant()
+            if ($actual -cne $expected) { throw "Archive checksum mismatch: $name" }
+            $verifiedHashes[$name] = $actual
+            Write-Output "$actual  $name"
+          }
+          $installRoot = Join-Path $env:GITHUB_WORKSPACE 'installed'
+          Expand-Archive -LiteralPath (Join-Path $artifactDir $env:FULL_ZIP) -DestinationPath $installRoot
+          $bundle = Join-Path $installRoot 'HARDYS_PrintSimulator_v11_2'
+          $python = Join-Path $bundle 'runtime\python\python.exe'
+          $checker = Join-Path $bundle 'verification_sources\verify_release_v11_2.py'
+          if (-not (Test-Path -LiteralPath $python -PathType Leaf)) { throw 'Bundled Python is missing.' }
+          if (-not (Test-Path -LiteralPath $checker -PathType Leaf)) { throw 'Bundled release checker is missing.' }
+          Push-Location -LiteralPath $bundle
+          try {
+            & $python $checker --output $receipt
+            $gateExit = $LASTEXITCODE
+          } finally {
+            Pop-Location
+          }
+          $verification = Get-Content -LiteralPath $receipt -Raw | ConvertFrom-Json
+          $verification | Add-Member -NotePropertyName ci -NotePropertyValue ([ordered]@{
+            commit_sha = $env:GITHUB_SHA
+            run_id = $env:GITHUB_RUN_ID
+            run_attempt = $env:GITHUB_RUN_ATTEMPT
+            user_pc_executed = $false
+            full_install_sha256 = $verifiedHashes[$env:FULL_ZIP]
+            update_sha256 = $verifiedHashes[$env:UPDATE_ZIP]
+            checker_exit_code = $gateExit
+          }) -Force
+          $verification | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $receipt -Encoding utf8NoBOM
+          if ($gateExit -ne 0) { throw "Bundled release checker failed with exit code $gateExit." }
+          if (($verification.all_pass -isnot [bool]) -or ($verification.all_pass -ne $true)) { throw 'all_pass is not true.' }
+          if (($verification.release_gate_eligible -isnot [bool]) -or ($verification.release_gate_eligible -ne $true)) { throw 'This result is not eligible for the Windows release gate.' }
+          if ($verification.mode -ne 'bundled_windows_release_gate') { throw 'A development/native result cannot pass this gate.' }
+          if ($verification.engine.actual_bundled_gs950_dll -ne $true) { throw 'The actual bundled GS 9.50 DLL was not verified.' }
+      - name: Keep the Windows receipt even when the gate fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hardys-v11.2-windows-${{ github.run_id }}-${{ github.run_attempt }}
+          path: WINDOWS_VERIFICATION.json
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    needs: [build, windows_verify]
+    if: github.ref == 'refs/heads/main' && needs.build.result == 'success' && needs.windows_verify.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Check out the release notes and pinned checksums from the exact commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          sparse-checkout: |
+            distribution/VERSION
+            distribution/SHA256SUMS-v11.2
+            distribution/RELEASE_NOTES-v11.2.md
+          sparse-checkout-cone-mode: false
+      - name: Download the verified build
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+          path: release
+      - name: Download the successful Windows receipt
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.windows_verify.outputs.artifact_name }}
+          path: release
+      - name: Recheck the gate, exact archive hashes and absence of an existing release or tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          cmp distribution/SHA256SUMS-v11.2 release/SHA256SUMS
+          (cd release && sha256sum --check --strict SHA256SUMS)
+          gh api "repos/$GITHUB_REPOSITORY/releases" --paginate --jq '.[].tag_name' > release/existing-release-tags.txt
+          gh api "repos/$GITHUB_REPOSITORY/git/matching-refs/tags/$RELEASE_TAG" --jq '.[].ref' > release/existing-tag-refs.txt
+          python3 - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          folder = Path('release')
+          receipt = json.loads((folder / 'WINDOWS_VERIFICATION.json').read_text(encoding='utf8'))
+          ci = receipt.get('ci', {})
+          if receipt.get('all_pass') is not True or receipt.get('release_gate_eligible') is not True:
+              raise SystemExit('Windows verification did not pass.')
+          if receipt.get('mode') != 'bundled_windows_release_gate' or receipt.get('engine', {}).get('actual_bundled_gs950_dll') is not True:
+              raise SystemExit('This is not the actual bundled Windows runtime result.')
+          if ci.get('commit_sha') != os.environ['GITHUB_SHA'] or ci.get('checker_exit_code') != 0:
+              raise SystemExit('Windows verification does not belong to this successful release commit.')
+          for name, field in ((os.environ['FULL_ZIP'], 'full_install_sha256'), (os.environ['UPDATE_ZIP'], 'update_sha256')):
+              actual = hashlib.sha256((folder / name).read_bytes()).hexdigest()
+              if ci.get(field) != actual:
+                  raise SystemExit('Windows verification used different archive bytes: ' + name)
+          tag = os.environ['RELEASE_TAG']
+          if tag in (folder / 'existing-release-tags.txt').read_text(encoding='utf8').splitlines():
+              raise SystemExit('Release already exists; refusing to modify or replace it: ' + tag)
+          if 'refs/tags/' + tag in (folder / 'existing-tag-refs.txt').read_text(encoding='utf8').splitlines():
+              raise SystemExit('Tag already exists; refusing to move or reuse it: ' + tag)
+          PY
+      - name: Bind a new tag to this exact commit and publish the five verified assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Atomic ref creation fails if another actor created the tag after
+          # the preflight. --target alone would not move an existing tag.
+          gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" -f "ref=refs/tags/$RELEASE_TAG" -f "sha=$GITHUB_SHA"
+          gh release create "$RELEASE_TAG" \
+            "release/$FULL_ZIP" \
+            "release/$UPDATE_ZIP" \
+            release/SHA256SUMS \
+            release/BUILD_VERIFICATION.json \
+            release/WINDOWS_VERIFICATION.json \
+            --repo "$GITHUB_REPOSITORY" \
+            --verify-tag \
+            --target "$GITHUB_SHA" \
+            --title 'HARDYS 인쇄색 시뮬레이터 V11.2' \
+            --notes-file distribution/RELEASE_NOTES-v11.2.md
+      - name: Download the published archives into a separate folder and verify every checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir downloaded
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --dir downloaded \
+            --pattern "$FULL_ZIP" --pattern "$UPDATE_ZIP" --pattern SHA256SUMS
+          cmp distribution/SHA256SUMS-v11.2 downloaded/SHA256SUMS
+          (cd downloaded && sha256sum --check --strict SHA256SUMS)
+          sha256sum "downloaded/$FULL_ZIP" "downloaded/$UPDATE_ZIP"
+          gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" > downloaded/tag-ref.json
+          python3 - <<'PY'
+          import datetime, hashlib, json, os
+          from pathlib import Path
+          downloaded = Path('downloaded')
+          tag = json.loads((downloaded / 'tag-ref.json').read_text(encoding='utf8'))
+          if tag.get('object', {}).get('type') != 'commit' or tag['object']['sha'] != os.environ['GITHUB_SHA']:
+              raise SystemExit('Published release tag does not point to the exact verified commit.')
+          rows = []
+          for name in (os.environ['FULL_ZIP'], os.environ['UPDATE_ZIP']):
+              path = downloaded / name
+              actual = hashlib.sha256(path.read_bytes()).hexdigest()
+              built = hashlib.sha256((Path('release') / name).read_bytes()).hexdigest()
+              if actual != built:
+                  raise SystemExit('Downloaded release archive differs from the verified build: ' + name)
+              rows.append({'name': name, 'bytes': path.stat().st_size, 'sha256': actual,
+                           'matches_verified_build': True,
+                           'public_download_url': f'https://github.com/{os.environ["GITHUB_REPOSITORY"]}/releases/download/{os.environ["RELEASE_TAG"]}/{name}'})
+          receipt = {'schema_version': 1, 'revision': '11.2', 'all_pass': True,
+                     'repository': os.environ['GITHUB_REPOSITORY'], 'tag': os.environ['RELEASE_TAG'],
+                     'commit_sha': os.environ['GITHUB_SHA'], 'run_id': os.environ['GITHUB_RUN_ID'],
+                     'verified_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                     'method': 'gh release download into a separate directory; pinned SHA256SUMS comparison; sha256sum --check; byte-hash comparison with the Windows-verified build',
+                     'scope': 'Published release downloads and remote Windows CI; user PC untouched.',
+                     'windows_receipt_sha256': hashlib.sha256(Path('release/WINDOWS_VERIFICATION.json').read_bytes()).hexdigest(),
+                     'artifacts': rows}
+          Path('PUBLIC_DOWNLOAD_VERIFICATION.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
+          PY
+          gh release upload "$RELEASE_TAG" PUBLIC_DOWNLOAD_VERIFICATION.json --repo "$GITHUB_REPOSITORY"
+          mkdir receipt_roundtrip
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --dir receipt_roundtrip --pattern PUBLIC_DOWNLOAD_VERIFICATION.json
+          cmp PUBLIC_DOWNLOAD_VERIFICATION.json receipt_roundtrip/PUBLIC_DOWNLOAD_VERIFICATION.json
+      - name: Keep the post-publication verification receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hardys-v11.2-download-${{ github.run_id }}-${{ github.run_attempt }}
+          path: PUBLIC_DOWNLOAD_VERIFICATION.json
+          if-no-files-found: ignore
+          retention-days: 30

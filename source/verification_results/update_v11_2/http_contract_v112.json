@@ -1,0 +1,1057 @@
+{
+  "date": "2026-11-23",
+  "environment": {
+    "os": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "pillow": "13.0.0",
+    "lcms": "2.19"
+  },
+  "scope": "Copied V11.2 app, actual PNG/API/photo/inverse contracts; no user-PC UI or native PDF rerender.",
+  "checks": [
+    {
+      "name": "health_revision",
+      "passed": true
+    },
+    {
+      "name": "import_revision_matches_release",
+      "rgb": [
+        18,
+        121,
+        141
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        18,
+        121,
+        141
+      ],
+      "strength": 0,
+      "predicted_rgb": [
+        18,
+        121,
+        141
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        18,
+        121,
+        141
+      ],
+      "strength": 0,
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        18,
+        121,
+        141
+      ],
+      "strength": 0.5,
+      "predicted_rgb": [
+        38,
+        113,
+        141
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        18,
+        121,
+        141
+      ],
+      "strength": 0.5,
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        18,
+        121,
+        141
+      ],
+      "strength": 1,
+      "predicted_rgb": [
+        49,
+        105,
+        142
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        18,
+        121,
+        141
+      ],
+      "strength": 1,
+      "passed": true
+    },
+    {
+      "name": "internal_double_correction_blocked",
+      "rgb": [
+        18,
+        121,
+        141
+      ],
+      "passed": true
+    },
+    {
+      "name": "import_revision_matches_release",
+      "rgb": [
+        224,
+        186,
+        124
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        224,
+        186,
+        124
+      ],
+      "strength": 0,
+      "predicted_rgb": [
+        224,
+        186,
+        124
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        224,
+        186,
+        124
+      ],
+      "strength": 0,
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        224,
+        186,
+        124
+      ],
+      "strength": 0.5,
+      "predicted_rgb": [
+        201,
+        169,
+        121
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        224,
+        186,
+        124
+      ],
+      "strength": 0.5,
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        224,
+        186,
+        124
+      ],
+      "strength": 1,
+      "predicted_rgb": [
+        178,
+        152,
+        117
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        224,
+        186,
+        124
+      ],
+      "strength": 1,
+      "passed": true
+    },
+    {
+      "name": "internal_double_correction_blocked",
+      "rgb": [
+        224,
+        186,
+        124
+      ],
+      "passed": true
+    },
+    {
+      "name": "import_revision_matches_release",
+      "rgb": [
+        216,
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        216,
+        2,
+        2
+      ],
+      "strength": 0,
+      "predicted_rgb": [
+        216,
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        216,
+        2,
+        2
+      ],
+      "strength": 0,
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        216,
+        2,
+        2
+      ],
+      "strength": 0.5,
+      "predicted_rgb": [
+        191,
+        44,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        216,
+        2,
+        2
+      ],
+      "strength": 0.5,
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        216,
+        2,
+        2
+      ],
+      "strength": 1,
+      "predicted_rgb": [
+        166,
+        59,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        216,
+        2,
+        2
+      ],
+      "strength": 1,
+      "passed": true
+    },
+    {
+      "name": "internal_double_correction_blocked",
+      "rgb": [
+        216,
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "name": "import_revision_matches_release",
+      "rgb": [
+        0,
+        185,
+        65
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        0,
+        185,
+        65
+      ],
+      "strength": 0,
+      "predicted_rgb": [
+        0,
+        185,
+        65
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        0,
+        185,
+        65
+      ],
+      "strength": 0,
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        0,
+        185,
+        65
+      ],
+      "strength": 0.5,
+      "predicted_rgb": [
+        0,
+        170,
+        78
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        0,
+        185,
+        65
+      ],
+      "strength": 0.5,
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        0,
+        185,
+        65
+      ],
+      "strength": 1,
+      "predicted_rgb": [
+        0,
+        156,
+        88
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        0,
+        185,
+        65
+      ],
+      "strength": 1,
+      "passed": true
+    },
+    {
+      "name": "internal_double_correction_blocked",
+      "rgb": [
+        0,
+        185,
+        65
+      ],
+      "passed": true
+    },
+    {
+      "name": "import_revision_matches_release",
+      "rgb": [
+        128,
+        128,
+        128
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        128,
+        128,
+        128
+      ],
+      "strength": 0,
+      "predicted_rgb": [
+        128,
+        128,
+        128
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        128,
+        128,
+        128
+      ],
+      "strength": 0,
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        128,
+        128,
+        128
+      ],
+      "strength": 0.5,
+      "predicted_rgb": [
+        128,
+        128,
+        128
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        128,
+        128,
+        128
+      ],
+      "strength": 0.5,
+      "passed": true
+    },
+    {
+      "name": "image_vs_direct_photo",
+      "rgb": [
+        128,
+        128,
+        128
+      ],
+      "strength": 1,
+      "predicted_rgb": [
+        128,
+        128,
+        128
+      ],
+      "passed": true
+    },
+    {
+      "name": "image_and_color_support_agree",
+      "rgb": [
+        128,
+        128,
+        128
+      ],
+      "strength": 1,
+      "passed": true
+    },
+    {
+      "name": "internal_double_correction_blocked",
+      "rgb": [
+        128,
+        128,
+        128
+      ],
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "photo",
+      "target": [
+        47,
+        103,
+        135
+      ],
+      "input_type": "rgb",
+      "input": [
+        17,
+        118,
+        133
+      ],
+      "expected": [
+        47,
+        103,
+        135
+      ],
+      "actual": [
+        47,
+        103,
+        135
+      ],
+      "reported_delta_e76": 0.0,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "photo",
+      "input_type": "rgb",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "photo",
+      "target": [
+        47,
+        103,
+        135
+      ],
+      "input_type": "cmyk",
+      "input": [
+        73.33,
+        8.23,
+        19.6,
+        40.39
+      ],
+      "expected": [
+        47,
+        103,
+        135
+      ],
+      "actual": [
+        47,
+        103,
+        135
+      ],
+      "reported_delta_e76": 0.0,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "photo",
+      "input_type": "cmyk",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "photo",
+      "target": [
+        0,
+        185,
+        65
+      ],
+      "input_type": "rgb",
+      "input": [
+        0,
+        216,
+        0
+      ],
+      "expected": [
+        0,
+        189,
+        77
+      ],
+      "actual": [
+        0,
+        189,
+        77
+      ],
+      "reported_delta_e76": 4.01,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "photo",
+      "input_type": "rgb",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "photo",
+      "target": [
+        0,
+        185,
+        65
+      ],
+      "input_type": "cmyk",
+      "input": [
+        57.25,
+        0.0,
+        100.0,
+        0.0
+      ],
+      "expected": [
+        82,
+        163,
+        73
+      ],
+      "actual": [
+        82,
+        163,
+        73
+      ],
+      "reported_delta_e76": 23.69,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "photo",
+      "input_type": "cmyk",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "photo",
+      "target": [
+        216,
+        2,
+        2
+      ],
+      "input_type": "rgb",
+      "input": [
+        255,
+        0,
+        40
+      ],
+      "expected": [
+        194,
+        63,
+        16
+      ],
+      "actual": [
+        194,
+        63,
+        16
+      ],
+      "reported_delta_e76": 20.91,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "photo",
+      "input_type": "rgb",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "photo",
+      "target": [
+        216,
+        2,
+        2
+      ],
+      "input_type": "cmyk",
+      "input": [
+        0.0,
+        100.0,
+        89.41,
+        0.0
+      ],
+      "expected": [
+        176,
+        60,
+        14
+      ],
+      "actual": [
+        176,
+        60,
+        14
+      ],
+      "reported_delta_e76": 27.02,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "photo",
+      "input_type": "cmyk",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "icc",
+      "target": [
+        47,
+        103,
+        135
+      ],
+      "input_type": "rgb",
+      "input": [
+        28,
+        99,
+        132
+      ],
+      "expected": [
+        47,
+        103,
+        135
+      ],
+      "actual": [
+        47,
+        103,
+        135
+      ],
+      "reported_delta_e76": 0.0,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "icc",
+      "input_type": "rgb",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "icc",
+      "target": [
+        47,
+        103,
+        135
+      ],
+      "input_type": "cmyk",
+      "input": [
+        70.98,
+        20.78,
+        0.0,
+        50.98
+      ],
+      "expected": [
+        47,
+        103,
+        135
+      ],
+      "actual": [
+        47,
+        103,
+        135
+      ],
+      "reported_delta_e76": 0.0,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "icc",
+      "input_type": "cmyk",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "icc",
+      "target": [
+        0,
+        185,
+        65
+      ],
+      "input_type": "rgb",
+      "input": [
+        5,
+        169,
+        15
+      ],
+      "expected": [
+        43,
+        168,
+        63
+      ],
+      "actual": [
+        43,
+        168,
+        63
+      ],
+      "reported_delta_e76": 11.32,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "icc",
+      "input_type": "rgb",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "icc",
+      "target": [
+        0,
+        185,
+        65
+      ],
+      "input_type": "cmyk",
+      "input": [
+        79.21,
+        0.0,
+        100.0,
+        0.0
+      ],
+      "expected": [
+        39,
+        168,
+        63
+      ],
+      "actual": [
+        39,
+        168,
+        63
+      ],
+      "reported_delta_e76": 10.93,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "icc",
+      "input_type": "cmyk",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "icc",
+      "target": [
+        216,
+        2,
+        2
+      ],
+      "input_type": "rgb",
+      "input": [
+        229,
+        17,
+        0
+      ],
+      "expected": [
+        228,
+        38,
+        37
+      ],
+      "actual": [
+        228,
+        38,
+        37
+      ],
+      "reported_delta_e76": 10.3,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "icc",
+      "input_type": "rgb",
+      "passed": true
+    },
+    {
+      "name": "inverse_public_value_reentry",
+      "mode": "icc",
+      "target": [
+        216,
+        2,
+        2
+      ],
+      "input_type": "cmyk",
+      "input": [
+        0.0,
+        95.68,
+        99.6,
+        0.0
+      ],
+      "expected": [
+        229,
+        45,
+        37
+      ],
+      "actual": [
+        229,
+        45,
+        37
+      ],
+      "reported_delta_e76": 10.29,
+      "passed": true
+    },
+    {
+      "name": "recommendation_context_and_support_preserved",
+      "mode": "icc",
+      "input_type": "cmyk",
+      "passed": true
+    },
+    {
+      "name": "stale_calibration_rejected",
+      "passed": true
+    },
+    {
+      "name": "invalid_color_shape_rejected",
+      "passed": true
+    },
+    {
+      "name": "icc_metadata_disables_photo_strength",
+      "passed": true
+    },
+    {
+      "name": "standard_proof_not_photo_source",
+      "passed": true
+    }
+  ],
+  "observations": [
+    {
+      "name": "rgb_to_displayed_cmyk_reentry",
+      "rgb": [
+        18,
+        121,
+        141
+      ],
+      "profile": "GRACoL2013_CRPC6.icc",
+      "cmyk": [
+        80.39,
+        23.92,
+        25.1,
+        23.14
+      ],
+      "rgb_prediction": [
+        49,
+        105,
+        142
+      ],
+      "cmyk_prediction": [
+        49,
+        105,
+        142
+      ],
+      "delta_e76": 0.0
+    },
+    {
+      "name": "rgb_to_displayed_cmyk_reentry",
+      "rgb": [
+        224,
+        186,
+        124
+      ],
+      "profile": "GRACoL2013_CRPC6.icc",
+      "cmyk": [
+        9.02,
+        24.71,
+        54.12,
+        4.31
+      ],
+      "rgb_prediction": [
+        178,
+        152,
+        117
+      ],
+      "cmyk_prediction": [
+        178,
+        152,
+        118
+      ],
+      "delta_e76": 0.5421737057206186
+    },
+    {
+      "name": "rgb_to_displayed_cmyk_reentry",
+      "rgb": [
+        216,
+        2,
+        2
+      ],
+      "profile": "GRACoL2013_CRPC6.icc",
+      "cmyk": [
+        0.0,
+        100.0,
+        100.0,
+        3.92
+      ],
+      "rgb_prediction": [
+        166,
+        59,
+        0
+      ],
+      "cmyk_prediction": [
+        169,
+        60,
+        0
+      ],
+      "delta_e76": 1.1722902446483954
+    },
+    {
+      "name": "rgb_to_displayed_cmyk_reentry",
+      "rgb": [
+        0,
+        185,
+        65
+      ],
+      "profile": "GRACoL2013_CRPC6.icc",
+      "cmyk": [
+        74.51,
+        0.0,
+        96.47,
+        0.0
+      ],
+      "rgb_prediction": [
+        0,
+        156,
+        88
+      ],
+      "cmyk_prediction": [
+        0,
+        146,
+        82
+      ],
+      "delta_e76": 4.374367166947314
+    },
+    {
+      "name": "rgb_to_displayed_cmyk_reentry",
+      "rgb": [
+        128,
+        128,
+        128
+      ],
+      "profile": "GRACoL2013_CRPC6.icc",
+      "cmyk": [
+        47.45,
+        38.82,
+        37.65,
+        16.86
+      ],
+      "rgb_prediction": [
+        128,
+        128,
+        128
+      ],
+      "cmyk_prediction": [
+        128,
+        128,
+        128
+      ],
+      "delta_e76": 0.0
+    }
+  ],
+  "failures": [],
+  "catalog_source": {
+    "id": "delivered_case7_v11",
+    "name": "올바른 기준 · 디자이너 전달본 7번",
+    "source": "케이스 7 · 130 × 32 × 130 mm.pdf",
+    "source_sha256": "e8cf05c8b3241d037ea40214213a95551a3ad24e49e001894b30c65b6bdcb23a",
+    "kind": "pdf",
+    "pipeline": "source_srgb_photo_v11",
+    "page_count": 1,
+    "pages": [
+      {
+        "source": "assets/reference_v11/page_01_source.png",
+        "relative": "assets/reference_v11/page_01_relative.png",
+        "paper": "assets/reference_v11/page_01_paper.png",
+        "TAC300": "assets/reference_v11/page_01_TAC300.png"
+      }
+    ],
+    "profile": "CoatedFOGRA39.icc",
+    "embedded_profile": true,
+    "source_profile_description": "GRACoL2013_CRPC6",
+    "source_profile_note": "내장 Output Intent 해석, 실제 인쇄소 변환 이력은 알 수 없음",
+    "render_revision": "11.1"
+  },
+  "calibration_unchanged": true,
+  "check_count": 69,
+  "all_contract_checks_passed": true
+}

@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-23",
+  "test_groups": 7,
+  "all_pass": true,
+  "windows_ghostscript_950_executed": false,
+  "files": [
+    {
+      "path": "app/proof_pdf.py",
+      "sha256": "eba2c39d84924273415fca7e5bb996ca8067bbe04c8473ed6da6ec9c1fe6798e",
+      "bytes": 16069
+    },
+    {
+      "path": "tests/icc/run_pdf_regression.py",
+      "sha256": "7e501e60df08a685c2d151145029e6cb28ccb61f91ec0a23924ac9383e1971df",
+      "bytes": 12284
+    },
+    {
+      "path": "tests/icc/fixtures/proof_pdf_v11_1.py",
+      "sha256": "d87a2126c821f1d36d1a3d5f980436aab2ecf41c56eab8c45b45d692f51f5603",
+      "bytes": 13529
+    },
+    {
+      "path": "verification/ICC_PDF_V11_2_REVIEW_20261123.txt",
+      "sha256": "f43c682b6c63e3d9f03d7dfd332be41fa3f2583befa61e3c934f3c6532ea78d7",
+      "bytes": 6575
+    },
+    {
+      "path": "verification/icc_pdf_v11_2_results.json",
+      "sha256": "b8868f9d26d7d5b0d4d1a95d6f5e26550a4f4e2b6fa05c6e47a813c776d02376",
+      "bytes": 10903
+    }
+  ]
+}

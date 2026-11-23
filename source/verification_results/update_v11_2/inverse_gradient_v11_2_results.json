@@ -1,0 +1,8599 @@
+{
+  "scope": "Focused inverse-gradient and reference-support regression; Linux system runtime, not Windows or physical press validation.",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "numpy": "2.3.5",
+    "pillow": "13.0.0",
+    "littlecms": "2.19"
+  },
+  "source_sha256": {
+    "inverse_gradient.py": "8df55b27577a20ddaa08a11e12455c41f004561d87ae37aeaf053ef036fd5b88",
+    "reference_support.py": "bc564d9bcc6380f0a0d1d3166cb8d8c9b004ed1c8fe6caffaffbaf6b4b241331",
+    "prediction.py": "04c7d4509696dc9302183d78e177aed2ef3098f8a40a17e5963660c51d851c01",
+    "default_calibration.json": "5653523ea74fb72bdfc4c60d31bca8c0e6f4b7b2ae03bbd6e576fbbd8aa75236"
+  },
+  "fixture_sha256": {
+    "baseline_v11_1.json": "a9fbf5e6379870031b423bbace3fecf92b99220f7af7a85cd77bcdfd839e90b7",
+    "gradient_tac240_target.png": "8cd60e6640d8c4451f8f9012fc2a2a5935ee4c31ab1eb18ebbb066b1ae54af48",
+    "gradient_target_0.png": "b06dfaadfd6290cb8471beb1e5f33f2dd436bd36e48c4c9d14e830940b2b297c",
+    "gradient_target_1.png": "4cf98e450a10df69e36f4e6f47aa97870623b72bbf2310731cc562b7c8da8510",
+    "gradient_target_2.png": "c2740672dfb2b899128aa58a2a81ce38591d15203e9a8fed563bdfa8d8badd82"
+  },
+  "checks": [
+    {
+      "name": "support.default_counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.chromatic_denominator",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.all_neutral_is_not_validated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.empty",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.radius_below_near_threshold_is_disjoint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.radius_metadata",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.radius_above_default",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.no_references_is_extrapolated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.singleton_shape",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.reject_shape",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.reject_range",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "support.reject_finite",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "quantized_ramp.0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "quantized_ramp.1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "quantized_ramp.2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "quantized_ramp.3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "quantized_ramp.4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "line.source_pixels_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "line.normalized_points",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "line.source_angle",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "line.preview_and_source_angle_distinguished",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "line.reverses_colors",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "line.reverses_source_angle",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "rect.selection_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "rect.physical_angle",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_basic300.two.reentered_samples",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_basic300.two.reentered_predictions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_basic300.two.displayed_mean_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_basic300.two.displayed_max_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_basic300.two.entire_curve_tac",
+      "passed": true,
+      "detail": 151.37254901960785
+    },
+    {
+      "name": "photo_basic300.two.conservative_reported_tac",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_basic300.two.support_of_recommended_inputs",
+      "passed": true,
+      "detail": {
+        "neutral": 0,
+        "near": 15,
+        "transition": 13,
+        "extrapolated": 5
+      }
+    },
+    {
+      "name": "photo_basic300.two.support_sample_count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_basic300.baseline_objective_preserved",
+      "passed": true,
+      "detail": {
+        "old": 0.4813369802614229,
+        "new": 0.4813369802614229
+      }
+    },
+    {
+      "name": "photo_basic300.direction",
+      "passed": true,
+      "detail": 110.0
+    },
+    {
+      "name": "photo_symmetric300.two.reentered_samples",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.two.reentered_predictions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.two.displayed_mean_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.two.displayed_max_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.two.entire_curve_tac",
+      "passed": true,
+      "detail": 152.54901960784315
+    },
+    {
+      "name": "photo_symmetric300.two.conservative_reported_tac",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.two.support_of_recommended_inputs",
+      "passed": true,
+      "detail": {
+        "neutral": 33,
+        "near": 0,
+        "transition": 0,
+        "extrapolated": 0
+      }
+    },
+    {
+      "name": "photo_symmetric300.two.support_sample_count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.baseline_objective_preserved",
+      "passed": true,
+      "detail": {
+        "old": 430.33270806910906,
+        "new": 427.72633407743075
+      }
+    },
+    {
+      "name": "photo_symmetric300.direction",
+      "passed": true,
+      "detail": 35.6
+    },
+    {
+      "name": "photo_symmetric300.three.reentered_samples",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.three.reentered_predictions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.three.displayed_mean_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.three.displayed_max_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.three.entire_curve_tac",
+      "passed": true,
+      "detail": 151.76470588235293
+    },
+    {
+      "name": "photo_symmetric300.three.conservative_reported_tac",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.three.support_of_recommended_inputs",
+      "passed": true,
+      "detail": {
+        "neutral": 0,
+        "near": 15,
+        "transition": 14,
+        "extrapolated": 4
+      }
+    },
+    {
+      "name": "photo_symmetric300.three.support_sample_count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.three_stop_retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "photo_symmetric300.three_baseline_objective_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.two.reentered_samples",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.two.reentered_predictions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.two.displayed_mean_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.two.displayed_max_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.two.entire_curve_tac",
+      "passed": true,
+      "detail": 99.6078431372549
+    },
+    {
+      "name": "icc_low100.two.conservative_reported_tac",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.two.icc_has_no_photo_support",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.baseline_objective_preserved",
+      "passed": true,
+      "detail": {
+        "old": 1425.1713186688628,
+        "new": 561.1809912745437
+      }
+    },
+    {
+      "name": "icc_low100.direction",
+      "passed": true,
+      "detail": 110.0
+    },
+    {
+      "name": "icc_low100.three.reentered_samples",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.three.reentered_predictions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.three.displayed_mean_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.three.displayed_max_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.three.entire_curve_tac",
+      "passed": true,
+      "detail": 99.6078431372549
+    },
+    {
+      "name": "icc_low100.three.conservative_reported_tac",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.three.icc_has_no_photo_support",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_low100.does_not_miss_simple_feasible_seed",
+      "passed": true,
+      "detail": {
+        "seed": 563.6336257768015,
+        "new": 561.1809912745437
+      }
+    },
+    {
+      "name": "icc_ui240.two.reentered_samples",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.two.reentered_predictions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.two.displayed_mean_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.two.displayed_max_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.two.entire_curve_tac",
+      "passed": true,
+      "detail": 240.0
+    },
+    {
+      "name": "icc_ui240.two.conservative_reported_tac",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.two.icc_has_no_photo_support",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.baseline_objective_preserved",
+      "passed": true,
+      "detail": {
+        "old": 179.36378985302343,
+        "new": 169.61764935771646
+      }
+    },
+    {
+      "name": "icc_ui240.direction",
+      "passed": true,
+      "detail": 109.9
+    },
+    {
+      "name": "icc_ui240.three.reentered_samples",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.three.reentered_predictions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.three.displayed_mean_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.three.displayed_max_error",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.three.entire_curve_tac",
+      "passed": true,
+      "detail": 238.8235294117647
+    },
+    {
+      "name": "icc_ui240.three.conservative_reported_tac",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icc_ui240.three.icc_has_no_photo_support",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "support_cases": {
+    "default_boundaries_and_neutral": {
+      "total_samples": 9,
+      "neutral_samples": 3,
+      "chromatic_samples": 6,
+      "percentage_denominator": "chromatic_samples",
+      "neutral_chroma_max": 16.0,
+      "near_delta_e76_max": 12.0,
+      "extrapolated_delta_e76_min": 26.0,
+      "near_requires_local_support": true,
+      "metric": "Delta E 76, sRGB-derived D65 Lab",
+      "meaning": "Proximity of input colors to photograph references; not prediction accuracy. Extrapolation starts at the active model radius.",
+      "near_samples": 2,
+      "near_percent": 33.33,
+      "transition_samples": 2,
+      "transition_percent": 33.33,
+      "extrapolated_samples": 2,
+      "extrapolated_percent": 33.33
+    },
+    "all_neutral": {
+      "total_samples": 3,
+      "neutral_samples": 3,
+      "chromatic_samples": 0,
+      "percentage_denominator": "chromatic_samples",
+      "neutral_chroma_max": 16.0,
+      "near_delta_e76_max": 12.0,
+      "extrapolated_delta_e76_min": 26.0,
+      "near_requires_local_support": true,
+      "metric": "Delta E 76, sRGB-derived D65 Lab",
+      "meaning": "Proximity of input colors to photograph references; not prediction accuracy. Extrapolation starts at the active model radius.",
+      "near_samples": 0,
+      "near_percent": null,
+      "transition_samples": 0,
+      "transition_percent": null,
+      "extrapolated_samples": 0,
+      "extrapolated_percent": null
+    },
+    "empty": {
+      "total_samples": 0,
+      "neutral_samples": 0,
+      "chromatic_samples": 0,
+      "percentage_denominator": "chromatic_samples",
+      "neutral_chroma_max": 16.0,
+      "near_delta_e76_max": 12.0,
+      "extrapolated_delta_e76_min": 26.0,
+      "near_requires_local_support": true,
+      "metric": "Delta E 76, sRGB-derived D65 Lab",
+      "meaning": "Proximity of input colors to photograph references; not prediction accuracy. Extrapolation starts at the active model radius.",
+      "near_samples": 0,
+      "near_percent": null,
+      "transition_samples": 0,
+      "transition_percent": null,
+      "extrapolated_samples": 0,
+      "extrapolated_percent": null
+    },
+    "custom_radius10": {
+      "total_samples": 6,
+      "neutral_samples": 0,
+      "chromatic_samples": 6,
+      "percentage_denominator": "chromatic_samples",
+      "neutral_chroma_max": 16.0,
+      "near_delta_e76_max": 12.0,
+      "extrapolated_delta_e76_min": 10.0,
+      "near_requires_local_support": true,
+      "metric": "Delta E 76, sRGB-derived D65 Lab",
+      "meaning": "Proximity of input colors to photograph references; not prediction accuracy. Extrapolation starts at the active model radius.",
+      "near_samples": 2,
+      "near_percent": 33.33,
+      "transition_samples": 0,
+      "transition_percent": 0.0,
+      "extrapolated_samples": 4,
+      "extrapolated_percent": 66.67
+    },
+    "custom_radius40": {
+      "total_samples": 6,
+      "neutral_samples": 0,
+      "chromatic_samples": 6,
+      "percentage_denominator": "chromatic_samples",
+      "neutral_chroma_max": 16.0,
+      "near_delta_e76_max": 12.0,
+      "extrapolated_delta_e76_min": 40.0,
+      "near_requires_local_support": true,
+      "metric": "Delta E 76, sRGB-derived D65 Lab",
+      "meaning": "Proximity of input colors to photograph references; not prediction accuracy. Extrapolation starts at the active model radius.",
+      "near_samples": 1,
+      "near_percent": 16.67,
+      "transition_samples": 3,
+      "transition_percent": 50.0,
+      "extrapolated_samples": 2,
+      "extrapolated_percent": 33.33
+    },
+    "no_references_large_radius": {
+      "total_samples": 6,
+      "neutral_samples": 0,
+      "chromatic_samples": 6,
+      "percentage_denominator": "chromatic_samples",
+      "neutral_chroma_max": 16.0,
+      "near_delta_e76_max": 12.0,
+      "extrapolated_delta_e76_min": 2000.0,
+      "near_requires_local_support": true,
+      "metric": "Delta E 76, sRGB-derived D65 Lab",
+      "meaning": "Proximity of input colors to photograph references; not prediction accuracy. Extrapolation starts at the active model radius.",
+      "near_samples": 0,
+      "near_percent": 0.0,
+      "transition_samples": 0,
+      "transition_percent": 0.0,
+      "extrapolated_samples": 6,
+      "extrapolated_percent": 100.0
+    },
+    "single_rgb": {
+      "total_samples": 1,
+      "neutral_samples": 0,
+      "chromatic_samples": 1,
+      "percentage_denominator": "chromatic_samples",
+      "neutral_chroma_max": 16.0,
+      "near_delta_e76_max": 12.0,
+      "extrapolated_delta_e76_min": 26.0,
+      "near_requires_local_support": true,
+      "metric": "Delta E 76, sRGB-derived D65 Lab",
+      "meaning": "Proximity of input colors to photograph references; not prediction accuracy. Extrapolation starts at the active model radius.",
+      "near_samples": 1,
+      "near_percent": 100.0,
+      "transition_samples": 0,
+      "transition_percent": 0.0,
+      "extrapolated_samples": 0,
+      "extrapolated_percent": 0.0
+    }
+  },
+  "quantized_ramps": [
+    {
+      "stops": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "exact_states": 256,
+      "enumerated_states": 256,
+      "missing_exact_states": 0,
+      "conservative_extra_states": 0
+    },
+    {
+      "stops": [
+        [
+          0,
+          255,
+          80
+        ],
+        [
+          255,
+          0,
+          192
+        ]
+      ],
+      "exact_states": 623,
+      "enumerated_states": 623,
+      "missing_exact_states": 0,
+      "conservative_extra_states": 0
+    },
+    {
+      "stops": [
+        [
+          10,
+          40,
+          82
+        ],
+        [
+          241,
+          99,
+          211
+        ],
+        [
+          40,
+          214,
+          8
+        ]
+      ],
+      "exact_states": 936,
+      "enumerated_states": 936,
+      "missing_exact_states": 0,
+      "conservative_extra_states": 0
+    },
+    {
+      "stops": [
+        [
+          23,
+          123,
+          141
+        ],
+        [
+          221,
+          185,
+          124
+        ],
+        [
+          23,
+          123,
+          141
+        ]
+      ],
+      "exact_states": 276,
+      "enumerated_states": 276,
+      "missing_exact_states": 0,
+      "conservative_extra_states": 0
+    },
+    {
+      "stops": [
+        [
+          93,
+          93,
+          93
+        ],
+        [
+          93,
+          93,
+          93
+        ]
+      ],
+      "exact_states": 1,
+      "enumerated_states": 1,
+      "missing_exact_states": 0,
+      "conservative_extra_states": 0
+    }
+  ],
+  "geometry_cases": {
+    "selected_line": {
+      "selection": "line",
+      "start_label": "선택한 1번 위치",
+      "end_label": "선택한 2번 위치",
+      "direction": "선택한 1번 → 2번 위치",
+      "style": "선택한 두 위치의 방향",
+      "css_angle": null,
+      "source_points": [
+        [
+          11.0,
+          15.0
+        ],
+        [
+          180.0,
+          60.0
+        ]
+      ],
+      "spatial_residual_delta_e76": 0,
+      "source_image_size": [
+        200,
+        80
+      ],
+      "source_coordinate_system": "pixel centers; origin top-left; x right; y down",
+      "css_angle_convention": "0 degrees up; 90 degrees right; clockwise",
+      "source_points_normalized": [
+        [
+          0.05527638190954774,
+          0.189873417721519
+        ],
+        [
+          0.9045226130653267,
+          0.759493670886076
+        ]
+      ],
+      "source_points_normalization": "x/(width-1), y/(height-1); a singleton axis uses denominator 1",
+      "source_line_css_angle": 104.9103,
+      "source_line_angle_scope": "Direction of selected source points only; not an inferred whole-area gradient angle",
+      "preview_css_angle": 90.0,
+      "line_sample_count": 33,
+      "line_sampling": "rounded pixel center; median of clipped 5x5 neighborhood"
+    },
+    "reversed_line": {
+      "selection": "line",
+      "start_label": "선택한 1번 위치",
+      "end_label": "선택한 2번 위치",
+      "direction": "선택한 1번 → 2번 위치",
+      "style": "선택한 두 위치의 방향",
+      "css_angle": null,
+      "source_points": [
+        [
+          180.0,
+          60.0
+        ],
+        [
+          11.0,
+          15.0
+        ]
+      ],
+      "spatial_residual_delta_e76": 0,
+      "source_image_size": [
+        200,
+        80
+      ],
+      "source_coordinate_system": "pixel centers; origin top-left; x right; y down",
+      "css_angle_convention": "0 degrees up; 90 degrees right; clockwise",
+      "source_points_normalized": [
+        [
+          0.9045226130653267,
+          0.759493670886076
+        ],
+        [
+          0.05527638190954774,
+          0.189873417721519
+        ]
+      ],
+      "source_points_normalization": "x/(width-1), y/(height-1); a singleton axis uses denominator 1",
+      "source_line_css_angle": 284.9103,
+      "source_line_angle_scope": "Direction of selected source points only; not an inferred whole-area gradient angle",
+      "preview_css_angle": 90.0,
+      "line_sample_count": 33,
+      "line_sampling": "rounded pixel center; median of clipped 5x5 neighborhood"
+    },
+    "rect": {
+      "selection": "rect",
+      "rect": [
+        20,
+        10,
+        180,
+        70
+      ],
+      "start_label": "왼쪽 위",
+      "end_label": "오른쪽 아래",
+      "direction": "왼쪽 위 → 오른쪽 아래",
+      "style": "대각선 그라데이션",
+      "css_angle": 109.5,
+      "orientation_method": "RGB plane slope",
+      "spatial_residual_delta_e76": 1.44,
+      "flat_image": false,
+      "source_image_size": [
+        200,
+        80
+      ],
+      "source_coordinate_system": "pixel centers; origin top-left; x right; y down",
+      "css_angle_convention": "0 degrees up; 90 degrees right; clockwise",
+      "rect_coordinate_convention": "left, top inclusive; right, bottom exclusive"
+    }
+  },
+  "gradient_cases": {
+    "photo_basic300": {
+      "payload": {
+        "model_mode": "photo",
+        "tac": 300
+      },
+      "response": {
+        "analysis": {
+          "selection": "auto",
+          "rect": [
+            0,
+            0,
+            200,
+            80
+          ],
+          "start_label": "왼쪽 위",
+          "end_label": "오른쪽 아래",
+          "direction": "왼쪽 위 → 오른쪽 아래",
+          "style": "대각선 그라데이션",
+          "css_angle": 110.0,
+          "orientation_method": "local RGB gradient structure tensor",
+          "spatial_residual_delta_e76": 0.39,
+          "flat_image": false,
+          "source_image_size": [
+            200,
+            80
+          ],
+          "source_coordinate_system": "pixel centers; origin top-left; x right; y down",
+          "css_angle_convention": "0 degrees up; 90 degrees right; clockwise",
+          "rect_coordinate_convention": "left, top inclusive; right, bottom exclusive"
+        },
+        "target_stops": [
+          [
+            50,
+            106,
+            142
+          ],
+          [
+            175,
+            151,
+            117
+          ]
+        ],
+        "target_preview": "exports/gradient_d964c586fda0a81042b9/target.png",
+        "two_stop": {
+          "stops": [
+            {
+              "position_percent": 0,
+              "input_rgb": [
+                22,
+                123,
+                142
+              ],
+              "target_rgb": [
+                50,
+                106,
+                142
+              ],
+              "predicted_rgb": [
+                51,
+                107,
+                143
+              ],
+              "converted_cmyk": [
+                80.0,
+                23.52,
+                25.49,
+                22.35
+              ],
+              "delta_e76": 0.4
+            },
+            {
+              "position_percent": 100,
+              "input_rgb": [
+                221,
+                185,
+                124
+              ],
+              "target_rgb": [
+                175,
+                151,
+                117
+              ],
+              "predicted_rgb": [
+                175,
+                150,
+                117
+              ],
+              "converted_cmyk": [
+                10.19,
+                24.31,
+                54.11,
+                4.7
+              ],
+              "delta_e76": 0.71
+            }
+          ],
+          "mean_delta_e76": 0.54,
+          "max_delta_e76": 0.88,
+          "max_ink_percent": 151.37,
+          "ink_validation": "all quantized RGB states on encoded-sRGB linear segments",
+          "predicted_samples": [
+            [
+              51,
+              107,
+              143
+            ],
+            [
+              53,
+              110,
+              143
+            ],
+            [
+              56,
+              111,
+              143
+            ],
+            [
+              59,
+              112,
+              141
+            ],
+            [
+              61,
+              112,
+              139
+            ],
+            [
+              64,
+              113,
+              135
+            ],
+            [
+              67,
+              114,
+              133
+            ],
+            [
+              70,
+              115,
+              130
+            ],
+            [
+              73,
+              116,
+              128
+            ],
+            [
+              75,
+              117,
+              125
+            ],
+            [
+              78,
+              119,
+              123
+            ],
+            [
+              81,
+              121,
+              122
+            ],
+            [
+              86,
+              124,
+              122
+            ],
+            [
+              91,
+              127,
+              123
+            ],
+            [
+              96,
+              129,
+              122
+            ],
+            [
+              101,
+              132,
+              123
+            ],
+            [
+              106,
+              135,
+              123
+            ],
+            [
+              110,
+              136,
+              122
+            ],
+            [
+              115,
+              138,
+              122
+            ],
+            [
+              118,
+              139,
+              120
+            ],
+            [
+              122,
+              140,
+              120
+            ],
+            [
+              125,
+              140,
+              117
+            ],
+            [
+              128,
+              141,
+              116
+            ],
+            [
+              132,
+              143,
+              115
+            ],
+            [
+              137,
+              145,
+              115
+            ],
+            [
+              142,
+              146,
+              115
+            ],
+            [
+              147,
+              148,
+              115
+            ],
+            [
+              152,
+              149,
+              115
+            ],
+            [
+              156,
+              150,
+              115
+            ],
+            [
+              161,
+              150,
+              116
+            ],
+            [
+              166,
+              149,
+              116
+            ],
+            [
+              170,
+              150,
+              116
+            ],
+            [
+              175,
+              150,
+              117
+            ]
+          ],
+          "input_samples": [
+            [
+              22,
+              123,
+              142
+            ],
+            [
+              28,
+              125,
+              141
+            ],
+            [
+              34,
+              127,
+              141
+            ],
+            [
+              41,
+              129,
+              140
+            ],
+            [
+              47,
+              131,
+              140
+            ],
+            [
+              53,
+              133,
+              139
+            ],
+            [
+              59,
+              135,
+              139
+            ],
+            [
+              66,
+              137,
+              138
+            ],
+            [
+              72,
+              138,
+              138
+            ],
+            [
+              78,
+              140,
+              137
+            ],
+            [
+              84,
+              142,
+              136
+            ],
+            [
+              90,
+              144,
+              136
+            ],
+            [
+              97,
+              146,
+              135
+            ],
+            [
+              103,
+              148,
+              135
+            ],
+            [
+              109,
+              150,
+              134
+            ],
+            [
+              115,
+              152,
+              134
+            ],
+            [
+              122,
+              154,
+              133
+            ],
+            [
+              128,
+              156,
+              132
+            ],
+            [
+              134,
+              158,
+              132
+            ],
+            [
+              140,
+              160,
+              131
+            ],
+            [
+              146,
+              162,
+              131
+            ],
+            [
+              153,
+              164,
+              130
+            ],
+            [
+              159,
+              166,
+              130
+            ],
+            [
+              165,
+              168,
+              129
+            ],
+            [
+              171,
+              170,
+              128
+            ],
+            [
+              177,
+              171,
+              128
+            ],
+            [
+              184,
+              173,
+              127
+            ],
+            [
+              190,
+              175,
+              127
+            ],
+            [
+              196,
+              177,
+              126
+            ],
+            [
+              202,
+              179,
+              126
+            ],
+            [
+              209,
+              181,
+              125
+            ],
+            [
+              215,
+              183,
+              125
+            ],
+            [
+              221,
+              185,
+              124
+            ]
+          ],
+          "reference_support": {
+            "total_samples": 33,
+            "neutral_samples": 0,
+            "chromatic_samples": 33,
+            "percentage_denominator": "chromatic_samples",
+            "neutral_chroma_max": 16.0,
+            "near_delta_e76_max": 12.0,
+            "extrapolated_delta_e76_min": 26.0,
+            "near_requires_local_support": true,
+            "metric": "Delta E 76, sRGB-derived D65 Lab",
+            "meaning": "Proximity of input colors to photograph references; not prediction accuracy. Extrapolation starts at the active model radius.",
+            "near_samples": 15,
+            "near_percent": 45.45,
+            "transition_samples": 13,
+            "transition_percent": 39.39,
+            "extrapolated_samples": 5,
+            "extrapolated_percent": 15.15
+          },
+          "input_preview": "exports/gradient_d964c586fda0a81042b9/two_input.png",
+          "predicted_preview": "exports/gradient_d964c586fda0a81042b9/two_predicted.png"
+        },
+        "three_stop": null,
+        "strength": 1.0,
+        "tac_limit": 300.0,
+        "model_mode": "photo",
+        "input_cmyk_profile": "GRACoL2013_CRPC6.icc",
+        "icc_gamut_warning_percent": 0.0,
+        "icc_gamut_scope": "FOGRA39 target-color sample alarm; not empirical fit residual",
+        "extrapolated_sample_percent": 54.55,
+        "model_name": "HARDYS 전달본 GRACoL → 실물 사진 경험 모델 v11",
+        "metric": "Delta E 76, sRGB-derived D65 Lab",
+        "interpolation": "encoded sRGB linear interpolation",
+        "note": "사진 모드는 sRGB 입력을 새 사진 모델로 직접 예측합니다. ICC 모드는 별도 FOGRA39 표준 조건입니다. 색차 임계값과 ICC 색역 경고는 다르며, 경고 없음은 4도 재현 보장이 아닙니다. 최종 인쇄 PDF로 확인해 주세요. 사진 보정과 방향·색 추출은 추정입니다."
+      },
+      "two_stop": {
+        "stops": [
+          [
+            22,
+            123,
+            142
+          ],
+          [
+            221,
+            185,
+            124
+          ]
+        ],
+        "samples": [
+          [
+            22,
+            123,
+            142
+          ],
+          [
+            28,
+            125,
+            141
+          ],
+          [
+            34,
+            127,
+            141
+          ],
+          [
+            41,
+            129,
+            140
+          ],
+          [
+            47,
+            131,
+            140
+          ],
+          [
+            53,
+            133,
+            139
+          ],
+          [
+            59,
+            135,
+            139
+          ],
+          [
+            66,
+            137,
+            138
+          ],
+          [
+            72,
+            138,
+            138
+          ],
+          [
+            78,
+            140,
+            137
+          ],
+          [
+            84,
+            142,
+            136
+          ],
+          [
+            90,
+            144,
+            136
+          ],
+          [
+            97,
+            146,
+            135
+          ],
+          [
+            103,
+            148,
+            135
+          ],
+          [
+            109,
+            150,
+            134
+          ],
+          [
+            115,
+            152,
+            134
+          ],
+          [
+            122,
+            154,
+            133
+          ],
+          [
+            128,
+            156,
+            132
+          ],
+          [
+            134,
+            158,
+            132
+          ],
+          [
+            140,
+            160,
+            131
+          ],
+          [
+            146,
+            162,
+            131
+          ],
+          [
+            153,
+            164,
+            130
+          ],
+          [
+            159,
+            166,
+            130
+          ],
+          [
+            165,
+            168,
+            129
+          ],
+          [
+            171,
+            170,
+            128
+          ],
+          [
+            177,
+            171,
+            128
+          ],
+          [
+            184,
+            173,
+            127
+          ],
+          [
+            190,
+            175,
+            127
+          ],
+          [
+            196,
+            177,
+            126
+          ],
+          [
+            202,
+            179,
+            126
+          ],
+          [
+            209,
+            181,
+            125
+          ],
+          [
+            215,
+            183,
+            125
+          ],
+          [
+            221,
+            185,
+            124
+          ]
+        ],
+        "predicted": [
+          [
+            51,
+            107,
+            143
+          ],
+          [
+            53,
+            110,
+            143
+          ],
+          [
+            56,
+            111,
+            143
+          ],
+          [
+            59,
+            112,
+            141
+          ],
+          [
+            61,
+            112,
+            139
+          ],
+          [
+            64,
+            113,
+            135
+          ],
+          [
+            67,
+            114,
+            133
+          ],
+          [
+            70,
+            115,
+            130
+          ],
+          [
+            73,
+            116,
+            128
+          ],
+          [
+            75,
+            117,
+            125
+          ],
+          [
+            78,
+            119,
+            123
+          ],
+          [
+            81,
+            121,
+            122
+          ],
+          [
+            86,
+            124,
+            122
+          ],
+          [
+            91,
+            127,
+            123
+          ],
+          [
+            96,
+            129,
+            122
+          ],
+          [
+            101,
+            132,
+            123
+          ],
+          [
+            106,
+            135,
+            123
+          ],
+          [
+            110,
+            136,
+            122
+          ],
+          [
+            115,
+            138,
+            122
+          ],
+          [
+            118,
+            139,
+            120
+          ],
+          [
+            122,
+            140,
+            120
+          ],
+          [
+            125,
+            140,
+            117
+          ],
+          [
+            128,
+            141,
+            116
+          ],
+          [
+            132,
+            143,
+            115
+          ],
+          [
+            137,
+            145,
+            115
+          ],
+          [
+            142,
+            146,
+            115
+          ],
+          [
+            147,
+            148,
+            115
+          ],
+          [
+            152,
+            149,
+            115
+          ],
+          [
+            156,
+            150,
+            115
+          ],
+          [
+            161,
+            150,
+            116
+          ],
+          [
+            166,
+            149,
+            116
+          ],
+          [
+            170,
+            150,
+            116
+          ],
+          [
+            175,
+            150,
+            117
+          ]
+        ],
+        "mean_delta_e76": 0.5409205650480454,
+        "max_delta_e76": 0.8764006002767244,
+        "objective": 0.4813369802614229,
+        "exact_state_count": 278,
+        "exact_max_ink_code_sum": 386,
+        "exact_max_tac_percent": 151.37254901960785,
+        "independent_reference_counts": {
+          "neutral": 0,
+          "near": 15,
+          "transition": 13,
+          "extrapolated": 5
+        }
+      },
+      "baseline_two_stop": {
+        "stops": [
+          [
+            22,
+            123,
+            142
+          ],
+          [
+            221,
+            185,
+            124
+          ]
+        ],
+        "samples": [
+          [
+            22,
+            123,
+            142
+          ],
+          [
+            28,
+            125,
+            141
+          ],
+          [
+            34,
+            127,
+            141
+          ],
+          [
+            41,
+            129,
+            140
+          ],
+          [
+            47,
+            131,
+            140
+          ],
+          [
+            53,
+            133,
+            139
+          ],
+          [
+            59,
+            135,
+            139
+          ],
+          [
+            66,
+            137,
+            138
+          ],
+          [
+            72,
+            138,
+            138
+          ],
+          [
+            78,
+            140,
+            137
+          ],
+          [
+            84,
+            142,
+            136
+          ],
+          [
+            90,
+            144,
+            136
+          ],
+          [
+            97,
+            146,
+            135
+          ],
+          [
+            103,
+            148,
+            135
+          ],
+          [
+            109,
+            150,
+            134
+          ],
+          [
+            115,
+            152,
+            134
+          ],
+          [
+            122,
+            154,
+            133
+          ],
+          [
+            128,
+            156,
+            132
+          ],
+          [
+            134,
+            158,
+            132
+          ],
+          [
+            140,
+            160,
+            131
+          ],
+          [
+            146,
+            162,
+            131
+          ],
+          [
+            153,
+            164,
+            130
+          ],
+          [
+            159,
+            166,
+            130
+          ],
+          [
+            165,
+            168,
+            129
+          ],
+          [
+            171,
+            170,
+            128
+          ],
+          [
+            177,
+            171,
+            128
+          ],
+          [
+            184,
+            173,
+            127
+          ],
+          [
+            190,
+            175,
+            127
+          ],
+          [
+            196,
+            177,
+            126
+          ],
+          [
+            202,
+            179,
+            126
+          ],
+          [
+            209,
+            181,
+            125
+          ],
+          [
+            215,
+            183,
+            125
+          ],
+          [
+            221,
+            185,
+            124
+          ]
+        ],
+        "predicted": [
+          [
+            51,
+            107,
+            143
+          ],
+          [
+            53,
+            110,
+            143
+          ],
+          [
+            56,
+            111,
+            143
+          ],
+          [
+            59,
+            112,
+            141
+          ],
+          [
+            61,
+            112,
+            139
+          ],
+          [
+            64,
+            113,
+            135
+          ],
+          [
+            67,
+            114,
+            133
+          ],
+          [
+            70,
+            115,
+            130
+          ],
+          [
+            73,
+            116,
+            128
+          ],
+          [
+            75,
+            117,
+            125
+          ],
+          [
+            78,
+            119,
+            123
+          ],
+          [
+            81,
+            121,
+            122
+          ],
+          [
+            86,
+            124,
+            122
+          ],
+          [
+            91,
+            127,
+            123
+          ],
+          [
+            96,
+            129,
+            122
+          ],
+          [
+            101,
+            132,
+            123
+          ],
+          [
+            106,
+            135,
+            123
+          ],
+          [
+            110,
+            136,
+            122
+          ],
+          [
+            115,
+            138,
+            122
+          ],
+          [
+            118,
+            139,
+            120
+          ],
+          [
+            122,
+            140,
+            120
+          ],
+          [
+            125,
+            140,
+            117
+          ],
+          [
+            128,
+            141,
+            116
+          ],
+          [
+            132,
+            143,
+            115
+          ],
+          [
+            137,
+            145,
+            115
+          ],
+          [
+            142,
+            146,
+            115
+          ],
+          [
+            147,
+            148,
+            115
+          ],
+          [
+            152,
+            149,
+            115
+          ],
+          [
+            156,
+            150,
+            115
+          ],
+          [
+            161,
+            150,
+            116
+          ],
+          [
+            166,
+            149,
+            116
+          ],
+          [
+            170,
+            150,
+            116
+          ],
+          [
+            175,
+            150,
+            117
+          ]
+        ],
+        "mean_delta_e76": 0.5409205650480454,
+        "max_delta_e76": 0.8764006002767244,
+        "objective": 0.4813369802614229,
+        "exact_state_count": 278,
+        "exact_max_ink_code_sum": 386,
+        "exact_max_tac_percent": 151.37254901960785
+      },
+      "elapsed_seconds": 3.599
+    },
+    "photo_symmetric300": {
+      "payload": {
+        "model_mode": "photo",
+        "tac": 300
+      },
+      "response": {
+        "analysis": {
+          "selection": "auto",
+          "rect": [
+            0,
+            0,
+            200,
+            80
+          ],
+          "start_label": "왼쪽 아래",
+          "end_label": "오른쪽 위",
+          "direction": "왼쪽 아래 → 오른쪽 위",
+          "style": "대각선 그라데이션",
+          "css_angle": 35.6,
+          "orientation_method": "local RGB gradient structure tensor",
+          "spatial_residual_delta_e76": 0.59,
+          "flat_image": false,
+          "source_image_size": [
+            200,
+            80
+          ],
+          "source_coordinate_system": "pixel centers; origin top-left; x right; y down",
+          "css_angle_convention": "0 degrees up; 90 degrees right; clockwise",
+          "rect_coordinate_convention": "left, top inclusive; right, bottom exclusive"
+        },
+        "target_stops": [
+          [
+            51,
+            108,
+            142
+          ],
+          [
+            51,
+            108,
+            142
+          ]
+        ],
+        "target_preview": "exports/gradient_7dce7d018f7ae96c2388/target.png",
+        "two_stop": {
+          "stops": [
+            {
+              "position_percent": 0,
+              "input_rgb": [
+                101,
+                133,
+                118
+              ],
+              "target_rgb": [
+                51,
+                108,
+                142
+              ],
+              "predicted_rgb": [
+                93,
+                120,
+                113
+              ],
+              "converted_cmyk": [
+                58.03,
+                26.27,
+                47.45,
+                20.78
+              ],
+              "delta_e76": 25.58
+            },
+            {
+              "position_percent": 100,
+              "input_rgb": [
+                114,
+                126,
+                127
+              ],
+              "target_rgb": [
+                51,
+                108,
+                142
+              ],
+              "predicted_rgb": [
+                114,
+                126,
+                127
+              ],
+              "converted_cmyk": [
+                53.72,
+                36.47,
+                37.64,
+                18.43
+              ],
+              "delta_e76": 24.0
+            }
+          ],
+          "mean_delta_e76": 15.11,
+          "max_delta_e76": 25.67,
+          "max_ink_percent": 152.55,
+          "ink_validation": "all quantized RGB states on encoded-sRGB linear segments",
+          "predicted_samples": [
+            [
+              93,
+              120,
+              113
+            ],
+            [
+              93,
+              120,
+              113
+            ],
+            [
+              96,
+              122,
+              115
+            ],
+            [
+              97,
+              123,
+              116
+            ],
+            [
+              99,
+              124,
+              116
+            ],
+            [
+              99,
+              124,
+              116
+            ],
+            [
+              99,
+              125,
+              118
+            ],
+            [
+              102,
+              126,
+              119
+            ],
+            [
+              102,
+              126,
+              119
+            ],
+            [
+              104,
+              128,
+              120
+            ],
+            [
+              104,
+              128,
+              120
+            ],
+            [
+              104,
+              128,
+              120
+            ],
+            [
+              106,
+              128,
+              121
+            ],
+            [
+              106,
+              129,
+              122
+            ],
+            [
+              107,
+              129,
+              122
+            ],
+            [
+              107,
+              129,
+              122
+            ],
+            [
+              108,
+              129,
+              122
+            ],
+            [
+              108,
+              129,
+              123
+            ],
+            [
+              108,
+              129,
+              123
+            ],
+            [
+              109,
+              129,
+              123
+            ],
+            [
+              109,
+              129,
+              124
+            ],
+            [
+              110,
+              128,
+              124
+            ],
+            [
+              110,
+              128,
+              124
+            ],
+            [
+              110,
+              128,
+              124
+            ],
+            [
+              111,
+              128,
+              125
+            ],
+            [
+              111,
+              128,
+              125
+            ],
+            [
+              112,
+              127,
+              125
+            ],
+            [
+              112,
+              127,
+              126
+            ],
+            [
+              112,
+              127,
+              126
+            ],
+            [
+              113,
+              127,
+              126
+            ],
+            [
+              113,
+              126,
+              126
+            ],
+            [
+              114,
+              126,
+              127
+            ],
+            [
+              114,
+              126,
+              127
+            ]
+          ],
+          "input_samples": [
+            [
+              101,
+              133,
+              118
+            ],
+            [
+              101,
+              133,
+              118
+            ],
+            [
+              102,
+              133,
+              119
+            ],
+            [
+              102,
+              132,
+              119
+            ],
+            [
+              103,
+              132,
+              119
+            ],
+            [
+              103,
+              132,
+              119
+            ],
+            [
+              103,
+              132,
+              120
+            ],
+            [
+              104,
+              131,
+              120
+            ],
+            [
+              104,
+              131,
+              120
+            ],
+            [
+              105,
+              131,
+              121
+            ],
+            [
+              105,
+              131,
+              121
+            ],
+            [
+              105,
+              131,
+              121
+            ],
+            [
+              106,
+              130,
+              121
+            ],
+            [
+              106,
+              130,
+              122
+            ],
+            [
+              107,
+              130,
+              122
+            ],
+            [
+              107,
+              130,
+              122
+            ],
+            [
+              108,
+              130,
+              122
+            ],
+            [
+              108,
+              129,
+              123
+            ],
+            [
+              108,
+              129,
+              123
+            ],
+            [
+              109,
+              129,
+              123
+            ],
+            [
+              109,
+              129,
+              124
+            ],
+            [
+              110,
+              128,
+              124
+            ],
+            [
+              110,
+              128,
+              124
+            ],
+            [
+              110,
+              128,
+              124
+            ],
+            [
+              111,
+              128,
+              125
+            ],
+            [
+              111,
+              128,
+              125
+            ],
+            [
+              112,
+              127,
+              125
+            ],
+            [
+              112,
+              127,
+              126
+            ],
+            [
+              112,
+              127,
+              126
+            ],
+            [
+              113,
+              127,
+              126
+            ],
+            [
+              113,
+              126,
+              126
+            ],
+            [
+              114,
+              126,
+              127
+            ],
+            [
+              114,
+              126,
+              127
+            ]
+          ],
+          "reference_support": {
+            "total_samples": 33,
+            "neutral_samples": 33,
+            "chromatic_samples": 0,
+            "percentage_denominator": "chromatic_samples",
+            "neutral_chroma_max": 16.0,
+            "near_delta_e76_max": 12.0,
+            "extrapolated_delta_e76_min": 26.0,
+            "near_requires_local_support": true,
+            "metric": "Delta E 76, sRGB-derived D65 Lab",
+            "meaning": "Proximity of input colors to photograph references; not prediction accuracy. Extrapolation starts at the active model radius.",
+            "near_samples": 0,
+            "near_percent": null,
+            "transition_samples": 0,
+            "transition_percent": null,
+            "extrapolated_samples": 0,
+            "extrapolated_percent": null
+          },
+          "input_preview": "exports/gradient_7dce7d018f7ae96c2388/two_input.png",
+          "predicted_preview": "exports/gradient_7dce7d018f7ae96c2388/two_predicted.png"
+        },
+        "three_stop": {
+          "stops": [
+            {
+              "position_percent": 0,
+              "input_rgb": [
+                23,
+                123,
+                141
+              ],
+              "target_rgb": [
+                51,
+                108,
+                142
+              ],
+              "predicted_rgb": [
+                51,
+                108,
+                143
+              ],
+              "converted_cmyk": [
+                79.6,
+                23.13,
+                26.27,
+                22.35
+              ],
+              "delta_e76": 0.63
+            },
+            {
+              "position_percent": 50,
+              "input_rgb": [
+                221,
+                185,
+                124
+              ],
+              "target_rgb": [
+                173,
+                150,
+                117
+              ],
+              "predicted_rgb": [
+                175,
+                150,
+                117
+              ],
+              "converted_cmyk": [
+                10.19,
+                24.31,
+                54.11,
+                4.7
+              ],
+              "delta_e76": 0.88
+            },
+            {
+              "position_percent": 100,
+              "input_rgb": [
+                23,
+                123,
+                141
+              ],
+              "target_rgb": [
+                51,
+                108,
+                142
+              ],
+              "predicted_rgb": [
+                51,
+                108,
+                143
+              ],
+              "converted_cmyk": [
+                79.6,
+                23.13,
+                26.27,
+                22.35
+              ],
+              "delta_e76": 0.63
+            }
+          ],
+          "mean_delta_e76": 0.48,
+          "max_delta_e76": 0.88,
+          "max_ink_percent": 151.76,
+          "ink_validation": "all quantized RGB states on encoded-sRGB linear segments",
+          "predicted_samples": [
+            [
+              51,
+              108,
+              143
+            ],
+            [
+              56,
+              111,
+              142
+            ],
+            [
+              62,
+              112,
+              137
+            ],
+            [
+              67,
+              114,
+              132
+            ],
+            [
+              72,
+              116,
+              127
+            ],
+            [
+              78,
+              119,
+              123
+            ],
+            [
+              86,
+              124,
+              122
+            ],
+            [
+              97,
+              130,
+              123
+            ],
+            [
+              105,
+              134,
+              122
+            ],
+            [
+              113,
+              137,
+              121
+            ],
+            [
+              121,
+              139,
+              118
+            ],
+            [
+              128,
+              141,
+              115
+            ],
+            [
+              138,
+              145,
+              115
+            ],
+            [
+              147,
+              148,
+              115
+            ],
+            [
+              156,
+              150,
+              115
+            ],
+            [
+              166,
+              149,
+              116
+            ],
+            [
+              175,
+              150,
+              117
+            ],
+            [
+              166,
+              149,
+              116
+            ],
+            [
+              156,
+              150,
+              115
+            ],
+            [
+              147,
+              148,
+              115
+            ],
+            [
+              138,
+              145,
+              115
+            ],
+            [
+              128,
+              141,
+              115
+            ],
+            [
+              121,
+              139,
+              118
+            ],
+            [
+              113,
+              137,
+              121
+            ],
+            [
+              105,
+              134,
+              122
+            ],
+            [
+              97,
+              130,
+              123
+            ],
+            [
+              86,
+              124,
+              122
+            ],
+            [
+              78,
+              119,
+              123
+            ],
+            [
+              72,
+              116,
+              127
+            ],
+            [
+              67,
+              114,
+              132
+            ],
+            [
+              62,
+              112,
+              137
+            ],
+            [
+              56,
+              111,
+              142
+            ],
+            [
+              51,
+              108,
+              143
+            ]
+          ],
+          "input_samples": [
+            [
+              23,
+              123,
+              141
+            ],
+            [
+              35,
+              127,
+              140
+            ],
+            [
+              48,
+              131,
+              139
+            ],
+            [
+              60,
+              135,
+              138
+            ],
+            [
+              72,
+              138,
+              137
+            ],
+            [
+              85,
+              142,
+              136
+            ],
+            [
+              97,
+              146,
+              135
+            ],
+            [
+              110,
+              150,
+              134
+            ],
+            [
+              122,
+              154,
+              132
+            ],
+            [
+              134,
+              158,
+              131
+            ],
+            [
+              147,
+              162,
+              130
+            ],
+            [
+              159,
+              166,
+              129
+            ],
+            [
+              172,
+              170,
+              128
+            ],
+            [
+              184,
+              173,
+              127
+            ],
+            [
+              196,
+              177,
+              126
+            ],
+            [
+              209,
+              181,
+              125
+            ],
+            [
+              221,
+              185,
+              124
+            ],
+            [
+              209,
+              181,
+              125
+            ],
+            [
+              196,
+              177,
+              126
+            ],
+            [
+              184,
+              173,
+              127
+            ],
+            [
+              172,
+              170,
+              128
+            ],
+            [
+              159,
+              166,
+              129
+            ],
+            [
+              147,
+              162,
+              130
+            ],
+            [
+              134,
+              158,
+              131
+            ],
+            [
+              122,
+              154,
+              132
+            ],
+            [
+              110,
+              150,
+              134
+            ],
+            [
+              97,
+              146,
+              135
+            ],
+            [
+              85,
+              142,
+              136
+            ],
+            [
+              72,
+              138,
+              137
+            ],
+            [
+              60,
+              135,
+              138
+            ],
+            [
+              48,
+              131,
+              139
+            ],
+            [
+              35,
+              127,
+              140
+            ],
+            [
+              23,
+              123,
+              141
+            ]
+          ],
+          "reference_support": {
+            "total_samples": 33,
+            "neutral_samples": 0,
+            "chromatic_samples": 33,
+            "percentage_denominator": "chromatic_samples",
+            "neutral_chroma_max": 16.0,
+            "near_delta_e76_max": 12.0,
+            "extrapolated_delta_e76_min": 26.0,
+            "near_requires_local_support": true,
+            "metric": "Delta E 76, sRGB-derived D65 Lab",
+            "meaning": "Proximity of input colors to photograph references; not prediction accuracy. Extrapolation starts at the active model radius.",
+            "near_samples": 15,
+            "near_percent": 45.45,
+            "transition_samples": 14,
+            "transition_percent": 42.42,
+            "extrapolated_samples": 4,
+            "extrapolated_percent": 12.12
+          },
+          "input_preview": "exports/gradient_7dce7d018f7ae96c2388/three_input.png",
+          "predicted_preview": "exports/gradient_7dce7d018f7ae96c2388/three_predicted.png"
+        },
+        "strength": 1.0,
+        "tac_limit": 300.0,
+        "model_mode": "photo",
+        "input_cmyk_profile": "GRACoL2013_CRPC6.icc",
+        "icc_gamut_warning_percent": 0.0,
+        "icc_gamut_scope": "FOGRA39 target-color sample alarm; not empirical fit residual",
+        "extrapolated_sample_percent": 100.0,
+        "model_name": "HARDYS 전달본 GRACoL → 실물 사진 경험 모델 v11",
+        "metric": "Delta E 76, sRGB-derived D65 Lab",
+        "interpolation": "encoded sRGB linear interpolation",
+        "note": "사진 모드는 sRGB 입력을 새 사진 모델로 직접 예측합니다. ICC 모드는 별도 FOGRA39 표준 조건입니다. 색차 임계값과 ICC 색역 경고는 다르며, 경고 없음은 4도 재현 보장이 아닙니다. 최종 인쇄 PDF로 확인해 주세요. 사진 보정과 방향·색 추출은 추정입니다."
+      },
+      "two_stop": {
+        "stops": [
+          [
+            101,
+            133,
+            118
+          ],
+          [
+            114,
+            126,
+            127
+          ]
+        ],
+        "samples": [
+          [
+            101,
+            133,
+            118
+          ],
+          [
+            101,
+            133,
+            118
+          ],
+          [
+            102,
+            133,
+            119
+          ],
+          [
+            102,
+            132,
+            119
+          ],
+          [
+            103,
+            132,
+            119
+          ],
+          [
+            103,
+            132,
+            119
+          ],
+          [
+            103,
+            132,
+            120
+          ],
+          [
+            104,
+            131,
+            120
+          ],
+          [
+            104,
+            131,
+            120
+          ],
+          [
+            105,
+            131,
+            121
+          ],
+          [
+            105,
+            131,
+            121
+          ],
+          [
+            105,
+            131,
+            121
+          ],
+          [
+            106,
+            130,
+            121
+          ],
+          [
+            106,
+            130,
+            122
+          ],
+          [
+            107,
+            130,
+            122
+          ],
+          [
+            107,
+            130,
+            122
+          ],
+          [
+            108,
+            130,
+            122
+          ],
+          [
+            108,
+            129,
+            123
+          ],
+          [
+            108,
+            129,
+            123
+          ],
+          [
+            109,
+            129,
+            123
+          ],
+          [
+            109,
+            129,
+            124
+          ],
+          [
+            110,
+            128,
+            124
+          ],
+          [
+            110,
+            128,
+            124
+          ],
+          [
+            110,
+            128,
+            124
+          ],
+          [
+            111,
+            128,
+            125
+          ],
+          [
+            111,
+            128,
+            125
+          ],
+          [
+            112,
+            127,
+            125
+          ],
+          [
+            112,
+            127,
+            126
+          ],
+          [
+            112,
+            127,
+            126
+          ],
+          [
+            113,
+            127,
+            126
+          ],
+          [
+            113,
+            126,
+            126
+          ],
+          [
+            114,
+            126,
+            127
+          ],
+          [
+            114,
+            126,
+            127
+          ]
+        ],
+        "predicted": [
+          [
+            93,
+            120,
+            113
+          ],
+          [
+            93,
+            120,
+            113
+          ],
+          [
+            96,
+            122,
+            115
+          ],
+          [
+            97,
+            123,
+            116
+          ],
+          [
+            99,
+            124,
+            116
+          ],
+          [
+            99,
+            124,
+            116
+          ],
+          [
+            99,
+            125,
+            118
+          ],
+          [
+            102,
+            126,
+            119
+          ],
+          [
+            102,
+            126,
+            119
+          ],
+          [
+            104,
+            128,
+            120
+          ],
+          [
+            104,
+            128,
+            120
+          ],
+          [
+            104,
+            128,
+            120
+          ],
+          [
+            106,
+            128,
+            121
+          ],
+          [
+            106,
+            129,
+            122
+          ],
+          [
+            107,
+            129,
+            122
+          ],
+          [
+            107,
+            129,
+            122
+          ],
+          [
+            108,
+            129,
+            122
+          ],
+          [
+            108,
+            129,
+            123
+          ],
+          [
+            108,
+            129,
+            123
+          ],
+          [
+            109,
+            129,
+            123
+          ],
+          [
+            109,
+            129,
+            124
+          ],
+          [
+            110,
+            128,
+            124
+          ],
+          [
+            110,
+            128,
+            124
+          ],
+          [
+            110,
+            128,
+            124
+          ],
+          [
+            111,
+            128,
+            125
+          ],
+          [
+            111,
+            128,
+            125
+          ],
+          [
+            112,
+            127,
+            125
+          ],
+          [
+            112,
+            127,
+            126
+          ],
+          [
+            112,
+            127,
+            126
+          ],
+          [
+            113,
+            127,
+            126
+          ],
+          [
+            113,
+            126,
+            126
+          ],
+          [
+            114,
+            126,
+            127
+          ],
+          [
+            114,
+            126,
+            127
+          ]
+        ],
+        "mean_delta_e76": 15.114846737936574,
+        "max_delta_e76": 25.668759453105658,
+        "objective": 427.72633407743075,
+        "exact_state_count": 29,
+        "exact_max_ink_code_sum": 389,
+        "exact_max_tac_percent": 152.54901960784315,
+        "independent_reference_counts": {
+          "neutral": 33,
+          "near": 0,
+          "transition": 0,
+          "extrapolated": 0
+        }
+      },
+      "baseline_two_stop": {
+        "stops": [
+          [
+            120,
+            131,
+            132
+          ],
+          [
+            111,
+            149,
+            137
+          ]
+        ],
+        "samples": [
+          [
+            120,
+            131,
+            132
+          ],
+          [
+            120,
+            132,
+            132
+          ],
+          [
+            119,
+            132,
+            132
+          ],
+          [
+            119,
+            133,
+            132
+          ],
+          [
+            119,
+            133,
+            133
+          ],
+          [
+            119,
+            134,
+            133
+          ],
+          [
+            118,
+            134,
+            133
+          ],
+          [
+            118,
+            135,
+            133
+          ],
+          [
+            118,
+            136,
+            133
+          ],
+          [
+            117,
+            136,
+            133
+          ],
+          [
+            117,
+            137,
+            134
+          ],
+          [
+            117,
+            137,
+            134
+          ],
+          [
+            117,
+            138,
+            134
+          ],
+          [
+            116,
+            138,
+            134
+          ],
+          [
+            116,
+            139,
+            134
+          ],
+          [
+            116,
+            139,
+            134
+          ],
+          [
+            116,
+            140,
+            134
+          ],
+          [
+            115,
+            141,
+            135
+          ],
+          [
+            115,
+            141,
+            135
+          ],
+          [
+            115,
+            142,
+            135
+          ],
+          [
+            114,
+            142,
+            135
+          ],
+          [
+            114,
+            143,
+            135
+          ],
+          [
+            114,
+            143,
+            135
+          ],
+          [
+            114,
+            144,
+            136
+          ],
+          [
+            113,
+            144,
+            136
+          ],
+          [
+            113,
+            145,
+            136
+          ],
+          [
+            113,
+            146,
+            136
+          ],
+          [
+            112,
+            146,
+            136
+          ],
+          [
+            112,
+            147,
+            136
+          ],
+          [
+            112,
+            147,
+            137
+          ],
+          [
+            112,
+            148,
+            137
+          ],
+          [
+            111,
+            148,
+            137
+          ],
+          [
+            111,
+            149,
+            137
+          ]
+        ],
+        "predicted": [
+          [
+            120,
+            131,
+            132
+          ],
+          [
+            120,
+            132,
+            132
+          ],
+          [
+            119,
+            132,
+            132
+          ],
+          [
+            119,
+            133,
+            132
+          ],
+          [
+            119,
+            133,
+            133
+          ],
+          [
+            119,
+            134,
+            133
+          ],
+          [
+            118,
+            134,
+            133
+          ],
+          [
+            118,
+            135,
+            133
+          ],
+          [
+            118,
+            136,
+            133
+          ],
+          [
+            117,
+            136,
+            133
+          ],
+          [
+            117,
+            137,
+            134
+          ],
+          [
+            117,
+            137,
+            134
+          ],
+          [
+            117,
+            138,
+            134
+          ],
+          [
+            116,
+            138,
+            134
+          ],
+          [
+            116,
+            139,
+            134
+          ],
+          [
+            116,
+            139,
+            134
+          ],
+          [
+            116,
+            139,
+            134
+          ],
+          [
+            115,
+            140,
+            135
+          ],
+          [
+            115,
+            140,
+            135
+          ],
+          [
+            115,
+            140,
+            134
+          ],
+          [
+            113,
+            139,
+            134
+          ],
+          [
+            113,
+            139,
+            133
+          ],
+          [
+            113,
+            139,
+            133
+          ],
+          [
+            112,
+            139,
+            134
+          ],
+          [
+            111,
+            138,
+            133
+          ],
+          [
+            110,
+            137,
+            132
+          ],
+          [
+            108,
+            136,
+            131
+          ],
+          [
+            107,
+            135,
+            130
+          ],
+          [
+            105,
+            134,
+            129
+          ],
+          [
+            106,
+            135,
+            131
+          ],
+          [
+            105,
+            134,
+            130
+          ],
+          [
+            103,
+            133,
+            129
+          ],
+          [
+            102,
+            132,
+            128
+          ]
+        ],
+        "mean_delta_e76": 15.403697243738737,
+        "max_delta_e76": 25.399034768222155,
+        "objective": 430.33270806910906,
+        "exact_state_count": 32,
+        "exact_max_ink_code_sum": 357,
+        "exact_max_tac_percent": 140.0
+      },
+      "three_stop": {
+        "stops": [
+          [
+            23,
+            123,
+            141
+          ],
+          [
+            221,
+            185,
+            124
+          ],
+          [
+            23,
+            123,
+            141
+          ]
+        ],
+        "samples": [
+          [
+            23,
+            123,
+            141
+          ],
+          [
+            35,
+            127,
+            140
+          ],
+          [
+            48,
+            131,
+            139
+          ],
+          [
+            60,
+            135,
+            138
+          ],
+          [
+            72,
+            138,
+            137
+          ],
+          [
+            85,
+            142,
+            136
+          ],
+          [
+            97,
+            146,
+            135
+          ],
+          [
+            110,
+            150,
+            134
+          ],
+          [
+            122,
+            154,
+            132
+          ],
+          [
+            134,
+            158,
+            131
+          ],
+          [
+            147,
+            162,
+            130
+          ],
+          [
+            159,
+            166,
+            129
+          ],
+          [
+            172,
+            170,
+            128
+          ],
+          [
+            184,
+            173,
+            127
+          ],
+          [
+            196,
+            177,
+            126
+          ],
+          [
+            209,
+            181,
+            125
+          ],
+          [
+            221,
+            185,
+            124
+          ],
+          [
+            209,
+            181,
+            125
+          ],
+          [
+            196,
+            177,
+            126
+          ],
+          [
+            184,
+            173,
+            127
+          ],
+          [
+            172,
+            170,
+            128
+          ],
+          [
+            159,
+            166,
+            129
+          ],
+          [
+            147,
+            162,
+            130
+          ],
+          [
+            134,
+            158,
+            131
+          ],
+          [
+            122,
+            154,
+            132
+          ],
+          [
+            110,
+            150,
+            134
+          ],
+          [
+            97,
+            146,
+            135
+          ],
+          [
+            85,
+            142,
+            136
+          ],
+          [
+            72,
+            138,
+            137
+          ],
+          [
+            60,
+            135,
+            138
+          ],
+          [
+            48,
+            131,
+            139
+          ],
+          [
+            35,
+            127,
+            140
+          ],
+          [
+            23,
+            123,
+            141
+          ]
+        ],
+        "predicted": [
+          [
+            51,
+            108,
+            143
+          ],
+          [
+            56,
+            111,
+            142
+          ],
+          [
+            62,
+            112,
+            137
+          ],
+          [
+            67,
+            114,
+            132
+          ],
+          [
+            72,
+            116,
+            127
+          ],
+          [
+            78,
+            119,
+            123
+          ],
+          [
+            86,
+            124,
+            122
+          ],
+          [
+            97,
+            130,
+            123
+          ],
+          [
+            105,
+            134,
+            122
+          ],
+          [
+            113,
+            137,
+            121
+          ],
+          [
+            121,
+            139,
+            118
+          ],
+          [
+            128,
+            141,
+            115
+          ],
+          [
+            138,
+            145,
+            115
+          ],
+          [
+            147,
+            148,
+            115
+          ],
+          [
+            156,
+            150,
+            115
+          ],
+          [
+            166,
+            149,
+            116
+          ],
+          [
+            175,
+            150,
+            117
+          ],
+          [
+            166,
+            149,
+            116
+          ],
+          [
+            156,
+            150,
+            115
+          ],
+          [
+            147,
+            148,
+            115
+          ],
+          [
+            138,
+            145,
+            115
+          ],
+          [
+            128,
+            141,
+            115
+          ],
+          [
+            121,
+            139,
+            118
+          ],
+          [
+            113,
+            137,
+            121
+          ],
+          [
+            105,
+            134,
+            122
+          ],
+          [
+            97,
+            130,
+            123
+          ],
+          [
+            86,
+            124,
+            122
+          ],
+          [
+            78,
+            119,
+            123
+          ],
+          [
+            72,
+            116,
+            127
+          ],
+          [
+            67,
+            114,
+            132
+          ],
+          [
+            62,
+            112,
+            137
+          ],
+          [
+            56,
+            111,
+            142
+          ],
+          [
+            51,
+            108,
+            143
+          ]
+        ],
+        "mean_delta_e76": 0.47679465703263535,
+        "max_delta_e76": 0.8827501445726813,
+        "objective": 0.48896728878738416,
+        "exact_state_count": 276,
+        "exact_max_ink_code_sum": 387,
+        "exact_max_tac_percent": 151.76470588235293,
+        "independent_reference_counts": {
+          "neutral": 0,
+          "near": 15,
+          "transition": 14,
+          "extrapolated": 4
+        }
+      },
+      "baseline_three_stop": {
+        "stops": [
+          [
+            23,
+            123,
+            141
+          ],
+          [
+            221,
+            185,
+            124
+          ],
+          [
+            23,
+            123,
+            141
+          ]
+        ],
+        "samples": [
+          [
+            23,
+            123,
+            141
+          ],
+          [
+            35,
+            127,
+            140
+          ],
+          [
+            48,
+            131,
+            139
+          ],
+          [
+            60,
+            135,
+            138
+          ],
+          [
+            72,
+            138,
+            137
+          ],
+          [
+            85,
+            142,
+            136
+          ],
+          [
+            97,
+            146,
+            135
+          ],
+          [
+            110,
+            150,
+            134
+          ],
+          [
+            122,
+            154,
+            132
+          ],
+          [
+            134,
+            158,
+            131
+          ],
+          [
+            147,
+            162,
+            130
+          ],
+          [
+            159,
+            166,
+            129
+          ],
+          [
+            172,
+            170,
+            128
+          ],
+          [
+            184,
+            173,
+            127
+          ],
+          [
+            196,
+            177,
+            126
+          ],
+          [
+            209,
+            181,
+            125
+          ],
+          [
+            221,
+            185,
+            124
+          ],
+          [
+            209,
+            181,
+            125
+          ],
+          [
+            196,
+            177,
+            126
+          ],
+          [
+            184,
+            173,
+            127
+          ],
+          [
+            172,
+            170,
+            128
+          ],
+          [
+            159,
+            166,
+            129
+          ],
+          [
+            147,
+            162,
+            130
+          ],
+          [
+            134,
+            158,
+            131
+          ],
+          [
+            122,
+            154,
+            132
+          ],
+          [
+            110,
+            150,
+            134
+          ],
+          [
+            97,
+            146,
+            135
+          ],
+          [
+            85,
+            142,
+            136
+          ],
+          [
+            72,
+            138,
+            137
+          ],
+          [
+            60,
+            135,
+            138
+          ],
+          [
+            48,
+            131,
+            139
+          ],
+          [
+            35,
+            127,
+            140
+          ],
+          [
+            23,
+            123,
+            141
+          ]
+        ],
+        "predicted": [
+          [
+            51,
+            108,
+            143
+          ],
+          [
+            56,
+            111,
+            142
+          ],
+          [
+            62,
+            112,
+            137
+          ],
+          [
+            67,
+            114,
+            132
+          ],
+          [
+            72,
+            116,
+            127
+          ],
+          [
+            78,
+            119,
+            123
+          ],
+          [
+            86,
+            124,
+            122
+          ],
+          [
+            97,
+            130,
+            123
+          ],
+          [
+            105,
+            134,
+            122
+          ],
+          [
+            113,
+            137,
+            121
+          ],
+          [
+            121,
+            139,
+            118
+          ],
+          [
+            128,
+            141,
+            115
+          ],
+          [
+            138,
+            145,
+            115
+          ],
+          [
+            147,
+            148,
+            115
+          ],
+          [
+            156,
+            150,
+            115
+          ],
+          [
+            166,
+            149,
+            116
+          ],
+          [
+            175,
+            150,
+            117
+          ],
+          [
+            166,
+            149,
+            116
+          ],
+          [
+            156,
+            150,
+            115
+          ],
+          [
+            147,
+            148,
+            115
+          ],
+          [
+            138,
+            145,
+            115
+          ],
+          [
+            128,
+            141,
+            115
+          ],
+          [
+            121,
+            139,
+            118
+          ],
+          [
+            113,
+            137,
+            121
+          ],
+          [
+            105,
+            134,
+            122
+          ],
+          [
+            97,
+            130,
+            123
+          ],
+          [
+            86,
+            124,
+            122
+          ],
+          [
+            78,
+            119,
+            123
+          ],
+          [
+            72,
+            116,
+            127
+          ],
+          [
+            67,
+            114,
+            132
+          ],
+          [
+            62,
+            112,
+            137
+          ],
+          [
+            56,
+            111,
+            142
+          ],
+          [
+            51,
+            108,
+            143
+          ]
+        ],
+        "mean_delta_e76": 0.47679465703263535,
+        "max_delta_e76": 0.8827501445726813,
+        "objective": 0.48896728878738416,
+        "exact_state_count": 276,
+        "exact_max_ink_code_sum": 387,
+        "exact_max_tac_percent": 151.76470588235293
+      },
+      "elapsed_seconds": 6.188
+    },
+    "icc_low100": {
+      "payload": {
+        "model_mode": "icc",
+        "tac": 100
+      },
+      "response": {
+        "analysis": {
+          "selection": "auto",
+          "rect": [
+            0,
+            0,
+            200,
+            80
+          ],
+          "start_label": "왼쪽 위",
+          "end_label": "오른쪽 아래",
+          "direction": "왼쪽 위 → 오른쪽 아래",
+          "style": "대각선 그라데이션",
+          "css_angle": 110.0,
+          "orientation_method": "RGB plane slope",
+          "spatial_residual_delta_e76": 0.65,
+          "flat_image": false,
+          "source_image_size": [
+            200,
+            80
+          ],
+          "source_coordinate_system": "pixel centers; origin top-left; x right; y down",
+          "css_angle_convention": "0 degrees up; 90 degrees right; clockwise",
+          "rect_coordinate_convention": "left, top inclusive; right, bottom exclusive"
+        },
+        "target_stops": [
+          [
+            51,
+            77,
+            103
+          ],
+          [
+            210,
+            200,
+            156
+          ]
+        ],
+        "target_preview": "exports/gradient_7b8a441d742ab0642f54/target.png",
+        "two_stop": {
+          "stops": [
+            {
+              "position_percent": 0,
+              "input_rgb": [
+                124,
+                150,
+                199
+              ],
+              "target_rgb": [
+                51,
+                77,
+                103
+              ],
+              "predicted_rgb": [
+                128,
+                151,
+                199
+              ],
+              "converted_cmyk": [
+                56.47,
+                36.86,
+                4.31,
+                0.0
+              ],
+              "delta_e76": 32.41
+            },
+            {
+              "position_percent": 100,
+              "input_rgb": [
+                201,
+                196,
+                152
+              ],
+              "target_rgb": [
+                210,
+                200,
+                156
+              ],
+              "predicted_rgb": [
+                203,
+                197,
+                153
+              ],
+              "converted_cmyk": [
+                24.31,
+                17.25,
+                45.88,
+                2.35
+              ],
+              "delta_e76": 2.12
+            }
+          ],
+          "mean_delta_e76": 15.64,
+          "max_delta_e76": 32.41,
+          "max_ink_percent": 99.61,
+          "ink_validation": "all quantized RGB states on encoded-sRGB linear segments",
+          "predicted_samples": [
+            [
+              128,
+              151,
+              199
+            ],
+            [
+              130,
+              152,
+              198
+            ],
+            [
+              134,
+              155,
+              197
+            ],
+            [
+              136,
+              156,
+              196
+            ],
+            [
+              138,
+              158,
+              194
+            ],
+            [
+              140,
+              159,
+              193
+            ],
+            [
+              142,
+              161,
+              191
+            ],
+            [
+              145,
+              161,
+              189
+            ],
+            [
+              147,
+              163,
+              187
+            ],
+            [
+              149,
+              164,
+              186
+            ],
+            [
+              151,
+              166,
+              185
+            ],
+            [
+              154,
+              168,
+              184
+            ],
+            [
+              156,
+              168,
+              182
+            ],
+            [
+              158,
+              170,
+              181
+            ],
+            [
+              161,
+              171,
+              179
+            ],
+            [
+              163,
+              173,
+              178
+            ],
+            [
+              165,
+              174,
+              177
+            ],
+            [
+              168,
+              176,
+              175
+            ],
+            [
+              169,
+              177,
+              174
+            ],
+            [
+              172,
+              178,
+              171
+            ],
+            [
+              174,
+              180,
+              170
+            ],
+            [
+              178,
+              181,
+              169
+            ],
+            [
+              179,
+              183,
+              168
+            ],
+            [
+              181,
+              184,
+              166
+            ],
+            [
+              184,
+              185,
+              165
+            ],
+            [
+              185,
+              187,
+              163
+            ],
+            [
+              189,
+              188,
+              162
+            ],
+            [
+              191,
+              190,
+              160
+            ],
+            [
+              193,
+              191,
+              159
+            ],
+            [
+              196,
+              192,
+              156
+            ],
+            [
+              198,
+              194,
+              155
+            ],
+            [
+              202,
+              196,
+              154
+            ],
+            [
+              203,
+              197,
+              153
+            ]
+          ],
+          "input_samples": [
+            [
+              124,
+              150,
+              199
+            ],
+            [
+              126,
+              151,
+              198
+            ],
+            [
+              129,
+              153,
+              196
+            ],
+            [
+              131,
+              154,
+              195
+            ],
+            [
+              134,
+              156,
+              193
+            ],
+            [
+              136,
+              157,
+              192
+            ],
+            [
+              138,
+              159,
+              190
+            ],
+            [
+              141,
+              160,
+              189
+            ],
+            [
+              143,
+              162,
+              187
+            ],
+            [
+              146,
+              163,
+              186
+            ],
+            [
+              148,
+              164,
+              184
+            ],
+            [
+              150,
+              166,
+              183
+            ],
+            [
+              153,
+              167,
+              181
+            ],
+            [
+              155,
+              169,
+              180
+            ],
+            [
+              158,
+              170,
+              178
+            ],
+            [
+              160,
+              172,
+              177
+            ],
+            [
+              162,
+              173,
+              176
+            ],
+            [
+              165,
+              174,
+              174
+            ],
+            [
+              167,
+              176,
+              173
+            ],
+            [
+              170,
+              177,
+              171
+            ],
+            [
+              172,
+              179,
+              170
+            ],
+            [
+              175,
+              180,
+              168
+            ],
+            [
+              177,
+              182,
+              167
+            ],
+            [
+              179,
+              183,
+              165
+            ],
+            [
+              182,
+              184,
+              164
+            ],
+            [
+              184,
+              186,
+              162
+            ],
+            [
+              187,
+              187,
+              161
+            ],
+            [
+              189,
+              189,
+              159
+            ],
+            [
+              191,
+              190,
+              158
+            ],
+            [
+              194,
+              192,
+              156
+            ],
+            [
+              196,
+              193,
+              155
+            ],
+            [
+              199,
+              195,
+              153
+            ],
+            [
+              201,
+              196,
+              152
+            ]
+          ],
+          "reference_support": null,
+          "input_preview": "exports/gradient_7b8a441d742ab0642f54/two_input.png",
+          "predicted_preview": "exports/gradient_7b8a441d742ab0642f54/two_predicted.png"
+        },
+        "three_stop": {
+          "stops": [
+            {
+              "position_percent": 0,
+              "input_rgb": [
+                123,
+                151,
+                200
+              ],
+              "target_rgb": [
+                51,
+                77,
+                103
+              ],
+              "predicted_rgb": [
+                127,
+                152,
+                200
+              ],
+              "converted_cmyk": [
+                56.47,
+                36.07,
+                4.31,
+                0.0
+              ],
+              "delta_e76": 32.6
+            },
+            {
+              "position_percent": 50,
+              "input_rgb": [
+                169,
+                173,
+                170
+              ],
+              "target_rgb": [
+                131,
+                139,
+                129
+              ],
+              "predicted_rgb": [
+                171,
+                174,
+                170
+              ],
+              "converted_cmyk": [
+                35.68,
+                25.49,
+                29.8,
+                5.88
+              ],
+              "delta_e76": 14.39
+            },
+            {
+              "position_percent": 100,
+              "input_rgb": [
+                196,
+                189,
+                143
+              ],
+              "target_rgb": [
+                210,
+                200,
+                156
+              ],
+              "predicted_rgb": [
+                197,
+                190,
+                144
+              ],
+              "converted_cmyk": [
+                25.88,
+                20.0,
+                49.41,
+                3.92
+              ],
+              "delta_e76": 4.24
+            }
+          ],
+          "mean_delta_e76": 15.03,
+          "max_delta_e76": 32.6,
+          "max_ink_percent": 99.61,
+          "ink_validation": "all quantized RGB states on encoded-sRGB linear segments",
+          "predicted_samples": [
+            [
+              127,
+              152,
+              200
+            ],
+            [
+              130,
+              153,
+              198
+            ],
+            [
+              134,
+              155,
+              197
+            ],
+            [
+              137,
+              157,
+              195
+            ],
+            [
+              138,
+              158,
+              193
+            ],
+            [
+              141,
+              160,
+              192
+            ],
+            [
+              144,
+              161,
+              189
+            ],
+            [
+              147,
+              162,
+              187
+            ],
+            [
+              149,
+              163,
+              185
+            ],
+            [
+              153,
+              164,
+              183
+            ],
+            [
+              156,
+              167,
+              182
+            ],
+            [
+              158,
+              167,
+              180
+            ],
+            [
+              161,
+              169,
+              179
+            ],
+            [
+              163,
+              170,
+              177
+            ],
+            [
+              166,
+              171,
+              175
+            ],
+            [
+              168,
+              173,
+              173
+            ],
+            [
+              171,
+              174,
+              170
+            ],
+            [
+              173,
+              175,
+              169
+            ],
+            [
+              175,
+              177,
+              168
+            ],
+            [
+              177,
+              178,
+              166
+            ],
+            [
+              179,
+              178,
+              164
+            ],
+            [
+              180,
+              179,
+              163
+            ],
+            [
+              181,
+              180,
+              161
+            ],
+            [
+              183,
+              181,
+              160
+            ],
+            [
+              184,
+              182,
+              157
+            ],
+            [
+              186,
+              183,
+              156
+            ],
+            [
+              189,
+              184,
+              154
+            ],
+            [
+              190,
+              185,
+              152
+            ],
+            [
+              191,
+              186,
+              151
+            ],
+            [
+              193,
+              187,
+              148
+            ],
+            [
+              195,
+              188,
+              147
+            ],
+            [
+              196,
+              189,
+              146
+            ],
+            [
+              197,
+              190,
+              144
+            ]
+          ],
+          "input_samples": [
+            [
+              123,
+              151,
+              200
+            ],
+            [
+              126,
+              152,
+              198
+            ],
+            [
+              129,
+              154,
+              196
+            ],
+            [
+              132,
+              155,
+              194
+            ],
+            [
+              134,
+              156,
+              192
+            ],
+            [
+              137,
+              158,
+              191
+            ],
+            [
+              140,
+              159,
+              189
+            ],
+            [
+              143,
+              161,
+              187
+            ],
+            [
+              146,
+              162,
+              185
+            ],
+            [
+              149,
+              163,
+              183
+            ],
+            [
+              152,
+              165,
+              181
+            ],
+            [
+              155,
+              166,
+              179
+            ],
+            [
+              158,
+              168,
+              178
+            ],
+            [
+              160,
+              169,
+              176
+            ],
+            [
+              163,
+              170,
+              174
+            ],
+            [
+              166,
+              172,
+              172
+            ],
+            [
+              169,
+              173,
+              170
+            ],
+            [
+              171,
+              174,
+              168
+            ],
+            [
+              172,
+              175,
+              167
+            ],
+            [
+              174,
+              176,
+              165
+            ],
+            [
+              176,
+              177,
+              163
+            ],
+            [
+              177,
+              178,
+              162
+            ],
+            [
+              179,
+              179,
+              160
+            ],
+            [
+              181,
+              180,
+              158
+            ],
+            [
+              182,
+              181,
+              156
+            ],
+            [
+              184,
+              182,
+              155
+            ],
+            [
+              186,
+              183,
+              153
+            ],
+            [
+              188,
+              184,
+              151
+            ],
+            [
+              189,
+              185,
+              150
+            ],
+            [
+              191,
+              186,
+              148
+            ],
+            [
+              193,
+              187,
+              146
+            ],
+            [
+              194,
+              188,
+              145
+            ],
+            [
+              196,
+              189,
+              143
+            ]
+          ],
+          "reference_support": null,
+          "input_preview": "exports/gradient_7b8a441d742ab0642f54/three_input.png",
+          "predicted_preview": "exports/gradient_7b8a441d742ab0642f54/three_predicted.png"
+        },
+        "strength": 0.0,
+        "tac_limit": 100.0,
+        "model_mode": "icc",
+        "input_cmyk_profile": "CoatedFOGRA39.icc",
+        "icc_gamut_warning_percent": 0.0,
+        "icc_gamut_scope": "FOGRA39 target-color sample alarm; not empirical fit residual",
+        "extrapolated_sample_percent": null,
+        "model_name": "HARDYS 전달본 GRACoL → 실물 사진 경험 모델 v11",
+        "metric": "Delta E 76, sRGB-derived D65 Lab",
+        "interpolation": "encoded sRGB linear interpolation",
+        "note": "사진 모드는 sRGB 입력을 새 사진 모델로 직접 예측합니다. ICC 모드는 별도 FOGRA39 표준 조건입니다. 색차 임계값과 ICC 색역 경고는 다르며, 경고 없음은 4도 재현 보장이 아닙니다. 최종 인쇄 PDF로 확인해 주세요. 사진 보정과 방향·색 추출은 추정입니다."
+      },
+      "two_stop": {
+        "stops": [
+          [
+            124,
+            150,
+            199
+          ],
+          [
+            201,
+            196,
+            152
+          ]
+        ],
+        "samples": [
+          [
+            124,
+            150,
+            199
+          ],
+          [
+            126,
+            151,
+            198
+          ],
+          [
+            129,
+            153,
+            196
+          ],
+          [
+            131,
+            154,
+            195
+          ],
+          [
+            134,
+            156,
+            193
+          ],
+          [
+            136,
+            157,
+            192
+          ],
+          [
+            138,
+            159,
+            190
+          ],
+          [
+            141,
+            160,
+            189
+          ],
+          [
+            143,
+            162,
+            187
+          ],
+          [
+            146,
+            163,
+            186
+          ],
+          [
+            148,
+            164,
+            184
+          ],
+          [
+            150,
+            166,
+            183
+          ],
+          [
+            153,
+            167,
+            181
+          ],
+          [
+            155,
+            169,
+            180
+          ],
+          [
+            158,
+            170,
+            178
+          ],
+          [
+            160,
+            172,
+            177
+          ],
+          [
+            162,
+            173,
+            176
+          ],
+          [
+            165,
+            174,
+            174
+          ],
+          [
+            167,
+            176,
+            173
+          ],
+          [
+            170,
+            177,
+            171
+          ],
+          [
+            172,
+            179,
+            170
+          ],
+          [
+            175,
+            180,
+            168
+          ],
+          [
+            177,
+            182,
+            167
+          ],
+          [
+            179,
+            183,
+            165
+          ],
+          [
+            182,
+            184,
+            164
+          ],
+          [
+            184,
+            186,
+            162
+          ],
+          [
+            187,
+            187,
+            161
+          ],
+          [
+            189,
+            189,
+            159
+          ],
+          [
+            191,
+            190,
+            158
+          ],
+          [
+            194,
+            192,
+            156
+          ],
+          [
+            196,
+            193,
+            155
+          ],
+          [
+            199,
+            195,
+            153
+          ],
+          [
+            201,
+            196,
+            152
+          ]
+        ],
+        "predicted": [
+          [
+            128,
+            151,
+            199
+          ],
+          [
+            130,
+            152,
+            198
+          ],
+          [
+            134,
+            155,
+            197
+          ],
+          [
+            136,
+            156,
+            196
+          ],
+          [
+            138,
+            158,
+            194
+          ],
+          [
+            140,
+            159,
+            193
+          ],
+          [
+            142,
+            161,
+            191
+          ],
+          [
+            145,
+            161,
+            189
+          ],
+          [
+            147,
+            163,
+            187
+          ],
+          [
+            149,
+            164,
+            186
+          ],
+          [
+            151,
+            166,
+            185
+          ],
+          [
+            154,
+            168,
+            184
+          ],
+          [
+            156,
+            168,
+            182
+          ],
+          [
+            158,
+            170,
+            181
+          ],
+          [
+            161,
+            171,
+            179
+          ],
+          [
+            163,
+            173,
+            178
+          ],
+          [
+            165,
+            174,
+            177
+          ],
+          [
+            168,
+            176,
+            175
+          ],
+          [
+            169,
+            177,
+            174
+          ],
+          [
+            172,
+            178,
+            171
+          ],
+          [
+            174,
+            180,
+            170
+          ],
+          [
+            178,
+            181,
+            169
+          ],
+          [
+            179,
+            183,
+            168
+          ],
+          [
+            181,
+            184,
+            166
+          ],
+          [
+            184,
+            185,
+            165
+          ],
+          [
+            185,
+            187,
+            163
+          ],
+          [
+            189,
+            188,
+            162
+          ],
+          [
+            191,
+            190,
+            160
+          ],
+          [
+            193,
+            191,
+            159
+          ],
+          [
+            196,
+            192,
+            156
+          ],
+          [
+            198,
+            194,
+            155
+          ],
+          [
+            202,
+            196,
+            154
+          ],
+          [
+            203,
+            197,
+            153
+          ]
+        ],
+        "mean_delta_e76": 15.639246590239082,
+        "max_delta_e76": 32.408119358239354,
+        "objective": 561.1809912745437,
+        "exact_state_count": 170,
+        "exact_max_ink_code_sum": 254,
+        "exact_max_tac_percent": 99.6078431372549
+      },
+      "baseline_two_stop": {
+        "stops": [
+          [
+            176,
+            150,
+            255
+          ],
+          [
+            214,
+            222,
+            255
+          ]
+        ],
+        "samples": [
+          [
+            176,
+            150,
+            255
+          ],
+          [
+            177,
+            152,
+            255
+          ],
+          [
+            178,
+            154,
+            255
+          ],
+          [
+            180,
+            157,
+            255
+          ],
+          [
+            181,
+            159,
+            255
+          ],
+          [
+            182,
+            161,
+            255
+          ],
+          [
+            183,
+            164,
+            255
+          ],
+          [
+            184,
+            166,
+            255
+          ],
+          [
+            186,
+            168,
+            255
+          ],
+          [
+            187,
+            170,
+            255
+          ],
+          [
+            188,
+            172,
+            255
+          ],
+          [
+            189,
+            175,
+            255
+          ],
+          [
+            190,
+            177,
+            255
+          ],
+          [
+            191,
+            179,
+            255
+          ],
+          [
+            193,
+            182,
+            255
+          ],
+          [
+            194,
+            184,
+            255
+          ],
+          [
+            195,
+            186,
+            255
+          ],
+          [
+            196,
+            188,
+            255
+          ],
+          [
+            197,
+            190,
+            255
+          ],
+          [
+            199,
+            193,
+            255
+          ],
+          [
+            200,
+            195,
+            255
+          ],
+          [
+            201,
+            197,
+            255
+          ],
+          [
+            202,
+            200,
+            255
+          ],
+          [
+            203,
+            202,
+            255
+          ],
+          [
+            204,
+            204,
+            255
+          ],
+          [
+            206,
+            206,
+            255
+          ],
+          [
+            207,
+            208,
+            255
+          ],
+          [
+            208,
+            211,
+            255
+          ],
+          [
+            209,
+            213,
+            255
+          ],
+          [
+            210,
+            215,
+            255
+          ],
+          [
+            212,
+            218,
+            255
+          ],
+          [
+            213,
+            220,
+            255
+          ],
+          [
+            214,
+            222,
+            255
+          ]
+        ],
+        "predicted": [
+          [
+            162,
+            149,
+            199
+          ],
+          [
+            164,
+            150,
+            200
+          ],
+          [
+            165,
+            152,
+            201
+          ],
+          [
+            169,
+            155,
+            203
+          ],
+          [
+            171,
+            157,
+            204
+          ],
+          [
+            173,
+            159,
+            205
+          ],
+          [
+            175,
+            162,
+            207
+          ],
+          [
+            177,
+            164,
+            208
+          ],
+          [
+            179,
+            166,
+            209
+          ],
+          [
+            180,
+            168,
+            211
+          ],
+          [
+            182,
+            170,
+            212
+          ],
+          [
+            184,
+            173,
+            214
+          ],
+          [
+            186,
+            175,
+            215
+          ],
+          [
+            187,
+            177,
+            216
+          ],
+          [
+            190,
+            180,
+            217
+          ],
+          [
+            192,
+            181,
+            218
+          ],
+          [
+            193,
+            184,
+            219
+          ],
+          [
+            195,
+            186,
+            221
+          ],
+          [
+            196,
+            188,
+            222
+          ],
+          [
+            199,
+            192,
+            224
+          ],
+          [
+            200,
+            194,
+            225
+          ],
+          [
+            202,
+            195,
+            226
+          ],
+          [
+            203,
+            198,
+            228
+          ],
+          [
+            204,
+            200,
+            229
+          ],
+          [
+            205,
+            202,
+            230
+          ],
+          [
+            207,
+            204,
+            231
+          ],
+          [
+            208,
+            206,
+            232
+          ],
+          [
+            210,
+            209,
+            234
+          ],
+          [
+            211,
+            212,
+            236
+          ],
+          [
+            212,
+            214,
+            237
+          ],
+          [
+            215,
+            217,
+            238
+          ],
+          [
+            215,
+            218,
+            239
+          ],
+          [
+            216,
+            221,
+            241
+          ]
+        ],
+        "mean_delta_e76": 33.71518581752916,
+        "max_delta_e76": 37.19853651614459,
+        "objective": 1425.1713186688628,
+        "exact_state_count": 111,
+        "exact_max_ink_code_sum": 224,
+        "exact_max_tac_percent": 87.84313725490196
+      },
+      "three_stop": {
+        "stops": [
+          [
+            123,
+            151,
+            200
+          ],
+          [
+            169,
+            173,
+            170
+          ],
+          [
+            196,
+            189,
+            143
+          ]
+        ],
+        "samples": [
+          [
+            123,
+            151,
+            200
+          ],
+          [
+            126,
+            152,
+            198
+          ],
+          [
+            129,
+            154,
+            196
+          ],
+          [
+            132,
+            155,
+            194
+          ],
+          [
+            134,
+            156,
+            192
+          ],
+          [
+            137,
+            158,
+            191
+          ],
+          [
+            140,
+            159,
+            189
+          ],
+          [
+            143,
+            161,
+            187
+          ],
+          [
+            146,
+            162,
+            185
+          ],
+          [
+            149,
+            163,
+            183
+          ],
+          [
+            152,
+            165,
+            181
+          ],
+          [
+            155,
+            166,
+            179
+          ],
+          [
+            158,
+            168,
+            178
+          ],
+          [
+            160,
+            169,
+            176
+          ],
+          [
+            163,
+            170,
+            174
+          ],
+          [
+            166,
+            172,
+            172
+          ],
+          [
+            169,
+            173,
+            170
+          ],
+          [
+            171,
+            174,
+            168
+          ],
+          [
+            172,
+            175,
+            167
+          ],
+          [
+            174,
+            176,
+            165
+          ],
+          [
+            176,
+            177,
+            163
+          ],
+          [
+            177,
+            178,
+            162
+          ],
+          [
+            179,
+            179,
+            160
+          ],
+          [
+            181,
+            180,
+            158
+          ],
+          [
+            182,
+            181,
+            156
+          ],
+          [
+            184,
+            182,
+            155
+          ],
+          [
+            186,
+            183,
+            153
+          ],
+          [
+            188,
+            184,
+            151
+          ],
+          [
+            189,
+            185,
+            150
+          ],
+          [
+            191,
+            186,
+            148
+          ],
+          [
+            193,
+            187,
+            146
+          ],
+          [
+            194,
+            188,
+            145
+          ],
+          [
+            196,
+            189,
+            143
+          ]
+        ],
+        "predicted": [
+          [
+            127,
+            152,
+            200
+          ],
+          [
+            130,
+            153,
+            198
+          ],
+          [
+            134,
+            155,
+            197
+          ],
+          [
+            137,
+            157,
+            195
+          ],
+          [
+            138,
+            158,
+            193
+          ],
+          [
+            141,
+            160,
+            192
+          ],
+          [
+            144,
+            161,
+            189
+          ],
+          [
+            147,
+            162,
+            187
+          ],
+          [
+            149,
+            163,
+            185
+          ],
+          [
+            153,
+            164,
+            183
+          ],
+          [
+            156,
+            167,
+            182
+          ],
+          [
+            158,
+            167,
+            180
+          ],
+          [
+            161,
+            169,
+            179
+          ],
+          [
+            163,
+            170,
+            177
+          ],
+          [
+            166,
+            171,
+            175
+          ],
+          [
+            168,
+            173,
+            173
+          ],
+          [
+            171,
+            174,
+            170
+          ],
+          [
+            173,
+            175,
+            169
+          ],
+          [
+            175,
+            177,
+            168
+          ],
+          [
+            177,
+            178,
+            166
+          ],
+          [
+            179,
+            178,
+            164
+          ],
+          [
+            180,
+            179,
+            163
+          ],
+          [
+            181,
+            180,
+            161
+          ],
+          [
+            183,
+            181,
+            160
+          ],
+          [
+            184,
+            182,
+            157
+          ],
+          [
+            186,
+            183,
+            156
+          ],
+          [
+            189,
+            184,
+            154
+          ],
+          [
+            190,
+            185,
+            152
+          ],
+          [
+            191,
+            186,
+            151
+          ],
+          [
+            193,
+            187,
+            148
+          ],
+          [
+            195,
+            188,
+            147
+          ],
+          [
+            196,
+            189,
+            146
+          ],
+          [
+            197,
+            190,
+            144
+          ]
+        ],
+        "mean_delta_e76": 15.028077867534291,
+        "max_delta_e76": 32.600916949947475,
+        "objective": 553.0127615918965,
+        "exact_state_count": 167,
+        "exact_max_ink_code_sum": 254,
+        "exact_max_tac_percent": 99.6078431372549
+      },
+      "feasible_endpoint_seed": {
+        "stops": [
+          [
+            123,
+            149,
+            198
+          ],
+          [
+            210,
+            200,
+            156
+          ]
+        ],
+        "samples": [
+          [
+            123,
+            149,
+            198
+          ],
+          [
+            126,
+            151,
+            197
+          ],
+          [
+            128,
+            152,
+            195
+          ],
+          [
+            131,
+            154,
+            194
+          ],
+          [
+            134,
+            155,
+            193
+          ],
+          [
+            137,
+            157,
+            191
+          ],
+          [
+            139,
+            159,
+            190
+          ],
+          [
+            142,
+            160,
+            189
+          ],
+          [
+            145,
+            162,
+            188
+          ],
+          [
+            147,
+            163,
+            186
+          ],
+          [
+            150,
+            165,
+            185
+          ],
+          [
+            153,
+            167,
+            184
+          ],
+          [
+            156,
+            168,
+            182
+          ],
+          [
+            158,
+            170,
+            181
+          ],
+          [
+            161,
+            171,
+            180
+          ],
+          [
+            164,
+            173,
+            178
+          ],
+          [
+            166,
+            174,
+            177
+          ],
+          [
+            169,
+            176,
+            176
+          ],
+          [
+            172,
+            178,
+            174
+          ],
+          [
+            175,
+            179,
+            173
+          ],
+          [
+            177,
+            181,
+            172
+          ],
+          [
+            180,
+            182,
+            170
+          ],
+          [
+            183,
+            184,
+            169
+          ],
+          [
+            186,
+            186,
+            168
+          ],
+          [
+            188,
+            187,
+            166
+          ],
+          [
+            191,
+            189,
+            165
+          ],
+          [
+            194,
+            190,
+            164
+          ],
+          [
+            196,
+            192,
+            163
+          ],
+          [
+            199,
+            194,
+            161
+          ],
+          [
+            202,
+            195,
+            160
+          ],
+          [
+            205,
+            197,
+            159
+          ],
+          [
+            207,
+            198,
+            157
+          ],
+          [
+            210,
+            200,
+            156
+          ]
+        ],
+        "predicted": [
+          [
+            127,
+            150,
+            198
+          ],
+          [
+            130,
+            152,
+            197
+          ],
+          [
+            132,
+            154,
+            196
+          ],
+          [
+            136,
+            156,
+            195
+          ],
+          [
+            138,
+            157,
+            194
+          ],
+          [
+            141,
+            159,
+            192
+          ],
+          [
+            142,
+            161,
+            191
+          ],
+          [
+            146,
+            161,
+            189
+          ],
+          [
+            148,
+            163,
+            188
+          ],
+          [
+            150,
+            164,
+            186
+          ],
+          [
+            153,
+            167,
+            185
+          ],
+          [
+            157,
+            168,
+            185
+          ],
+          [
+            159,
+            169,
+            183
+          ],
+          [
+            161,
+            171,
+            182
+          ],
+          [
+            164,
+            172,
+            181
+          ],
+          [
+            167,
+            175,
+            179
+          ],
+          [
+            168,
+            176,
+            178
+          ],
+          [
+            171,
+            178,
+            177
+          ],
+          [
+            175,
+            179,
+            175
+          ],
+          [
+            178,
+            180,
+            174
+          ],
+          [
+            180,
+            182,
+            173
+          ],
+          [
+            183,
+            183,
+            170
+          ],
+          [
+            185,
+            184,
+            169
+          ],
+          [
+            188,
+            187,
+            169
+          ],
+          [
+            190,
+            188,
+            167
+          ],
+          [
+            193,
+            190,
+            166
+          ],
+          [
+            196,
+            191,
+            164
+          ],
+          [
+            198,
+            192,
+            163
+          ],
+          [
+            202,
+            195,
+            161
+          ],
+          [
+            204,
+            196,
+            161
+          ],
+          [
+            207,
+            198,
+            160
+          ],
+          [
+            209,
+            199,
+            158
+          ],
+          [
+            211,
+            201,
+            157
+          ]
+        ],
+        "mean_delta_e76": 16.072892035023095,
+        "max_delta_e76": 32.06316837069196,
+        "objective": 563.6336257768015,
+        "exact_state_count": 178,
+        "exact_max_ink_code_sum": 255,
+        "exact_max_tac_percent": 100.0
+      },
+      "elapsed_seconds": 6.472
+    },
+    "icc_ui240": {
+      "payload": {
+        "model_mode": "icc",
+        "tac": 240
+      },
+      "response": {
+        "analysis": {
+          "selection": "auto",
+          "rect": [
+            0,
+            0,
+            200,
+            80
+          ],
+          "start_label": "왼쪽 위",
+          "end_label": "오른쪽 아래",
+          "direction": "왼쪽 위 → 오른쪽 아래",
+          "style": "대각선 그라데이션",
+          "css_angle": 109.9,
+          "orientation_method": "local RGB gradient structure tensor",
+          "spatial_residual_delta_e76": 0.4,
+          "flat_image": false,
+          "source_image_size": [
+            200,
+            80
+          ],
+          "source_coordinate_system": "pixel centers; origin top-left; x right; y down",
+          "css_angle_convention": "0 degrees up; 90 degrees right; clockwise",
+          "rect_coordinate_convention": "left, top inclusive; right, bottom exclusive"
+        },
+        "target_stops": [
+          [
+            30,
+            30,
+            30
+          ],
+          [
+            232,
+            111,
+            34
+          ]
+        ],
+        "target_preview": "exports/gradient_0ae2180196774a8fd88e/target.png",
+        "two_stop": {
+          "stops": [
+            {
+              "position_percent": 0,
+              "input_rgb": [
+                56,
+                59,
+                63
+              ],
+              "target_rgb": [
+                30,
+                30,
+                30
+              ],
+              "predicted_rgb": [
+                65,
+                66,
+                69
+              ],
+              "converted_cmyk": [
+                70.58,
+                59.6,
+                52.54,
+                57.25
+              ],
+              "delta_e76": 16.83
+            },
+            {
+              "position_percent": 100,
+              "input_rgb": [
+                217,
+                92,
+                18
+              ],
+              "target_rgb": [
+                232,
+                111,
+                34
+              ],
+              "predicted_rgb": [
+                218,
+                96,
+                38
+              ],
+              "converted_cmyk": [
+                9.41,
+                73.72,
+                99.6,
+                1.56
+              ],
+              "delta_e76": 8.58
+            }
+          ],
+          "mean_delta_e76": 9.0,
+          "max_delta_e76": 16.9,
+          "max_ink_percent": 240.0,
+          "ink_validation": "all quantized RGB states on encoded-sRGB linear segments",
+          "predicted_samples": [
+            [
+              65,
+              66,
+              69
+            ],
+            [
+              69,
+              67,
+              68
+            ],
+            [
+              74,
+              68,
+              67
+            ],
+            [
+              78,
+              69,
+              66
+            ],
+            [
+              82,
+              70,
+              64
+            ],
+            [
+              87,
+              71,
+              64
+            ],
+            [
+              92,
+              72,
+              62
+            ],
+            [
+              97,
+              73,
+              61
+            ],
+            [
+              101,
+              74,
+              60
+            ],
+            [
+              106,
+              75,
+              59
+            ],
+            [
+              111,
+              76,
+              58
+            ],
+            [
+              116,
+              76,
+              57
+            ],
+            [
+              120,
+              77,
+              55
+            ],
+            [
+              125,
+              78,
+              55
+            ],
+            [
+              130,
+              79,
+              53
+            ],
+            [
+              135,
+              80,
+              52
+            ],
+            [
+              140,
+              82,
+              51
+            ],
+            [
+              145,
+              82,
+              49
+            ],
+            [
+              150,
+              83,
+              48
+            ],
+            [
+              155,
+              84,
+              47
+            ],
+            [
+              161,
+              86,
+              46
+            ],
+            [
+              165,
+              87,
+              44
+            ],
+            [
+              170,
+              87,
+              44
+            ],
+            [
+              175,
+              88,
+              44
+            ],
+            [
+              180,
+              89,
+              43
+            ],
+            [
+              184,
+              90,
+              42
+            ],
+            [
+              189,
+              91,
+              41
+            ],
+            [
+              194,
+              92,
+              40
+            ],
+            [
+              199,
+              93,
+              40
+            ],
+            [
+              203,
+              94,
+              39
+            ],
+            [
+              208,
+              95,
+              39
+            ],
+            [
+              214,
+              95,
+              39
+            ],
+            [
+              218,
+              96,
+              38
+            ]
+          ],
+          "input_samples": [
+            [
+              56,
+              59,
+              63
+            ],
+            [
+              61,
+              60,
+              62
+            ],
+            [
+              66,
+              61,
+              60
+            ],
+            [
+              71,
+              62,
+              59
+            ],
+            [
+              76,
+              63,
+              57
+            ],
+            [
+              81,
+              64,
+              56
+            ],
+            [
+              86,
+              65,
+              55
+            ],
+            [
+              91,
+              66,
+              53
+            ],
+            [
+              96,
+              67,
+              52
+            ],
+            [
+              101,
+              68,
+              50
+            ],
+            [
+              106,
+              69,
+              49
+            ],
+            [
+              111,
+              70,
+              48
+            ],
+            [
+              116,
+              71,
+              46
+            ],
+            [
+              121,
+              72,
+              45
+            ],
+            [
+              126,
+              73,
+              43
+            ],
+            [
+              131,
+              74,
+              42
+            ],
+            [
+              136,
+              76,
+              40
+            ],
+            [
+              142,
+              77,
+              39
+            ],
+            [
+              147,
+              78,
+              38
+            ],
+            [
+              152,
+              79,
+              36
+            ],
+            [
+              157,
+              80,
+              35
+            ],
+            [
+              162,
+              81,
+              33
+            ],
+            [
+              167,
+              82,
+              32
+            ],
+            [
+              172,
+              83,
+              31
+            ],
+            [
+              177,
+              84,
+              29
+            ],
+            [
+              182,
+              85,
+              28
+            ],
+            [
+              187,
+              86,
+              26
+            ],
+            [
+              192,
+              87,
+              25
+            ],
+            [
+              197,
+              88,
+              24
+            ],
+            [
+              202,
+              89,
+              22
+            ],
+            [
+              207,
+              90,
+              21
+            ],
+            [
+              212,
+              91,
+              19
+            ],
+            [
+              217,
+              92,
+              18
+            ]
+          ],
+          "reference_support": null,
+          "input_preview": "exports/gradient_0ae2180196774a8fd88e/two_input.png",
+          "predicted_preview": "exports/gradient_0ae2180196774a8fd88e/two_predicted.png"
+        },
+        "three_stop": {
+          "stops": [
+            {
+              "position_percent": 0,
+              "input_rgb": [
+                64,
+                54,
+                54
+              ],
+              "target_rgb": [
+                30,
+                30,
+                30
+              ],
+              "predicted_rgb": [
+                72,
+                62,
+                61
+              ],
+              "converted_cmyk": [
+                58.82,
+                61.17,
+                54.5,
+                63.92
+              ],
+              "delta_e76": 16.59
+            },
+            {
+              "position_percent": 50,
+              "input_rgb": [
+                115,
+                60,
+                35
+              ],
+              "target_rgb": [
+                122,
+                64,
+                36
+              ],
+              "predicted_rgb": [
+                119,
+                67,
+                46
+              ],
+              "converted_cmyk": [
+                34.9,
+                73.33,
+                83.92,
+                46.27
+              ],
+              "delta_e76": 6.03
+            },
+            {
+              "position_percent": 100,
+              "input_rgb": [
+                236,
+                109,
+                3
+              ],
+              "target_rgb": [
+                232,
+                111,
+                34
+              ],
+              "predicted_rgb": [
+                237,
+                111,
+                31
+              ],
+              "converted_cmyk": [
+                0.78,
+                67.45,
+                98.82,
+                0.0
+              ],
+              "delta_e76": 2.78
+            }
+          ],
+          "mean_delta_e76": 6.46,
+          "max_delta_e76": 16.59,
+          "max_ink_percent": 238.82,
+          "ink_validation": "all quantized RGB states on encoded-sRGB linear segments",
+          "predicted_samples": [
+            [
+              72,
+              62,
+              61
+            ],
+            [
+              74,
+              62,
+              60
+            ],
+            [
+              77,
+              63,
+              60
+            ],
+            [
+              81,
+              63,
+              59
+            ],
+            [
+              83,
+              64,
+              58
+            ],
+            [
+              86,
+              64,
+              57
+            ],
+            [
+              89,
+              64,
+              56
+            ],
+            [
+              92,
+              65,
+              55
+            ],
+            [
+              95,
+              65,
+              54
+            ],
+            [
+              98,
+              65,
+              53
+            ],
+            [
+              101,
+              65,
+              52
+            ],
+            [
+              104,
+              65,
+              51
+            ],
+            [
+              107,
+              66,
+              51
+            ],
+            [
+              110,
+              67,
+              50
+            ],
+            [
+              114,
+              67,
+              48
+            ],
+            [
+              116,
+              68,
+              47
+            ],
+            [
+              119,
+              67,
+              46
+            ],
+            [
+              127,
+              70,
+              45
+            ],
+            [
+              134,
+              73,
+              44
+            ],
+            [
+              141,
+              75,
+              43
+            ],
+            [
+              148,
+              78,
+              41
+            ],
+            [
+              156,
+              81,
+              40
+            ],
+            [
+              163,
+              83,
+              39
+            ],
+            [
+              170,
+              86,
+              39
+            ],
+            [
+              178,
+              89,
+              39
+            ],
+            [
+              185,
+              93,
+              39
+            ],
+            [
+              193,
+              95,
+              40
+            ],
+            [
+              200,
+              99,
+              39
+            ],
+            [
+              207,
+              101,
+              38
+            ],
+            [
+              214,
+              104,
+              38
+            ],
+            [
+              222,
+              106,
+              36
+            ],
+            [
+              229,
+              109,
+              34
+            ],
+            [
+              237,
+              111,
+              31
+            ]
+          ],
+          "input_samples": [
+            [
+              64,
+              54,
+              54
+            ],
+            [
+              67,
+              54,
+              53
+            ],
+            [
+              70,
+              55,
+              52
+            ],
+            [
+              74,
+              55,
+              50
+            ],
+            [
+              77,
+              56,
+              49
+            ],
+            [
+              80,
+              56,
+              48
+            ],
+            [
+              83,
+              56,
+              47
+            ],
+            [
+              86,
+              57,
+              46
+            ],
+            [
+              90,
+              57,
+              44
+            ],
+            [
+              93,
+              57,
+              43
+            ],
+            [
+              96,
+              58,
+              42
+            ],
+            [
+              99,
+              58,
+              41
+            ],
+            [
+              102,
+              58,
+              40
+            ],
+            [
+              105,
+              59,
+              39
+            ],
+            [
+              109,
+              59,
+              37
+            ],
+            [
+              112,
+              60,
+              36
+            ],
+            [
+              115,
+              60,
+              35
+            ],
+            [
+              123,
+              63,
+              33
+            ],
+            [
+              130,
+              66,
+              31
+            ],
+            [
+              138,
+              69,
+              29
+            ],
+            [
+              145,
+              72,
+              27
+            ],
+            [
+              153,
+              75,
+              25
+            ],
+            [
+              160,
+              78,
+              23
+            ],
+            [
+              168,
+              81,
+              21
+            ],
+            [
+              176,
+              84,
+              19
+            ],
+            [
+              183,
+              88,
+              17
+            ],
+            [
+              191,
+              91,
+              15
+            ],
+            [
+              198,
+              94,
+              13
+            ],
+            [
+              206,
+              97,
+              11
+            ],
+            [
+              213,
+              100,
+              9
+            ],
+            [
+              221,
+              103,
+              7
+            ],
+            [
+              228,
+              106,
+              5
+            ],
+            [
+              236,
+              109,
+              3
+            ]
+          ],
+          "reference_support": null,
+          "input_preview": "exports/gradient_0ae2180196774a8fd88e/three_input.png",
+          "predicted_preview": "exports/gradient_0ae2180196774a8fd88e/three_predicted.png"
+        },
+        "strength": 0.0,
+        "tac_limit": 240.0,
+        "model_mode": "icc",
+        "input_cmyk_profile": "CoatedFOGRA39.icc",
+        "icc_gamut_warning_percent": 0.0,
+        "icc_gamut_scope": "FOGRA39 target-color sample alarm; not empirical fit residual",
+        "extrapolated_sample_percent": null,
+        "model_name": "HARDYS 전달본 GRACoL → 실물 사진 경험 모델 v11",
+        "metric": "Delta E 76, sRGB-derived D65 Lab",
+        "interpolation": "encoded sRGB linear interpolation",
+        "note": "사진 모드는 sRGB 입력을 새 사진 모델로 직접 예측합니다. ICC 모드는 별도 FOGRA39 표준 조건입니다. 색차 임계값과 ICC 색역 경고는 다르며, 경고 없음은 4도 재현 보장이 아닙니다. 최종 인쇄 PDF로 확인해 주세요. 사진 보정과 방향·색 추출은 추정입니다."
+      },
+      "two_stop": {
+        "stops": [
+          [
+            56,
+            59,
+            63
+          ],
+          [
+            217,
+            92,
+            18
+          ]
+        ],
+        "samples": [
+          [
+            56,
+            59,
+            63
+          ],
+          [
+            61,
+            60,
+            62
+          ],
+          [
+            66,
+            61,
+            60
+          ],
+          [
+            71,
+            62,
+            59
+          ],
+          [
+            76,
+            63,
+            57
+          ],
+          [
+            81,
+            64,
+            56
+          ],
+          [
+            86,
+            65,
+            55
+          ],
+          [
+            91,
+            66,
+            53
+          ],
+          [
+            96,
+            67,
+            52
+          ],
+          [
+            101,
+            68,
+            50
+          ],
+          [
+            106,
+            69,
+            49
+          ],
+          [
+            111,
+            70,
+            48
+          ],
+          [
+            116,
+            71,
+            46
+          ],
+          [
+            121,
+            72,
+            45
+          ],
+          [
+            126,
+            73,
+            43
+          ],
+          [
+            131,
+            74,
+            42
+          ],
+          [
+            136,
+            76,
+            40
+          ],
+          [
+            142,
+            77,
+            39
+          ],
+          [
+            147,
+            78,
+            38
+          ],
+          [
+            152,
+            79,
+            36
+          ],
+          [
+            157,
+            80,
+            35
+          ],
+          [
+            162,
+            81,
+            33
+          ],
+          [
+            167,
+            82,
+            32
+          ],
+          [
+            172,
+            83,
+            31
+          ],
+          [
+            177,
+            84,
+            29
+          ],
+          [
+            182,
+            85,
+            28
+          ],
+          [
+            187,
+            86,
+            26
+          ],
+          [
+            192,
+            87,
+            25
+          ],
+          [
+            197,
+            88,
+            24
+          ],
+          [
+            202,
+            89,
+            22
+          ],
+          [
+            207,
+            90,
+            21
+          ],
+          [
+            212,
+            91,
+            19
+          ],
+          [
+            217,
+            92,
+            18
+          ]
+        ],
+        "predicted": [
+          [
+            65,
+            66,
+            69
+          ],
+          [
+            69,
+            67,
+            68
+          ],
+          [
+            74,
+            68,
+            67
+          ],
+          [
+            78,
+            69,
+            66
+          ],
+          [
+            82,
+            70,
+            64
+          ],
+          [
+            87,
+            71,
+            64
+          ],
+          [
+            92,
+            72,
+            62
+          ],
+          [
+            97,
+            73,
+            61
+          ],
+          [
+            101,
+            74,
+            60
+          ],
+          [
+            106,
+            75,
+            59
+          ],
+          [
+            111,
+            76,
+            58
+          ],
+          [
+            116,
+            76,
+            57
+          ],
+          [
+            120,
+            77,
+            55
+          ],
+          [
+            125,
+            78,
+            55
+          ],
+          [
+            130,
+            79,
+            53
+          ],
+          [
+            135,
+            80,
+            52
+          ],
+          [
+            140,
+            82,
+            51
+          ],
+          [
+            145,
+            82,
+            49
+          ],
+          [
+            150,
+            83,
+            48
+          ],
+          [
+            155,
+            84,
+            47
+          ],
+          [
+            161,
+            86,
+            46
+          ],
+          [
+            165,
+            87,
+            44
+          ],
+          [
+            170,
+            87,
+            44
+          ],
+          [
+            175,
+            88,
+            44
+          ],
+          [
+            180,
+            89,
+            43
+          ],
+          [
+            184,
+            90,
+            42
+          ],
+          [
+            189,
+            91,
+            41
+          ],
+          [
+            194,
+            92,
+            40
+          ],
+          [
+            199,
+            93,
+            40
+          ],
+          [
+            203,
+            94,
+            39
+          ],
+          [
+            208,
+            95,
+            39
+          ],
+          [
+            214,
+            95,
+            39
+          ],
+          [
+            218,
+            96,
+            38
+          ]
+        ],
+        "mean_delta_e76": 8.995962639055536,
+        "max_delta_e76": 16.902674257580845,
+        "objective": 169.61764935771646,
+        "exact_state_count": 237,
+        "exact_max_ink_code_sum": 612,
+        "exact_max_tac_percent": 240.0
+      },
+      "baseline_two_stop": {
+        "stops": [
+          [
+            63,
+            53,
+            53
+          ],
+          [
+            213,
+            93,
+            23
+          ]
+        ],
+        "samples": [
+          [
+            63,
+            53,
+            53
+          ],
+          [
+            68,
+            54,
+            52
+          ],
+          [
+            72,
+            56,
+            51
+          ],
+          [
+            77,
+            57,
+            50
+          ],
+          [
+            82,
+            58,
+            49
+          ],
+          [
+            86,
+            59,
+            48
+          ],
+          [
+            91,
+            60,
+            47
+          ],
+          [
+            96,
+            62,
+            46
+          ],
+          [
+            100,
+            63,
+            46
+          ],
+          [
+            105,
+            64,
+            45
+          ],
+          [
+            110,
+            66,
+            44
+          ],
+          [
+            115,
+            67,
+            43
+          ],
+          [
+            119,
+            68,
+            42
+          ],
+          [
+            124,
+            69,
+            41
+          ],
+          [
+            129,
+            70,
+            40
+          ],
+          [
+            133,
+            72,
+            39
+          ],
+          [
+            138,
+            73,
+            38
+          ],
+          [
+            143,
+            74,
+            37
+          ],
+          [
+            147,
+            76,
+            36
+          ],
+          [
+            152,
+            77,
+            35
+          ],
+          [
+            157,
+            78,
+            34
+          ],
+          [
+            161,
+            79,
+            33
+          ],
+          [
+            166,
+            80,
+            32
+          ],
+          [
+            171,
+            82,
+            31
+          ],
+          [
+            176,
+            83,
+            30
+          ],
+          [
+            180,
+            84,
+            30
+          ],
+          [
+            185,
+            86,
+            29
+          ],
+          [
+            190,
+            87,
+            28
+          ],
+          [
+            194,
+            88,
+            27
+          ],
+          [
+            199,
+            89,
+            26
+          ],
+          [
+            204,
+            90,
+            25
+          ],
+          [
+            208,
+            92,
+            24
+          ],
+          [
+            213,
+            93,
+            23
+          ]
+        ],
+        "predicted": [
+          [
+            71,
+            61,
+            61
+          ],
+          [
+            75,
+            62,
+            60
+          ],
+          [
+            79,
+            64,
+            59
+          ],
+          [
+            83,
+            65,
+            59
+          ],
+          [
+            88,
+            65,
+            58
+          ],
+          [
+            92,
+            66,
+            57
+          ],
+          [
+            96,
+            67,
+            56
+          ],
+          [
+            101,
+            69,
+            55
+          ],
+          [
+            105,
+            70,
+            55
+          ],
+          [
+            110,
+            71,
+            54
+          ],
+          [
+            115,
+            73,
+            54
+          ],
+          [
+            119,
+            74,
+            53
+          ],
+          [
+            123,
+            75,
+            52
+          ],
+          [
+            128,
+            76,
+            52
+          ],
+          [
+            133,
+            76,
+            50
+          ],
+          [
+            136,
+            78,
+            50
+          ],
+          [
+            141,
+            79,
+            48
+          ],
+          [
+            146,
+            80,
+            47
+          ],
+          [
+            150,
+            82,
+            47
+          ],
+          [
+            155,
+            83,
+            46
+          ],
+          [
+            161,
+            83,
+            45
+          ],
+          [
+            164,
+            84,
+            45
+          ],
+          [
+            169,
+            85,
+            44
+          ],
+          [
+            174,
+            87,
+            44
+          ],
+          [
+            179,
+            88,
+            43
+          ],
+          [
+            183,
+            89,
+            43
+          ],
+          [
+            187,
+            91,
+            43
+          ],
+          [
+            192,
+            92,
+            42
+          ],
+          [
+            196,
+            93,
+            41
+          ],
+          [
+            201,
+            94,
+            40
+          ],
+          [
+            206,
+            95,
+            40
+          ],
+          [
+            209,
+            96,
+            39
+          ],
+          [
+            214,
+            97,
+            39
+          ]
+        ],
+        "mean_delta_e76": 9.410436156103417,
+        "max_delta_e76": 17.10197879404402,
+        "objective": 179.36378985302343,
+        "exact_state_count": 191,
+        "exact_max_ink_code_sum": 612,
+        "exact_max_tac_percent": 240.0
+      },
+      "three_stop": {
+        "stops": [
+          [
+            64,
+            54,
+            54
+          ],
+          [
+            115,
+            60,
+            35
+          ],
+          [
+            236,
+            109,
+            3
+          ]
+        ],
+        "samples": [
+          [
+            64,
+            54,
+            54
+          ],
+          [
+            67,
+            54,
+            53
+          ],
+          [
+            70,
+            55,
+            52
+          ],
+          [
+            74,
+            55,
+            50
+          ],
+          [
+            77,
+            56,
+            49
+          ],
+          [
+            80,
+            56,
+            48
+          ],
+          [
+            83,
+            56,
+            47
+          ],
+          [
+            86,
+            57,
+            46
+          ],
+          [
+            90,
+            57,
+            44
+          ],
+          [
+            93,
+            57,
+            43
+          ],
+          [
+            96,
+            58,
+            42
+          ],
+          [
+            99,
+            58,
+            41
+          ],
+          [
+            102,
+            58,
+            40
+          ],
+          [
+            105,
+            59,
+            39
+          ],
+          [
+            109,
+            59,
+            37
+          ],
+          [
+            112,
+            60,
+            36
+          ],
+          [
+            115,
+            60,
+            35
+          ],
+          [
+            123,
+            63,
+            33
+          ],
+          [
+            130,
+            66,
+            31
+          ],
+          [
+            138,
+            69,
+            29
+          ],
+          [
+            145,
+            72,
+            27
+          ],
+          [
+            153,
+            75,
+            25
+          ],
+          [
+            160,
+            78,
+            23
+          ],
+          [
+            168,
+            81,
+            21
+          ],
+          [
+            176,
+            84,
+            19
+          ],
+          [
+            183,
+            88,
+            17
+          ],
+          [
+            191,
+            91,
+            15
+          ],
+          [
+            198,
+            94,
+            13
+          ],
+          [
+            206,
+            97,
+            11
+          ],
+          [
+            213,
+            100,
+            9
+          ],
+          [
+            221,
+            103,
+            7
+          ],
+          [
+            228,
+            106,
+            5
+          ],
+          [
+            236,
+            109,
+            3
+          ]
+        ],
+        "predicted": [
+          [
+            72,
+            62,
+            61
+          ],
+          [
+            74,
+            62,
+            60
+          ],
+          [
+            77,
+            63,
+            60
+          ],
+          [
+            81,
+            63,
+            59
+          ],
+          [
+            83,
+            64,
+            58
+          ],
+          [
+            86,
+            64,
+            57
+          ],
+          [
+            89,
+            64,
+            56
+          ],
+          [
+            92,
+            65,
+            55
+          ],
+          [
+            95,
+            65,
+            54
+          ],
+          [
+            98,
+            65,
+            53
+          ],
+          [
+            101,
+            65,
+            52
+          ],
+          [
+            104,
+            65,
+            51
+          ],
+          [
+            107,
+            66,
+            51
+          ],
+          [
+            110,
+            67,
+            50
+          ],
+          [
+            114,
+            67,
+            48
+          ],
+          [
+            116,
+            68,
+            47
+          ],
+          [
+            119,
+            67,
+            46
+          ],
+          [
+            127,
+            70,
+            45
+          ],
+          [
+            134,
+            73,
+            44
+          ],
+          [
+            141,
+            75,
+            43
+          ],
+          [
+            148,
+            78,
+            41
+          ],
+          [
+            156,
+            81,
+            40
+          ],
+          [
+            163,
+            83,
+            39
+          ],
+          [
+            170,
+            86,
+            39
+          ],
+          [
+            178,
+            89,
+            39
+          ],
+          [
+            185,
+            93,
+            39
+          ],
+          [
+            193,
+            95,
+            40
+          ],
+          [
+            200,
+            99,
+            39
+          ],
+          [
+            207,
+            101,
+            38
+          ],
+          [
+            214,
+            104,
+            38
+          ],
+          [
+            222,
+            106,
+            36
+          ],
+          [
+            229,
+            109,
+            34
+          ],
+          [
+            237,
+            111,
+            31
+          ]
+        ],
+        "mean_delta_e76": 6.462444710111022,
+        "max_delta_e76": 16.593760017016766,
+        "objective": 132.89187969469268,
+        "exact_state_count": 278,
+        "exact_max_ink_code_sum": 609,
+        "exact_max_tac_percent": 238.8235294117647
+      },
+      "elapsed_seconds": 4.787
+    }
+  },
+  "passed_checks": 88,
+  "total_checks": 88,
+  "all_passed": true,
+  "elapsed_seconds": 21.174
+}
